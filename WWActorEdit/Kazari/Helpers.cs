@@ -479,45 +479,50 @@ namespace WWActorEdit.Kazari
                 float RotXRad = (Rot.X / 180.0f * (float)Math.PI);
 
                 float Modifier = 1.0f;
-                if (KeysDown[(char)Keys.Space]) Modifier = 10.0f;
-                else if (KeysDown[(char)Keys.ShiftKey]) Modifier = 0.25f;
+                bool twoD = false;
 
-                if (KeysDown[(char)Keys.W])
-                {
-                    if (Rot.X >= 90.0f || Rot.X <= -90.0f)
-                    {
-                        Pos.Y += (float)Math.Sin(RotXRad) * CameraCoeff * 2.0f * Modifier;
-                    }
-                    else
-                    {
-                        Pos.X -= (float)Math.Sin(RotYRad) * CameraCoeff * 2.0f * Modifier;
-                        Pos.Z += (float)Math.Cos(RotYRad) * CameraCoeff * 2.0f * Modifier;
-                        Pos.Y += (float)Math.Sin(RotXRad) * CameraCoeff * 2.0f * Modifier;
+                if (KeysDown[(char)Keys.Space])
+                    Modifier = 10.0f;
+                else if (KeysDown[(char)Keys.ShiftKey])
+                    Modifier = 0.3f;
+                if (KeysDown[(char)Keys.ControlKey])
+                    twoD = true;
+
+                if (KeysDown[(char)Keys.W]) {
+                    if (twoD) {
+                        Pos.Y -= CameraCoeff * 2.0f * Modifier;
+                    } else {
+                        if (Rot.X >= 90.0f || Rot.X <= -90.0f) {
+                            Pos.Y += (float)Math.Sin(RotXRad) * CameraCoeff * 2.0f * Modifier;
+                        } else {
+                            Pos.X -= (float)Math.Sin(RotYRad) * CameraCoeff * 2.0f * Modifier;
+                            Pos.Z += (float)Math.Cos(RotYRad) * CameraCoeff * 2.0f * Modifier;
+                            Pos.Y += (float)Math.Sin(RotXRad) * CameraCoeff * 2.0f * Modifier;
+                        }
                     }
                 }
 
-                if (KeysDown[(char)Keys.S])
-                {
-                    if (Rot.X >= 90.0f || Rot.X <= -90.0f)
-                    {
-                        Pos.Y -= (float)Math.Sin(RotXRad) * CameraCoeff * 2.0f * Modifier;
-                    }
-                    else
-                    {
-                        Pos.X += (float)Math.Sin(RotYRad) * CameraCoeff * 2.0f * Modifier;
-                        Pos.Z -= (float)Math.Cos(RotYRad) * CameraCoeff * 2.0f * Modifier;
-                        Pos.Y -= (float)Math.Sin(RotXRad) * CameraCoeff * 2.0f * Modifier;
+                if (KeysDown[(char)Keys.S]) {
+                    if (twoD) {
+                        Pos.Y += CameraCoeff * 2.0f * Modifier;
+                    } else {
+                        if (Rot.X >= 90.0f || Rot.X <= -90.0f) {
+                            Pos.Y -= (float)Math.Sin(RotXRad) * CameraCoeff * 2.0f * Modifier;
+                        } else {
+                            Pos.X += (float)Math.Sin(RotYRad) * CameraCoeff * 2.0f * Modifier;
+                            Pos.Z -= (float)Math.Cos(RotYRad) * CameraCoeff * 2.0f * Modifier;
+                            Pos.Y -= (float)Math.Sin(RotXRad) * CameraCoeff * 2.0f * Modifier;
+                        }
                     }
                 }
 
-                if (KeysDown[(char)Keys.A])
-                {
+                if (KeysDown[(char)Keys.A]) {
                     Pos.X += (float)Math.Cos(RotYRad) * CameraCoeff * 2.0f * Modifier;
                     Pos.Z += (float)Math.Sin(RotYRad) * CameraCoeff * 2.0f * Modifier;
+
                 }
 
-                if (KeysDown[(char)Keys.D])
-                {
+                if (KeysDown[(char)Keys.D]) {
                     Pos.X -= (float)Math.Cos(RotYRad) * CameraCoeff * 2.0f * Modifier;
                     Pos.Z -= (float)Math.Sin(RotYRad) * CameraCoeff * 2.0f * Modifier;
                 }
