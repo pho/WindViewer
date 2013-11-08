@@ -30,6 +30,8 @@ namespace WWActorEdit.Kazari
         public RARC(string Path)
         {
             Load(Path);
+            //printAllFileEntries(Root);
+
         }
 
         public void Load(string Path)
@@ -49,7 +51,20 @@ namespace WWActorEdit.Kazari
             }
 
             Header = new RARCHeader(this, Data, ref Root);
+
         }
+
+        public static void printAllFileEntries(FileNode Root){
+            Console.WriteLine("Node: " + Root.NodeName);
+            foreach (RARC.FileEntry f in Root.Files) {
+                Console.WriteLine("  Entry:" + f.FileName);
+            }
+
+            foreach (RARC.FileNode n in Root.ChildNodes)
+                printAllFileEntries(n);
+
+        }
+
 
         public void Save()
         {

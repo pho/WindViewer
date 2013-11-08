@@ -192,6 +192,8 @@ namespace WWActorEdit.Kazari
 
 		public static void CompressRARC(string FullPath, RARC.FileNode Root)
 		{
+
+            Console.WriteLine("\n>> Compressing " + Root.NodeName + " to " + FullPath);
             string newFile = Root.NodeName;
 
 			stringTable = CreateStringTable();//Setup the string table
@@ -306,10 +308,16 @@ namespace WWActorEdit.Kazari
             header.sizeOfStringTable = (uint)stringTable.Length;
 			header.size = lengthOfDataTable + header.dataStartOffset + 0x20;
 
-            Console.WriteLine("Writing header...");
 			//Let's write it out
+
+            // Uncomment while testing
+            //FullPath += ".new.arc";
+
 			FileStream filestreamWriter = new FileStream(FullPath, FileMode.Create);
 			BinaryWriter binWriter = new BinaryWriter(filestreamWriter);
+
+            Console.WriteLine("Writing to file: " + FullPath);
+            Console.WriteLine("Writing header...");
 			//First the Header is written
 			binWriter.Write(header.type[0]);
 			binWriter.Write(header.type[1]);
