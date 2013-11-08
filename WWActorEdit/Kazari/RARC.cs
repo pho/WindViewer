@@ -53,7 +53,9 @@ namespace WWActorEdit.Kazari
 
         public void Save()
         {
-            Helpers.SaveBinary(FullPath, Header.FileData);
+            //Helpers.SaveBinary(FullPath, Header.FileData);
+            RARCPacker.CompressRARC(FullPath, Root);
+
         }
 
         #endregion
@@ -184,12 +186,12 @@ namespace WWActorEdit.Kazari
                 FirstFileEntryOffset = Helpers.Read32(Data, (int)Offset + 12);
 
                 NodeName = Helpers.ReadString(Data, (int)(FilenameOffset + Header.StringTableOffset + 32));
-
+                Console.WriteLine("Reading node: " + NodeName);
                 for (int i = 0; i < NumFileEntries; ++i)
                 {
                     UInt32 ReadOffset = (UInt32)(Header.FileEntriesOffset + (FirstFileEntryOffset * FileEntry.Size) + (i * FileEntry.Size) + 32);
                     FileEntry CurrentFile = new FileEntry(BaseRARC, Data, ReadOffset, Header);
-
+                    Console.WriteLine("Found fileEntry: " + CurrentFile.FileName);
                     if (CurrentFile.ID == 0xFFFF || CurrentFile.Unknown2 == 0x0200)         // 0x2000 correct???
                     {
                         if (CurrentFile.FilenameOffset != 0 && CurrentFile.FilenameOffset != 2)
@@ -222,6 +224,8 @@ namespace WWActorEdit.Kazari
             public string FileName;
             public bool IsCompressed;
 
+            public byte[] fileData;
+
             RARCHeader Header;
 
             public FileEntry(RARC BR, byte[] Data, UInt32 Offset, RARCHeader Head)
@@ -243,9 +247,10 @@ namespace WWActorEdit.Kazari
                     IsCompressed = false;
 
                 Header = Head;
+                fileData = GetFileData_OLD();
             }
 
-            public byte[] GetFileData()
+            public byte[] GetFileData_OLD()
             {
                 byte[] Data = null;
                 if (IsCompressed == true)
@@ -258,7 +263,11 @@ namespace WWActorEdit.Kazari
                 return Data;
             }
 
-            public void SetFileData(byte[] NewData)
+            public byte[] GetFileData(){    
+                return fileData;
+            }
+
+            public void SetFileData_OLD(byte[] NewData)
             {
                 if (IsCompressed == true)
                 {
@@ -270,6 +279,19 @@ namespace WWActorEdit.Kazari
                         Buffer.BlockCopy(NewData, 0, Header.FileData, (int)(Header.DataStartOffset + DataOffset + 32), (int)DataSize);
                     else
                         throw new Exception("Data size mismatch");
+                }
+            }
+
+            public void SetFileData(byte[] NewData)
+            {
+                if (IsCompressed == true)
+                {
+                    throw new Exception("Cannot set data in compressed file");
+                }
+                else
+                {
+                    fileData = NewData;
+                    DataSize = (uint) fileData.Length;
                 }
             }
 
