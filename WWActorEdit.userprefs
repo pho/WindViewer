@@ -1,18 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="WWActorEdit\Kazari\DZx\LGTV.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="WWActorEdit\Kazari\RARCPacker.cs">
     <Files>
-      <File FileName="WWActorEdit\Kazari\DZx\LGTV.cs" Line="7" Column="7" />
+      <File FileName="WWActorEdit\Kazari\RARC.cs" Line="1" Column="1" />
+      <File FileName="WWActorEdit\Kazari\RARCPacker.cs" Line="143" Column="13" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
+        <State expanded="True" selected="True">
           <Node name="WWActorEdit" expanded="True">
-            <Node name="Kazari" expanded="True">
-              <Node name="DZx" expanded="True">
-                <Node name="LGTV.cs" selected="True" />
-              </Node>
-            </Node>
+            <Node name="Kazari" expanded="True" />
           </Node>
         </State>
       </Pad>
