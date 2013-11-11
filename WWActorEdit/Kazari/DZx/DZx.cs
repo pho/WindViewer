@@ -100,6 +100,7 @@ namespace WWActorEdit.Kazari.DZx
 
                         /* Typically in DZS */
                         case "MULT": Data[i] = new MULT(FE, ref ReadOffset, NewNode, System.Drawing.Color.LightGray); continue;
+                        case "TRES": Data[i] = new TRES(FE, ref ReadOffset, NewNode, System.Drawing.Color.SaddleBrown); continue;
                     }
 
                     switch (Tag.Substring(0, 3))
@@ -107,6 +108,7 @@ namespace WWActorEdit.Kazari.DZx
                         case "ACT": Data[i] = new ACTR(FE, ref ReadOffset, NewNode, System.Drawing.Color.GreenYellow, ParentZA); break;
                         case "PLY": Data[i] = new ACTR(FE, ref ReadOffset, NewNode, System.Drawing.Color.Orange); break;
                         case "SCO": Data[i] = new TGDR(FE, ref ReadOffset, NewNode, System.Drawing.Color.Yellow, ParentZA); break;
+                        case "TRE": Data[i] = new TRES(FE, ref ReadOffset, NewNode, System.Drawing.Color.SaddleBrown); break;
                         default: Data[i] = new Generic(FE, ref ReadOffset, NewNode); NewNode.Tag = Data[i]; break;
                     }
                 }

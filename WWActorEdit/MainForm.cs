@@ -448,6 +448,8 @@ namespace WWActorEdit
                         CamPos = (-((SHIP)SelectedDZRChunkElement).Position * 0.005f);
                     else if (SelectedDZRChunkElement is TGDR)
                         CamPos = (-((TGDR)SelectedDZRChunkElement).Position * 0.005f);
+                    else if (SelectedDZRChunkElement is TRES)
+                        CamPos = (-((TRES)SelectedDZRChunkElement).Position * 0.005f);
                     else if (SelectedDZRChunkElement is MULT)
                         CamPos = (-(new Vector3(((MULT)SelectedDZRChunkElement).HVTranslation.X, 0.0f, ((MULT)SelectedDZRChunkElement).HVTranslation.Y) * 0.005f));
 

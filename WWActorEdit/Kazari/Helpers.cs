@@ -93,6 +93,11 @@ namespace WWActorEdit.Kazari
             return Encoding.GetEncoding(1251).GetString(TempBuffer, 0, Array.IndexOf(TempBuffer, (byte)0));
         }
 
+        public static void Overwrite8(ref byte[] Data, int Offset, byte Value)
+        {
+            OverwriteXX(ref Data, Offset, Value, 0);
+        }
+
         public static void Overwrite16(ref byte[] Data, int Offset, ushort Value)
         {
             OverwriteXX(ref Data, Offset, Value, 1);
