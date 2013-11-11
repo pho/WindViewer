@@ -104,12 +104,14 @@ namespace WWActorEdit.Kazari
             CreateFileEntries(Root);
             CreateNodeEntries(Root);
 
+            CreateDummyFiles();
+
+
             foreach (RARC.FileNode n in Root.ChildNodes) {
                 CreateNodes(n);
                 CreateEntries(n);
-            }
 
-            CreateDummyFiles();
+            }
 
         }
 
@@ -431,6 +433,8 @@ namespace WWActorEdit.Kazari
 			//Write all the file entries
 			foreach (FileEntry entry in fileEntries)
 			{
+                Console.WriteLine(String.Format("Writing fileEntry {0:X6}",entry.filenameOffset));
+
 				buffer = BitConverter.GetBytes(entry.id);
 				Array.Reverse(buffer);
 				filestreamWriter.Write(buffer, 0, buffer.Length);
