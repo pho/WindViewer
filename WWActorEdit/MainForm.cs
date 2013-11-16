@@ -111,15 +111,16 @@ namespace WWActorEdit
                         */
                         foreach (J3Dx M in A.J3Dxs)
                         {
+                            GetGlobalTranslation(A);
+                            GetGlobalRotation(A);
                             /* Got model translation from Stage? (ex. rooms in sea) */
-                            if (A.GlobalTranslation != Vector3.Zero)
+                            if (A.GlobalTranslation != Vector3.Zero || A.GlobalRotation > 0.0f)
                             {
                                 /* Perform translation */
                                 GL.Translate(A.GlobalTranslation);
-                                M.Render();
+                                GL.Rotate(A.GlobalRotation, 0, 1, 0);
                             }
-                            else
-                                M.Render();
+                            M.Render();
                         }
                         GL.PopMatrix();
                     }
@@ -298,7 +299,24 @@ namespace WWActorEdit
                     {
                         foreach (IDZxChunkElement ChunkElement in Chunk.Data.Where(C => C is MULT && ((MULT)C).RoomNumber == A.RoomNumber))
                         {
-                            A.GlobalTranslation = new Vector3(((MULT)ChunkElement).HVTranslation.X, 0.0f, ((MULT)ChunkElement).HVTranslation.Y);
+                            A.GlobalTranslation = new Vector3(((MULT)ChunkElement).Translation.X, 0.0f, ((MULT)ChunkElement).Translation.Y);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void GetGlobalRotation(ZeldaArc A)
+        {
+            if (Stage != null)
+            {
+                foreach (DZx D in Stage.DZSs)
+                {
+                    foreach (DZx.FileChunk Chunk in D.Chunks)
+                    {
+                        foreach (IDZxChunkElement ChunkElement in Chunk.Data.Where(C => C is MULT && ((MULT)C).RoomNumber == A.RoomNumber))
+                        {
+                            A.GlobalRotation = ((MULT)ChunkElement).Rotation;
                         }
                     }
                 }
@@ -315,6 +333,7 @@ namespace WWActorEdit
                 {
                     GetRoomNumber(NewArc);
                     GetGlobalTranslation(NewArc);
+                    GetGlobalRotation(NewArc);
                     Rooms.Add(NewArc);
                 }
                 else
@@ -398,7 +417,11 @@ namespace WWActorEdit
 
             toolStripStatusLabel1.Text = "Loaded stage file. Ready!";
 
-            foreach (ZeldaArc A in Rooms) GetGlobalTranslation(A);
+            foreach (ZeldaArc A in Rooms)
+            {
+                GetGlobalTranslation(A);
+                GetGlobalRotation(A);
+            }
         }
 
         private void saveChangesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -451,7 +474,7 @@ namespace WWActorEdit
                     else if (SelectedDZRChunkElement is TRES)
                         CamPos = (-((TRES)SelectedDZRChunkElement).Position * 0.005f);
                     else if (SelectedDZRChunkElement is MULT)
-                        CamPos = (-(new Vector3(((MULT)SelectedDZRChunkElement).HVTranslation.X, 0.0f, ((MULT)SelectedDZRChunkElement).HVTranslation.Y) * 0.005f));
+                        CamPos = (-(new Vector3(((MULT)SelectedDZRChunkElement).Translation.X, 0.0f, ((MULT)SelectedDZRChunkElement).Translation.Y) * 0.005f));
 
                     Helpers.Camera.Initialize(CamPos - new Vector3(0, 0, 2.0f));
                 }
@@ -508,6 +531,7 @@ namespace WWActorEdit
         public List<J3Dx> J3Dxs { get; private set; }
 
         public Vector3 GlobalTranslation { get; set; }
+        public float GlobalRotation { get; set; }
         public int RoomNumber { get; set; }
 
         public string Filename { get; private set; }
