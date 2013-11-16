@@ -99,6 +99,7 @@ namespace WWActorEdit.Kazari
 			return count;
 		}
 
+
         public static void CreateEntries(RARC.FileNode Root){
 
             CreateFileEntries(Root);
@@ -216,8 +217,7 @@ namespace WWActorEdit.Kazari
 
 			nodes[0].foldernameHash = Hash(rootDirName);
 
-			int filesCount = countRARCFiles (Root);
-			nodes[0].numFileEntries = (ushort)(filesCount + 2);
+			nodes[0].numFileEntries = (ushort) (Root.Files.Count + Root.ChildNodes.Count + 2);
 
 			nodes[0].firstFileEntryOffset = 0;
 
@@ -227,6 +227,7 @@ namespace WWActorEdit.Kazari
 			//Get the total number of subdirectories and files
 			//string[] allFiles = Directory.GetFiles(args[0], "*", SearchOption.AllDirectories);
 			//int numOfFilesAndDirs = allFiles.Length + directoriesCount;
+			int filesCount = countRARCFiles(Root);
 			int numOfFilesAndDirs = filesCount + directoriesCount;
 
 			//Now set up an array of FileEntrys(Taking into account the "." and ".." file entries for each folder
