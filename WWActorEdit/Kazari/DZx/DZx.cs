@@ -89,6 +89,7 @@ namespace WWActorEdit.Kazari.DZx
                     {
                         /* Typically in DZR */
                         case "ACTR": Data[i] = new ACTR(FE, ref ReadOffset, NewNode, System.Drawing.Color.GreenYellow, ParentZA); continue;
+                        case "TGOB": Data[i] = new ACTR(FE, ref ReadOffset, NewNode, System.Drawing.Color.GreenYellow, ParentZA); continue;
                         case "PLYR": Data[i] = new ACTR(FE, ref ReadOffset, NewNode, System.Drawing.Color.Orange); continue;
                         case "PPNT":    /* Found in DmSpot0's Stage DZS for some reason... */
                         case "RPPN": Data[i] = new RPPN(FE, ref ReadOffset, NewNode, System.Drawing.Color.LightSkyBlue); continue;
