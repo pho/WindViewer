@@ -54,7 +54,7 @@ namespace WWActorEdit.Kazari.DZx
                 Helpers.ConvertIEEE754Float(Helpers.Read32(SrcData, SrcOffset + 0x0C)),
                 Helpers.ConvertIEEE754Float(Helpers.Read32(SrcData, SrcOffset + 0x10)),
                 Helpers.ConvertIEEE754Float(Helpers.Read32(SrcData, SrcOffset + 0x14)));
-            _Rotation = (Helpers.Read16(SrcData, SrcOffset + 0x1A) / 182.04444444444444f).Clamp(-180, 179);
+            _Rotation = ((short)(Helpers.Read16(SrcData, SrcOffset + 0x1A)) / 182.04444444444444f).Clamp(-180, 179);
             _Contents = Helpers.Read8(SrcData, SrcOffset + 0x1C);
 
             SrcOffset += 0x20;

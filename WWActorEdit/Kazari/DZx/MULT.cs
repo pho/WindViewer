@@ -46,7 +46,7 @@ namespace WWActorEdit.Kazari.DZx
             _Translation = new Vector2(
                 Helpers.ConvertIEEE754Float(Helpers.Read32(SrcData, SrcOffset)),
                 Helpers.ConvertIEEE754Float(Helpers.Read32(SrcData, SrcOffset + 0x04)));
-            _Rotation = (Helpers.Read16(SrcData, SrcOffset + 0x08) / 182.04444444444444f);
+            _Rotation = ((short)(Helpers.Read16(SrcData, SrcOffset + 0x08)) / 182.04444444444444f).Clamp(-180, 179);
             _RoomNumber = SrcData[SrcOffset + 0x0A];
             _Unknown2 = SrcData[SrcOffset + 0x0B];
 
