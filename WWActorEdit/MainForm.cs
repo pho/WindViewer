@@ -114,7 +114,7 @@ namespace WWActorEdit
                             GetGlobalTranslation(A);
                             GetGlobalRotation(A);
                             /* Got model translation from Stage? (ex. rooms in sea) */
-                            if (A.GlobalTranslation != Vector3.Zero || A.GlobalRotation > 0.0f)
+                            if (A.GlobalTranslation != Vector3.Zero || A.GlobalRotation != 0)
                             {
                                 /* Perform translation */
                                 GL.Translate(A.GlobalTranslation);
