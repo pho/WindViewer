@@ -145,6 +145,21 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Kazari\RARCPacker.cs" />
+    <Compile Include="Kazari\DZx\MULTControl.cs" />
+    <Compile Include="Kazari\DZx\TRES.cs" />
+    <Compile Include="Kazari\DZx\TRESControl.cs" />
+    <Compile Include="Kazari\DZx\TRESControl.designer.cs">
+      <DependentUpon>TRESControl.cs</DependentUpon>
+    </Compile>
+    <None Include="Kazari\DZx\TRESControl.resx">
+      <DependentUpon>TRESControl.cs</DependentUpon>
+    </None>
+    <Compile Include="Kazari\DZx\MULTControl.designer.cs">
+      <DependentUpon>MULTControl.cs</DependentUpon>
+    </Compile>
+    <None Include="Kazari\DZx\MULTControl.resx">
+      <DependentUpon>MULTControl.cs</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="windviewer.ico" />
