@@ -19,6 +19,7 @@ using WWActorEdit.Kazari;
 using WWActorEdit.Kazari.DZx;
 using WWActorEdit.Kazari.DZB;
 using WWActorEdit.Kazari.J3Dx;
+using WWActorEdit.Kazari.STB;
 
 namespace WWActorEdit
 {
@@ -520,6 +521,18 @@ namespace WWActorEdit
                 "- Here's hoping I didn't forget anyone in the About box credits :P",
                 "Readme?", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+
+        private void toolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            string[] Files = Helpers.ShowOpenFileDialog("GameCube/Wii RARC archives (*.arc; *.rarc)|*.arc; *.rarc|All Files (*.*)|*.*");
+            if (Files[0] == string.Empty) return;
+
+            LoadRARC(Files[0], false);
+
+            toolStripStatusLabel1.Text = "Loaded demo archive.";
+
+        }
     }
 
     public class ZeldaArc
@@ -529,6 +542,7 @@ namespace WWActorEdit
         public List<DZx> DZSs { get; private set; }
         public List<DZB> DZBs { get; private set; }
         public List<J3Dx> J3Dxs { get; private set; }
+        public List<STB> STBs { get; private set; }
 
         public Vector3 GlobalTranslation { get; set; }
         public float GlobalRotation { get; set; }
@@ -543,6 +557,7 @@ namespace WWActorEdit
             DZSs = new List<DZx>();
             DZBs = new List<DZB>();
             J3Dxs = new List<J3Dx>();
+            STBs = new List<STB>();
 
             TreeNode NewNode = Helpers.CreateTreeNode(Archive.Filename, null);
             PopulateFileList(NewNode, Archive.Root, IgnoreModels);
@@ -614,6 +629,9 @@ namespace WWActorEdit
 
                 else if (Path.GetExtension(FE.FileName) == ".dzb")
                     DZBs.Add(new DZB(FE, TN));
+
+                else if (Path.GetExtension(FE.FileName) == ".stb")
+                    STBs.Add(new STB(FE, TN));
             }
         }
     }
