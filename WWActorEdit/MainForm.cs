@@ -24,20 +24,24 @@ namespace WWActorEdit
 {
     public partial class MainForm : Form
     {
+        //A list of currently loaded .arc Archives
         List<ZeldaArc> Rooms = new List<ZeldaArc>();
+        //Shortcut to the 'Stage' one if it is loaded.
         ZeldaArc Stage;
 
+        //idek
         IDZxChunkElement SelectedDZRChunkElement;
 
-        bool _glContextLoaded;
+        //Has the GL Control been loaded? Used to prevent rendering before GL is Initialized.
+        private bool _glContextLoaded;
 
         public MainForm()
         {
             //Initialize the WinForm
             InitializeComponent();
-         }
+        }
 
-        #region GLControl 
+        #region GLControl
         void Application_Idle(object sender, EventArgs e)
         {
             while (glControl.IsIdle == true)
@@ -215,66 +219,41 @@ namespace WWActorEdit
             glControl.SwapBuffers();
         }
 
+        /// <summary>
+        /// In a 'Stage', there is data that is indexed by Room number. The actual rooms don't store
+        /// this data internally, it is only by file name. So we're going to strip apart the filename
+        /// to get the room number.
+        /// </summary>
+        /// <param name="NewArc"></param>
         private void GetRoomNumber(ZeldaArc NewArc)
         {
-            /* Very shitty - hell, I even use the VB interaction stuff out of laziness! */
+            int roomNumber = 0;
+            
+            //We're going to trim the Filepath down to just name - ie: "Room0.arc / R00_00.arc"
+            string fileName = Path.GetFileName(NewArc.Filename);
 
-            int RNumb = 0;
-
-        start:
-            /* Alright, let's try this! */
-            try
+            //If it starts with "Room" then it's (probably) a Windwaker Archive.
+            if (fileName.Substring(0, 4).ToLower() == "room")
             {
-                /* First try to guess the roomnumber from the filename... */
-                /* Hm, is it even a room? */
-                if (Path.GetFileName(NewArc.Filename).Substring(0, 4).ToLower() != "room" &&    /* ...WW? */
-                    Path.GetFileName(NewArc.Filename).Substring(0, 1) != "R")                   /* ...or maybe TP? */
-                    goto manual;
-                else
-                {
-                    /* Any numbers in there...? */
-                    string[] numbers = Regex.Split(Path.GetFileName(NewArc.Filename), @"\D+");
-                    foreach (string n in numbers)
-                    {
-                        if (n != string.Empty)
-                        {
-                            /* Yay, there's a number, fuck it let's use this! */
-                            RNumb = int.Parse(n);
-                            goto cont;
-                        }
-                        else
-                            continue;
-                    }
-                    goto manual;        /* Wha? Nothing found? Gotta let the user do his thing... */
-                }
+                string trimmedNumbers = fileName.Substring(4, fileName.Length - 8);
+                roomNumber = int.Parse(trimmedNumbers);
             }
-            catch
+            //If it starts with R ("Rxx_00, xx being Room Number"), it's Twlight Princess
+            else if (fileName.Substring(0, 1).ToLower() == "r")
             {
-                goto manual;
+                //I *think* these follow the Rxx_00 pattern, where xx is the room number. _00 can change, xx might be 1 or 3, who knows!
+                string trimmedNumbers = fileName.Substring(1, 2); //We're going to try and just grab the XX pattern. If the program asserts here, then this logic needs to be improved!
+                roomNumber = int.Parse(trimmedNumbers);
+            }
+            else
+            {
+                Console.WriteLine(
+                    "Failed to determine room number from file name. Expected: Room<x>.arc or R<xx>_00, got: " +
+                    fileName);
+                Console.WriteLine("Defaulting to Room number 0!");
             }
 
-        manual:
-            {
-                /* Alright VB interaction time! Get the inputbox up... */
-                string Number = Microsoft.VisualBasic.Interaction.InputBox("Could not determine room number. Please enter the number manually.");
-                if (Number == string.Empty) return;
-
-                try
-                {
-                    /* Trying to get the number from the string */
-                    RNumb = int.Parse(Number);
-                    goto cont;
-                }
-                catch (FormatException)
-                {
-                    /* Ah for fucks sake, the box is asking for a NUMBER */
-                    goto start;
-                }
-            }
-
-        cont:
-            /* We somehow got a number! But is it correct? Hell if I know */
-            NewArc.RoomNumber = RNumb;
+            NewArc.RoomNumber = roomNumber;
         }
 
         private void GetGlobalTranslation(ZeldaArc A)
