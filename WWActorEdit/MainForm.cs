@@ -38,7 +38,7 @@ namespace WWActorEdit
         public MainForm()
         {
             //Initialize the WinForm
-            InitializeComponent();
+            InitializeComponent(); 
         }
 
         #region GLControl
