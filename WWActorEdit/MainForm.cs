@@ -334,7 +334,6 @@ namespace WWActorEdit
 
             saveChangesToolStripMenuItem.Enabled = false;
 
-            this.Text = Application.ProductName;
             toolStripStatusLabel1.Text = "Ready";
         }
 

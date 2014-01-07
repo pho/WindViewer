@@ -336,7 +336,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(800, 451);
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Text = "Wind Viewer";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
