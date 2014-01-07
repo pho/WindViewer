@@ -39,46 +39,35 @@ namespace WWActorEdit
         {
             InitializeComponent();
 
-            glControl1.Load += new EventHandler(glControl1_Load);
-            glControl1.Paint += new PaintEventHandler(glControl1_Paint);
-            glControl1.Resize += new EventHandler(glControl1_Resize);
-            glControl1.KeyDown += new KeyEventHandler(glControl1_KeyDown);
-            glControl1.KeyUp += new KeyEventHandler(glControl1_KeyUp);
-            glControl1.MouseDown += new MouseEventHandler(glControl1_MouseDown);
-            glControl1.MouseMove += new MouseEventHandler(glControl1_MouseMove);
-            glControl1.MouseUp += new MouseEventHandler(glControl1_MouseUp);
-
             UnloadAllRARCs();
 
             saveChangesToolStripMenuItem.Enabled = false;
-            /* DEMO WARNING */
-            //MessageBox.Show("This is a DEMO; no saving, maybe unstable, resource-hungry, slightly glitchy GUI! Keep that in mind while messing around with this!", string.Format("{0} sez:", Application.ProductName), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
+         }
 
         void Application_Idle(object sender, EventArgs e)
         {
-            while (glControl1.IsIdle == true)
+            while (glControl.IsIdle == true)
             {
-                glControl1_Paint(this, new PaintEventArgs(glControl1.CreateGraphics(), glControl1.ClientRectangle));
+                glControl_Paint(this, new PaintEventArgs(glControl.CreateGraphics(), glControl.ClientRectangle));
             }
         }
 
-        void glControl1_Load(object sender, EventArgs e)
+        void glControl_Load(object sender, EventArgs e)
         {
             Application.Idle += new EventHandler(Application_Idle);
 
-            Helpers.Enable3DRendering(new SizeF(glControl1.Width, glControl1.Height));
+            Helpers.Enable3DRendering(new SizeF(glControl.Width, glControl.Height));
 
             GLReady = true;
         }
 
-        void glControl1_Paint(object sender, PaintEventArgs e)
+        void glControl_Paint(object sender, PaintEventArgs e)
         {
             if (GLReady == false) return;
 
             GL.ClearColor(Color.FromArgb(255, 51, 128, 179));
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            Helpers.Enable3DRendering(new SizeF(glControl1.Width, glControl1.Height));
+            Helpers.Enable3DRendering(new SizeF(glControl.Width, glControl.Height));
 
             Helpers.Camera.Position();
 
@@ -163,28 +152,28 @@ namespace WWActorEdit
                 Helpers.Camera.KeyUpdate(KeysDown);
             }
 
-            glControl1.SwapBuffers();
+            glControl.SwapBuffers();
         }
 
-        void glControl1_Resize(object sender, EventArgs e)
+        void glControl_Resize(object sender, EventArgs e)
         {
             if (GLReady == false) return;
 
-            Helpers.Enable3DRendering(new SizeF(glControl1.Width, glControl1.Height));
-            glControl1.Invalidate();
+            Helpers.Enable3DRendering(new SizeF(glControl.Width, glControl.Height));
+            glControl.Invalidate();
         }
 
-        void glControl1_KeyDown(object sender, KeyEventArgs e)
+        void glControl_KeyDown(object sender, KeyEventArgs e)
         {
             KeysDown[e.KeyValue] = true;
         }
 
-        void glControl1_KeyUp(object sender, KeyEventArgs e)
+        void glControl_KeyUp(object sender, KeyEventArgs e)
         {
             KeysDown[e.KeyValue] = false;
         }
 
-        void glControl1_MouseDown(object sender, MouseEventArgs e)
+        void glControl_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
                 Mouse.LDown = true;
@@ -204,7 +193,7 @@ namespace WWActorEdit
             }
         }
 
-        void glControl1_MouseMove(object sender, MouseEventArgs e)
+        void glControl_MouseMove(object sender, MouseEventArgs e)
         {
             Mouse.Move = new Vector2(e.X, e.Y);
 
@@ -217,7 +206,7 @@ namespace WWActorEdit
             }
         }
 
-        void glControl1_MouseUp(object sender, MouseEventArgs e)
+        void glControl_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
                 Mouse.LDown = false;
