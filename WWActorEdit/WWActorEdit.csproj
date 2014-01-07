@@ -38,8 +38,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
-    <Reference Include="OpenTK.GLControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
+    <Reference Include="OpenTK">
+      <HintPath>.\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl">
+      <HintPath>.\OpenTK.GLControl.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,6 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Kazari\DZx\DZxControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Kazari\DZx\DZxControl.designer.cs">
+      <DependentUpon>DZxControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="ZeldaArc.cs" />
     <Compile Include="ExceptionForm.cs">
       <SubType>Form</SubType>
@@ -114,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Kazari\DZx\ACTRControl.resx">
       <DependentUpon>ACTRControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kazari\DZx\DZxControl.resx">
+      <DependentUpon>DZxControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Kazari\DZx\SHIPControl.resx">
       <DependentUpon>SHIPControl.cs</DependentUpon>
