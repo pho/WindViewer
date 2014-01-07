@@ -259,7 +259,15 @@ namespace WWActorEdit
                 Console.WriteLine(
                     "Failed to determine room number from file name. Expected: Room<x>.arc or R<xx>_00, got: " +
                     fileName);
-                Console.WriteLine("Defaulting to Room number 0!");
+                
+                InvalidRoomNumber popup = new InvalidRoomNumber();
+                popup.DescriptionLabel.Text =
+                    "Failed to determine room number from file name." + Environment.NewLine + "Expected: Room<x>.arc or R<xx>_00, got: " +
+                    fileName;
+                popup.ShowDialog(this);
+
+                roomNumber = (int) popup.roomNumberSelector.Value;
+                Console.WriteLine("User chose: " + roomNumber);
             }
 
             NewArc.RoomNumber = roomNumber;
