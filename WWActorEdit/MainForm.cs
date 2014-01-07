@@ -29,8 +29,7 @@ namespace WWActorEdit
 
         IDZxChunkElement SelectedDZRChunkElement;
 
-        bool GLReady = false;
-        bool Wait = false;
+        bool _glContextLoaded;
 
         bool[] KeysDown = new bool[256];
         Helpers.MouseStruct Mouse = new Helpers.MouseStruct();
@@ -56,7 +55,7 @@ namespace WWActorEdit
 
             Helpers.Enable3DRendering(new SizeF(glControl.Width, glControl.Height));
 
-            GLReady = true;
+            _glContextLoaded = true;
         }
 
         void glControl_Paint(object sender, PaintEventArgs e)
@@ -66,7 +65,7 @@ namespace WWActorEdit
 
         void glControl_Resize(object sender, EventArgs e)
         {
-            if (GLReady == false) return;
+            if (_glContextLoaded == false) return;
 
             Helpers.Enable3DRendering(new SizeF(glControl.Width, glControl.Height));
             glControl.Invalidate();
@@ -133,7 +132,7 @@ namespace WWActorEdit
         /// </summary>
         private void RenderFrame()
         {
-            if (GLReady == false) return;
+            if (_glContextLoaded == false) return;
 
             GL.ClearColor(Color.FromArgb(255, 51, 128, 179));
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -141,87 +140,68 @@ namespace WWActorEdit
 
             Helpers.Camera.Position();
 
-            if (Wait == false)
+
+            GL.Scale(0.005f, 0.005f, 0.005f);
+
+            /* Models */
+            if (renderModelsToolStripMenuItem.Checked == true)
             {
-                GL.Scale(0.005f, 0.005f, 0.005f);
-
-                /* Models */
-                if (renderModelsToolStripMenuItem.Checked == true)
+                foreach (ZeldaArc A in Rooms)
                 {
-                    foreach (ZeldaArc A in Rooms)
+                    GL.PushMatrix();
+                    GetGlobalTranslation(A);
+                    GetGlobalRotation(A);
+
+                    foreach (J3Dx M in A.J3Dxs)
                     {
-                        GL.PushMatrix();
-                        GetGlobalTranslation(A);
-                        GetGlobalRotation(A);
-                        /* WRONG! */
-                        /*
-                        foreach (DZx D in A.DZRs)
+                        /* Got model translation from Stage? (ex. rooms in sea) */
+                        if (A.GlobalTranslation != Vector3.Zero || A.GlobalRotation != 0)
                         {
-                            foreach (DZx.FileChunk Chunk in D.Chunks)
-                            {
-                                foreach (IDZxChunkElement ChunkElement in Chunk.Data.Where(C => C is LGTV))
-                                {
-                                    LGTV L = (LGTV)ChunkElement;
-                                    GL.Rotate((L.Unknown1.X / 1000.0) + 10.0, 1.0, 1.0, 0.0);
-                                    GL.Rotate((L.Unknown1.Y / 1000.0) + 10.0, 0.0, 1.0, 0.0);
-                                    GL.Rotate((L.Unknown1.Z / 1000.0) + 10.0, 0.0, 0.0, 1.0);
-                                    GL.Scale(L.Unknown2);
-                                }
-                            }
+                            /* Perform translation */
+                            GL.Translate(A.GlobalTranslation);
+                            GL.Rotate(A.GlobalRotation, 0, 1, 0);
                         }
-                        */
-                        foreach (J3Dx M in A.J3Dxs)
-                        {
-                            /* Got model translation from Stage? (ex. rooms in sea) */
-                            if (A.GlobalTranslation != Vector3.Zero || A.GlobalRotation != 0)
-                            {
-                                /* Perform translation */
-                                GL.Translate(A.GlobalTranslation);
-                                GL.Rotate(A.GlobalRotation, 0, 1, 0);
-                            }
-                            M.Render();
-                        }
-                        GL.PopMatrix();
+                        M.Render();
                     }
+                    GL.PopMatrix();
                 }
-
-                /* Actors, 1st pass */
-                if (renderRoomActorsToolStripMenuItem.Checked == true)
-                {
-                    foreach (ZeldaArc A in Rooms)
-                    {
-                        if (A.DZRs != null) foreach (DZx D in A.DZRs) D.Render();
-                        if (A.DZSs != null) foreach (DZx D in A.DZSs) D.Render();
-                    }
-                }
-                if (renderStageActorsToolStripMenuItem.Checked == true && Stage != null)
-                {
-                    if (Stage.DZRs != null) foreach (DZx D in Stage.DZRs) D.Render();
-                    if (Stage.DZSs != null) foreach (DZx D in Stage.DZSs) D.Render();
-                }
-
-                /* Collision */
-                if (renderCollisionToolStripMenuItem.Checked == true)
-                    foreach (ZeldaArc A in Rooms) foreach (DZB D in A.DZBs) D.Render();
-
-                /* Actors, 2nd pass */
-                if (renderRoomActorsToolStripMenuItem.Checked == true)
-                {
-                    foreach (ZeldaArc A in Rooms)
-                    {
-                        if (A.DZRs != null) foreach (DZx D in A.DZRs) D.Render();
-                        if (A.DZSs != null) foreach (DZx D in A.DZSs) D.Render();
-                    }
-                }
-                if (renderStageActorsToolStripMenuItem.Checked == true && Stage != null)
-                {
-                    if (Stage.DZRs != null) foreach (DZx D in Stage.DZRs) D.Render();
-                    if (Stage.DZSs != null) foreach (DZx D in Stage.DZSs) D.Render();
-                }
-
-                Helpers.Camera.KeyUpdate(KeysDown);
             }
 
+            /* Actors, 1st pass */
+            if (renderRoomActorsToolStripMenuItem.Checked == true)
+            {
+                foreach (ZeldaArc A in Rooms)
+                {
+                    if (A.DZRs != null) foreach (DZx D in A.DZRs) D.Render();
+                    if (A.DZSs != null) foreach (DZx D in A.DZSs) D.Render();
+                }
+            }
+            if (renderStageActorsToolStripMenuItem.Checked == true && Stage != null)
+            {
+                if (Stage.DZRs != null) foreach (DZx D in Stage.DZRs) D.Render();
+                if (Stage.DZSs != null) foreach (DZx D in Stage.DZSs) D.Render();
+            }
+
+            /* Collision */
+            if (renderCollisionToolStripMenuItem.Checked == true)
+                foreach (ZeldaArc A in Rooms) foreach (DZB D in A.DZBs) D.Render();
+
+            /* Actors, 2nd pass */
+            if (renderRoomActorsToolStripMenuItem.Checked == true)
+            {
+                foreach (ZeldaArc A in Rooms)
+                {
+                    if (A.DZRs != null) foreach (DZx D in A.DZRs) D.Render();
+                    if (A.DZSs != null) foreach (DZx D in A.DZSs) D.Render();
+                }
+            }
+            if (renderStageActorsToolStripMenuItem.Checked == true && Stage != null)
+            {
+                if (Stage.DZRs != null) foreach (DZx D in Stage.DZRs) D.Render();
+                if (Stage.DZSs != null) foreach (DZx D in Stage.DZSs) D.Render();
+            }
+
+            Helpers.Camera.KeyUpdate(KeysDown);
             glControl.SwapBuffers();
         }
 
@@ -370,7 +350,6 @@ namespace WWActorEdit
             if (Files.Length == 1 && Files[0] == string.Empty) return;
 
             Helpers.MassEnableDisable(this.Controls, false);
-            Wait = true;
 
             if (Files.Length > 5 && (renderRoomActorsToolStripMenuItem.Checked == true || renderStageActorsToolStripMenuItem.Checked == true))
             {
@@ -403,7 +382,6 @@ namespace WWActorEdit
             toolStripStatusLabel1.Text = string.Format("Loaded {0} room files. Ready!", Files.Length);
 
             Helpers.MassEnableDisable(this.Controls, true);
-            Wait = false;
         }
 
         private void openStageRARCToolStripMenuItem_Click(object sender, EventArgs e)
