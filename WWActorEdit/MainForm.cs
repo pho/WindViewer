@@ -41,11 +41,12 @@ namespace WWActorEdit
             InitializeComponent();
          }
 
+        #region GLControl 
         void Application_Idle(object sender, EventArgs e)
         {
             while (glControl.IsIdle == true)
             {
-                glControl_Paint(this, new PaintEventArgs(glControl.CreateGraphics(), glControl.ClientRectangle));
+                RenderFrame();
             }
         }
 
@@ -59,6 +60,78 @@ namespace WWActorEdit
         }
 
         void glControl_Paint(object sender, PaintEventArgs e)
+        {
+            RenderFrame();
+        }
+
+        void glControl_Resize(object sender, EventArgs e)
+        {
+            if (GLReady == false) return;
+
+            Helpers.Enable3DRendering(new SizeF(glControl.Width, glControl.Height));
+            glControl.Invalidate();
+        }
+
+        void glControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            KeysDown[e.KeyValue] = true;
+        }
+
+        void glControl_KeyUp(object sender, KeyEventArgs e)
+        {
+            KeysDown[e.KeyValue] = false;
+        }
+
+        void glControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+                Mouse.LDown = true;
+            else if (e.Button == MouseButtons.Right)
+                Mouse.RDown = true;
+            else if (e.Button == MouseButtons.Middle)
+                Mouse.MDown = true;
+
+            Mouse.Center = new Vector2(e.X, e.Y);
+
+            if (Mouse.LDown == true)
+            {
+                if (Mouse.Center != Mouse.Move)
+                    Helpers.Camera.MouseMove(Mouse.Move);
+                else
+                    Helpers.Camera.MouseCenter(Mouse.Move);
+            }
+        }
+
+        void glControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            Mouse.Move = new Vector2(e.X, e.Y);
+
+            if (Mouse.LDown == true)
+            {
+                if (Mouse.Center != Mouse.Move)
+                    Helpers.Camera.MouseMove(Mouse.Move);
+                else
+                    Helpers.Camera.MouseCenter(Mouse.Move);
+            }
+        }
+
+        void glControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+                Mouse.LDown = false;
+            else if (e.Button == MouseButtons.Right)
+                Mouse.RDown = false;
+            else if (e.Button == MouseButtons.Middle)
+                Mouse.MDown = false;
+        }
+        #endregion
+
+        /// <summary>
+        /// Instead of faking a Paint event inside the Application.Idle we'll just put
+        /// the drawing into its own function and call it in both Application.Idle
+        /// and in the Paint event of the GL control.
+        /// </summary>
+        private void RenderFrame()
         {
             if (GLReady == false) return;
 
@@ -150,67 +223,6 @@ namespace WWActorEdit
             }
 
             glControl.SwapBuffers();
-        }
-
-        void glControl_Resize(object sender, EventArgs e)
-        {
-            if (GLReady == false) return;
-
-            Helpers.Enable3DRendering(new SizeF(glControl.Width, glControl.Height));
-            glControl.Invalidate();
-        }
-
-        void glControl_KeyDown(object sender, KeyEventArgs e)
-        {
-            KeysDown[e.KeyValue] = true;
-        }
-
-        void glControl_KeyUp(object sender, KeyEventArgs e)
-        {
-            KeysDown[e.KeyValue] = false;
-        }
-
-        void glControl_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-                Mouse.LDown = true;
-            else if (e.Button == MouseButtons.Right)
-                Mouse.RDown = true;
-            else if (e.Button == MouseButtons.Middle)
-                Mouse.MDown = true;
-
-            Mouse.Center = new Vector2(e.X, e.Y);
-
-            if (Mouse.LDown == true)
-            {
-                if (Mouse.Center != Mouse.Move)
-                    Helpers.Camera.MouseMove(Mouse.Move);
-                else
-                    Helpers.Camera.MouseCenter(Mouse.Move);
-            }
-        }
-
-        void glControl_MouseMove(object sender, MouseEventArgs e)
-        {
-            Mouse.Move = new Vector2(e.X, e.Y);
-
-            if (Mouse.LDown == true)
-            {
-                if (Mouse.Center != Mouse.Move)
-                    Helpers.Camera.MouseMove(Mouse.Move);
-                else
-                    Helpers.Camera.MouseCenter(Mouse.Move);
-            }
-        }
-
-        void glControl_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-                Mouse.LDown = false;
-            else if (e.Button == MouseButtons.Right)
-                Mouse.RDown = false;
-            else if (e.Button == MouseButtons.Middle)
-                Mouse.MDown = false;
         }
 
         private void GetRoomNumber(ZeldaArc NewArc)
