@@ -256,6 +256,13 @@ namespace WWActorEdit
             NewArc.RoomNumber = roomNumber;
         }
 
+        /// <summary>
+        /// This is a terribly placed/named function, but I'm going to leave it for now until I fully understand it.
+        /// My best guess is that the "Stage" file contains the translation/rotation of each individual room. These
+        /// can be loaded in any order in WindViewer, so my guess is that they're just set every frame instead of
+        /// when a Stage/Room is loaded. Weird.
+        /// </summary>
+        /// <param name="A"></param>
         private void GetGlobalTranslation(ZeldaArc A)
         {
             if (Stage != null)
