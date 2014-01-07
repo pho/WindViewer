@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ZeldaArc.cs" />
     <Compile Include="ExceptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,9 +146,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Kazari\RARCPacker.cs" />
-    <Compile Include="Kazari\DZx\MULTControl.cs" />
+    <Compile Include="Kazari\DZx\MULTControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Kazari\DZx\TRES.cs" />
-    <Compile Include="Kazari\DZx\TRESControl.cs" />
+    <Compile Include="Kazari\DZx\TRESControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Kazari\DZx\TRESControl.designer.cs">
       <DependentUpon>TRESControl.cs</DependentUpon>
     </Compile>
