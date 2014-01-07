@@ -24,271 +24,254 @@ namespace WWActorEdit
 {
     public partial class MainForm : Form
     {
+        //A list of currently loaded .arc Archives
         List<ZeldaArc> Rooms = new List<ZeldaArc>();
+        //Shortcut to the 'Stage' one if it is loaded.
         ZeldaArc Stage;
 
+        //idek
         IDZxChunkElement SelectedDZRChunkElement;
 
-        bool GLReady = false;
-        bool Wait = false;
-
-        bool[] KeysDown = new bool[256];
-        Helpers.MouseStruct Mouse = new Helpers.MouseStruct();
+        //Has the GL Control been loaded? Used to prevent rendering before GL is Initialized.
+        private bool _glContextLoaded;
 
         public MainForm()
         {
-            InitializeComponent();
-
-            glControl1.Load += new EventHandler(glControl1_Load);
-            glControl1.Paint += new PaintEventHandler(glControl1_Paint);
-            glControl1.Resize += new EventHandler(glControl1_Resize);
-            glControl1.KeyDown += new KeyEventHandler(glControl1_KeyDown);
-            glControl1.KeyUp += new KeyEventHandler(glControl1_KeyUp);
-            glControl1.MouseDown += new MouseEventHandler(glControl1_MouseDown);
-            glControl1.MouseMove += new MouseEventHandler(glControl1_MouseMove);
-            glControl1.MouseUp += new MouseEventHandler(glControl1_MouseUp);
-
-            UnloadAllRARCs();
-
-            saveChangesToolStripMenuItem.Enabled = false;
-            /* DEMO WARNING */
-            //MessageBox.Show("This is a DEMO; no saving, maybe unstable, resource-hungry, slightly glitchy GUI! Keep that in mind while messing around with this!", string.Format("{0} sez:", Application.ProductName), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //Initialize the WinForm
+            InitializeComponent(); 
         }
 
+        #region GLControl
         void Application_Idle(object sender, EventArgs e)
         {
-            while (glControl1.IsIdle == true)
+            while (glControl.IsIdle == true)
             {
-                glControl1_Paint(this, new PaintEventArgs(glControl1.CreateGraphics(), glControl1.ClientRectangle));
+                RenderFrame();
             }
         }
 
-        void glControl1_Load(object sender, EventArgs e)
+        void glControl_Load(object sender, EventArgs e)
         {
             Application.Idle += new EventHandler(Application_Idle);
 
-            Helpers.Enable3DRendering(new SizeF(glControl1.Width, glControl1.Height));
+            Helpers.Enable3DRendering(new SizeF(glControl.Width, glControl.Height));
 
-            GLReady = true;
+            _glContextLoaded = true;
         }
 
-        void glControl1_Paint(object sender, PaintEventArgs e)
+        void glControl_Paint(object sender, PaintEventArgs e)
         {
-            if (GLReady == false) return;
+            RenderFrame();
+        }
+
+        void glControl_Resize(object sender, EventArgs e)
+        {
+            if (_glContextLoaded == false) return;
+
+            Helpers.Enable3DRendering(new SizeF(glControl.Width, glControl.Height));
+            glControl.Invalidate();
+        }
+
+        void glControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            Helpers.Camera.KeysDown[e.KeyValue] = true;
+        }
+
+        void glControl_KeyUp(object sender, KeyEventArgs e)
+        {
+            Helpers.Camera.KeysDown[e.KeyValue] = false;
+        }
+
+        void glControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                    Helpers.Camera.Mouse.LDown = true;
+                    break;
+                case MouseButtons.Right:
+                    Helpers.Camera.Mouse.RDown = true;
+                    break;
+                case MouseButtons.Middle:
+                    Helpers.Camera.Mouse.MDown = true;
+                    break;
+            }
+
+            Helpers.Camera.Mouse.Center = new Vector2(e.X, e.Y);
+
+            if (Helpers.Camera.Mouse.LDown == true)
+            {
+                if (Helpers.Camera.Mouse.Center != Helpers.Camera.Mouse.Move)
+                    Helpers.Camera.MouseMove(Helpers.Camera.Mouse.Move);
+                else
+                    Helpers.Camera.MouseCenter(Helpers.Camera.Mouse.Move);
+            }
+        }
+
+        void glControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            Helpers.Camera.Mouse.Move = new Vector2(e.X, e.Y);
+
+            if (Helpers.Camera.Mouse.LDown == true)
+            {
+                if (Helpers.Camera.Mouse.Center != Helpers.Camera.Mouse.Move)
+                    Helpers.Camera.MouseMove(Helpers.Camera.Mouse.Move);
+                else
+                    Helpers.Camera.MouseCenter(Helpers.Camera.Mouse.Move);
+            }
+        }
+
+        void glControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                    Helpers.Camera.Mouse.LDown = false;
+                    break;
+                case MouseButtons.Right:
+                    Helpers.Camera.Mouse.RDown = false;
+                    break;
+                case MouseButtons.Middle:
+                    Helpers.Camera.Mouse.MDown = false;
+                    break;
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Instead of faking a Paint event inside the Application.Idle we'll just put
+        /// the drawing into its own function and call it in both Application.Idle
+        /// and in the Paint event of the GL control.
+        /// </summary>
+        private void RenderFrame()
+        {
+            if (_glContextLoaded == false) return;
 
             GL.ClearColor(Color.FromArgb(255, 51, 128, 179));
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            Helpers.Enable3DRendering(new SizeF(glControl1.Width, glControl1.Height));
+            Helpers.Enable3DRendering(new SizeF(glControl.Width, glControl.Height));
 
             Helpers.Camera.Position();
 
-            if (Wait == false)
-            {
-                GL.Scale(0.005f, 0.005f, 0.005f);
 
-                /* Models */
-                if (renderModelsToolStripMenuItem.Checked == true)
+            GL.Scale(0.005f, 0.005f, 0.005f);
+
+            /* Models */
+            if (renderModelsToolStripMenuItem.Checked == true)
+            {
+                foreach (ZeldaArc A in Rooms)
                 {
-                    foreach (ZeldaArc A in Rooms)
+                    GL.PushMatrix();
+                    GetGlobalTranslation(A);
+                    GetGlobalRotation(A);
+
+                    foreach (J3Dx M in A.J3Dxs)
                     {
-                        GL.PushMatrix();
-                        GetGlobalTranslation(A);
-                        GetGlobalRotation(A);
-                        /* WRONG! */
-                        /*
-                        foreach (DZx D in A.DZRs)
+                        /* Got model translation from Stage? (ex. rooms in sea) */
+                        if (A.GlobalTranslation != Vector3.Zero || A.GlobalRotation != 0)
                         {
-                            foreach (DZx.FileChunk Chunk in D.Chunks)
-                            {
-                                foreach (IDZxChunkElement ChunkElement in Chunk.Data.Where(C => C is LGTV))
-                                {
-                                    LGTV L = (LGTV)ChunkElement;
-                                    GL.Rotate((L.Unknown1.X / 1000.0) + 10.0, 1.0, 1.0, 0.0);
-                                    GL.Rotate((L.Unknown1.Y / 1000.0) + 10.0, 0.0, 1.0, 0.0);
-                                    GL.Rotate((L.Unknown1.Z / 1000.0) + 10.0, 0.0, 0.0, 1.0);
-                                    GL.Scale(L.Unknown2);
-                                }
-                            }
+                            /* Perform translation */
+                            GL.Translate(A.GlobalTranslation);
+                            GL.Rotate(A.GlobalRotation, 0, 1, 0);
                         }
-                        */
-                        foreach (J3Dx M in A.J3Dxs)
-                        {
-                            /* Got model translation from Stage? (ex. rooms in sea) */
-                            if (A.GlobalTranslation != Vector3.Zero || A.GlobalRotation != 0)
-                            {
-                                /* Perform translation */
-                                GL.Translate(A.GlobalTranslation);
-                                GL.Rotate(A.GlobalRotation, 0, 1, 0);
-                            }
-                            M.Render();
-                        }
-                        GL.PopMatrix();
+                        M.Render();
                     }
+                    GL.PopMatrix();
                 }
-
-                /* Actors, 1st pass */
-                if (renderRoomActorsToolStripMenuItem.Checked == true)
-                {
-                    foreach (ZeldaArc A in Rooms)
-                    {
-                        if (A.DZRs != null) foreach (DZx D in A.DZRs) D.Render();
-                        if (A.DZSs != null) foreach (DZx D in A.DZSs) D.Render();
-                    }
-                }
-                if (renderStageActorsToolStripMenuItem.Checked == true && Stage != null)
-                {
-                    if (Stage.DZRs != null) foreach (DZx D in Stage.DZRs) D.Render();
-                    if (Stage.DZSs != null) foreach (DZx D in Stage.DZSs) D.Render();
-                }
-
-                /* Collision */
-                if (renderCollisionToolStripMenuItem.Checked == true)
-                    foreach (ZeldaArc A in Rooms) foreach (DZB D in A.DZBs) D.Render();
-
-                /* Actors, 2nd pass */
-                if (renderRoomActorsToolStripMenuItem.Checked == true)
-                {
-                    foreach (ZeldaArc A in Rooms)
-                    {
-                        if (A.DZRs != null) foreach (DZx D in A.DZRs) D.Render();
-                        if (A.DZSs != null) foreach (DZx D in A.DZSs) D.Render();
-                    }
-                }
-                if (renderStageActorsToolStripMenuItem.Checked == true && Stage != null)
-                {
-                    if (Stage.DZRs != null) foreach (DZx D in Stage.DZRs) D.Render();
-                    if (Stage.DZSs != null) foreach (DZx D in Stage.DZSs) D.Render();
-                }
-
-                Helpers.Camera.KeyUpdate(KeysDown);
             }
 
-            glControl1.SwapBuffers();
-        }
-
-        void glControl1_Resize(object sender, EventArgs e)
-        {
-            if (GLReady == false) return;
-
-            Helpers.Enable3DRendering(new SizeF(glControl1.Width, glControl1.Height));
-            glControl1.Invalidate();
-        }
-
-        void glControl1_KeyDown(object sender, KeyEventArgs e)
-        {
-            KeysDown[e.KeyValue] = true;
-        }
-
-        void glControl1_KeyUp(object sender, KeyEventArgs e)
-        {
-            KeysDown[e.KeyValue] = false;
-        }
-
-        void glControl1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-                Mouse.LDown = true;
-            else if (e.Button == MouseButtons.Right)
-                Mouse.RDown = true;
-            else if (e.Button == MouseButtons.Middle)
-                Mouse.MDown = true;
-
-            Mouse.Center = new Vector2(e.X, e.Y);
-
-            if (Mouse.LDown == true)
+            /* Actors, 1st pass */
+            if (renderRoomActorsToolStripMenuItem.Checked == true)
             {
-                if (Mouse.Center != Mouse.Move)
-                    Helpers.Camera.MouseMove(Mouse.Move);
-                else
-                    Helpers.Camera.MouseCenter(Mouse.Move);
+                foreach (ZeldaArc A in Rooms)
+                {
+                    if (A.DZRs != null) foreach (DZx D in A.DZRs) D.Render();
+                    if (A.DZSs != null) foreach (DZx D in A.DZSs) D.Render();
+                }
             }
-        }
-
-        void glControl1_MouseMove(object sender, MouseEventArgs e)
-        {
-            Mouse.Move = new Vector2(e.X, e.Y);
-
-            if (Mouse.LDown == true)
+            if (renderStageActorsToolStripMenuItem.Checked == true && Stage != null)
             {
-                if (Mouse.Center != Mouse.Move)
-                    Helpers.Camera.MouseMove(Mouse.Move);
-                else
-                    Helpers.Camera.MouseCenter(Mouse.Move);
+                if (Stage.DZRs != null) foreach (DZx D in Stage.DZRs) D.Render();
+                if (Stage.DZSs != null) foreach (DZx D in Stage.DZSs) D.Render();
             }
+
+            /* Collision */
+            if (renderCollisionToolStripMenuItem.Checked == true)
+                foreach (ZeldaArc A in Rooms) foreach (DZB D in A.DZBs) D.Render();
+
+            /* Actors, 2nd pass */
+            if (renderRoomActorsToolStripMenuItem.Checked == true)
+            {
+                foreach (ZeldaArc A in Rooms)
+                {
+                    if (A.DZRs != null) foreach (DZx D in A.DZRs) D.Render();
+                    if (A.DZSs != null) foreach (DZx D in A.DZSs) D.Render();
+                }
+            }
+            if (renderStageActorsToolStripMenuItem.Checked == true && Stage != null)
+            {
+                if (Stage.DZRs != null) foreach (DZx D in Stage.DZRs) D.Render();
+                if (Stage.DZSs != null) foreach (DZx D in Stage.DZSs) D.Render();
+            }
+
+            Helpers.Camera.KeyUpdate();
+            glControl.SwapBuffers();
         }
 
-        void glControl1_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-                Mouse.LDown = false;
-            else if (e.Button == MouseButtons.Right)
-                Mouse.RDown = false;
-            else if (e.Button == MouseButtons.Middle)
-                Mouse.MDown = false;
-        }
-
+        /// <summary>
+        /// In a 'Stage', there is data that is indexed by Room number. The actual rooms don't store
+        /// this data internally, it is only by file name. So we're going to strip apart the filename
+        /// to get the room number.
+        /// </summary>
+        /// <param name="NewArc"></param>
         private void GetRoomNumber(ZeldaArc NewArc)
         {
-            /* Very shitty - hell, I even use the VB interaction stuff out of laziness! */
+            int roomNumber = 0;
+            
+            //We're going to trim the Filepath down to just name - ie: "Room0.arc / R00_00.arc"
+            string fileName = Path.GetFileName(NewArc.Filename);
 
-            int RNumb = 0;
-
-        start:
-            /* Alright, let's try this! */
-            try
+            //If it starts with "Room" then it's (probably) a Windwaker Archive.
+            if (fileName.Substring(0, 4).ToLower() == "room")
             {
-                /* First try to guess the roomnumber from the filename... */
-                /* Hm, is it even a room? */
-                if (Path.GetFileName(NewArc.Filename).Substring(0, 4).ToLower() != "room" &&    /* ...WW? */
-                    Path.GetFileName(NewArc.Filename).Substring(0, 1) != "R")                   /* ...or maybe TP? */
-                    goto manual;
-                else
-                {
-                    /* Any numbers in there...? */
-                    string[] numbers = Regex.Split(Path.GetFileName(NewArc.Filename), @"\D+");
-                    foreach (string n in numbers)
-                    {
-                        if (n != string.Empty)
-                        {
-                            /* Yay, there's a number, fuck it let's use this! */
-                            RNumb = int.Parse(n);
-                            goto cont;
-                        }
-                        else
-                            continue;
-                    }
-                    goto manual;        /* Wha? Nothing found? Gotta let the user do his thing... */
-                }
+                //Use Regex here to grab what is between "Room" and ".arc", since it goes up to "Room23.arc"
+                string[] numbers = Regex.Split(fileName, @"\D+");
+                string trimmedNumbers = String.Join("", numbers);
+                trimmedNumbers = trimmedNumbers.Trim();
+
+                roomNumber = int.Parse(trimmedNumbers);
             }
-            catch
+            //If it starts with R ("Rxx_00, xx being Room Number"), it's Twlight Princess
+            else if (fileName.Substring(0, 1).ToLower() == "r")
             {
-                goto manual;
+                //I *think* these follow the Rxx_00 pattern, where xx is the room number. _00 can change, xx might be 1 or 3, who knows!
+                
+                //We're going to use RegEx here to make sure we only grab what is between R and _00 which could be multipl.e
+                string[] numbers = Regex.Split(fileName.Substring(0, fileName.Length - 6), @"\D+");
+                string trimmedNumbers = String.Join("", numbers);
+                trimmedNumbers = trimmedNumbers.Trim();
+
+                roomNumber = int.Parse(trimmedNumbers);
             }
-
-        manual:
+            else
             {
-                /* Alright VB interaction time! Get the inputbox up... */
-                string Number = Microsoft.VisualBasic.Interaction.InputBox("Could not determine room number. Please enter the number manually.");
-                if (Number == string.Empty) return;
-
-                try
-                {
-                    /* Trying to get the number from the string */
-                    RNumb = int.Parse(Number);
-                    goto cont;
-                }
-                catch (FormatException)
-                {
-                    /* Ah for fucks sake, the box is asking for a NUMBER */
-                    goto start;
-                }
+                Console.WriteLine(
+                    "Failed to determine room number from file name. Expected: Room<x>.arc or R<xx>_00, got: " +
+                    fileName);
+                Console.WriteLine("Defaulting to Room number 0!");
             }
 
-        cont:
-            /* We somehow got a number! But is it correct? Hell if I know */
-            NewArc.RoomNumber = RNumb;
+            NewArc.RoomNumber = roomNumber;
         }
 
+        /// <summary>
+        /// This is a terribly placed/named function, but I'm going to leave it for now until I fully understand it.
+        /// My best guess is that the "Stage" file contains the translation/rotation of each individual room. These
+        /// can be loaded in any order in WindViewer, so my guess is that they're just set every frame instead of
+        /// when a Stage/Room is loaded. Weird.
+        /// </summary>
+        /// <param name="A"></param> 
         private void GetGlobalTranslation(ZeldaArc A)
         {
             if (Stage != null)
@@ -360,7 +343,6 @@ namespace WWActorEdit
 
             saveChangesToolStripMenuItem.Enabled = false;
 
-            this.Text = Application.ProductName;
             toolStripStatusLabel1.Text = "Ready";
         }
 
@@ -372,7 +354,6 @@ namespace WWActorEdit
             if (Files.Length == 1 && Files[0] == string.Empty) return;
 
             Helpers.MassEnableDisable(this.Controls, false);
-            Wait = true;
 
             if (Files.Length > 5 && (renderRoomActorsToolStripMenuItem.Checked == true || renderStageActorsToolStripMenuItem.Checked == true))
             {
@@ -405,7 +386,6 @@ namespace WWActorEdit
             toolStripStatusLabel1.Text = string.Format("Loaded {0} room files. Ready!", Files.Length);
 
             Helpers.MassEnableDisable(this.Controls, true);
-            Wait = false;
         }
 
         private void openStageRARCToolStripMenuItem_Click(object sender, EventArgs e)
@@ -497,6 +477,7 @@ namespace WWActorEdit
 
             MessageBox.Show(
                 Application.ProductName + " - Written 2012 by xdaniel - Build " + BuildDate.ToString(CultureInfo.InvariantCulture) + Environment.NewLine +
+                "Improvements by LordNed, Abahbob, Pho, and Sage of Mirrors" + Environment.NewLine + 
                 Environment.NewLine +
                 "RARC, Yaz0 and J3Dx/BMD documentation by thakis" + Environment.NewLine +
                 "DZB and DZx documentation by Sage of Mirrors, Twili, fkualol, xdaniel, et al." + Environment.NewLine +

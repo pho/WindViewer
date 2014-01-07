@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.glControl1 = new OpenTK.GLControl();
+            this.glControl = new OpenTK.GLControl();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,16 +62,24 @@
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // glControl1
+            // glControl
             // 
-            this.glControl1.BackColor = System.Drawing.Color.Black;
-            this.glControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.glControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.glControl1.Location = new System.Drawing.Point(213, 24);
-            this.glControl1.Name = "glControl1";
-            this.glControl1.Size = new System.Drawing.Size(770, 511);
-            this.glControl1.TabIndex = 0;
-            this.glControl1.VSync = true;
+            this.glControl.BackColor = System.Drawing.Color.Black;
+            this.glControl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.glControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.glControl.Location = new System.Drawing.Point(213, 24);
+            this.glControl.Name = "glControl";
+            this.glControl.Size = new System.Drawing.Size(770, 437);
+            this.glControl.TabIndex = 0;
+            this.glControl.VSync = true;
+            this.glControl.Load += new System.EventHandler(this.glControl_Load);
+            this.glControl.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl_Paint);
+            this.glControl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glControl_KeyDown);
+            this.glControl.KeyUp += new System.Windows.Forms.KeyEventHandler(this.glControl_KeyUp);
+            this.glControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.glControl_MouseDown);
+            this.glControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.glControl_MouseMove);
+            this.glControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.glControl_MouseUp);
+            this.glControl.Resize += new System.EventHandler(this.glControl_Resize);
             // 
             // treeView1
             // 
@@ -81,7 +89,7 @@
             this.treeView1.Location = new System.Drawing.Point(0, 24);
             this.treeView1.Name = "treeView1";
             this.treeView1.ShowNodeToolTips = true;
-            this.treeView1.Size = new System.Drawing.Size(210, 561);
+            this.treeView1.Size = new System.Drawing.Size(210, 480);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -115,50 +123,51 @@
             // openRoomRARCToolStripMenuItem
             // 
             this.openRoomRARCToolStripMenuItem.Name = "openRoomRARCToolStripMenuItem";
-            this.openRoomRARCToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.openRoomRARCToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.openRoomRARCToolStripMenuItem.Text = "&Open Room RARC(s)...";
             this.openRoomRARCToolStripMenuItem.Click += new System.EventHandler(this.openRoomRARCToolStripMenuItem_Click);
             // 
             // openStageRARCToolStripMenuItem
             // 
             this.openStageRARCToolStripMenuItem.Name = "openStageRARCToolStripMenuItem";
-            this.openStageRARCToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.openStageRARCToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.openStageRARCToolStripMenuItem.Text = "Open S&tage RARC...";
             this.openStageRARCToolStripMenuItem.Click += new System.EventHandler(this.openStageRARCToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(185, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(190, 6);
             // 
             // saveChangesToolStripMenuItem
             // 
+            this.saveChangesToolStripMenuItem.Enabled = false;
             this.saveChangesToolStripMenuItem.Name = "saveChangesToolStripMenuItem";
-            this.saveChangesToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.saveChangesToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.saveChangesToolStripMenuItem.Text = "&Save Changes";
             this.saveChangesToolStripMenuItem.Click += new System.EventHandler(this.saveChangesToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(185, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(190, 6);
             // 
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.resetToolStripMenuItem.Text = "&Reset";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(185, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(190, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -181,7 +190,7 @@
             this.renderModelsToolStripMenuItem.CheckOnClick = true;
             this.renderModelsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.renderModelsToolStripMenuItem.Name = "renderModelsToolStripMenuItem";
-            this.renderModelsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.renderModelsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.renderModelsToolStripMenuItem.Text = "Render &Models";
             // 
             // renderCollisionToolStripMenuItem
@@ -190,7 +199,7 @@
             this.renderCollisionToolStripMenuItem.CheckOnClick = true;
             this.renderCollisionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.renderCollisionToolStripMenuItem.Name = "renderCollisionToolStripMenuItem";
-            this.renderCollisionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.renderCollisionToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.renderCollisionToolStripMenuItem.Text = "Render C&ollision";
             // 
             // renderRoomActorsToolStripMenuItem
@@ -199,7 +208,7 @@
             this.renderRoomActorsToolStripMenuItem.CheckOnClick = true;
             this.renderRoomActorsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.renderRoomActorsToolStripMenuItem.Name = "renderRoomActorsToolStripMenuItem";
-            this.renderRoomActorsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.renderRoomActorsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.renderRoomActorsToolStripMenuItem.Text = "Render &Room Actors";
             // 
             // renderStageActorsToolStripMenuItem
@@ -208,13 +217,13 @@
             this.renderStageActorsToolStripMenuItem.CheckOnClick = true;
             this.renderStageActorsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.renderStageActorsToolStripMenuItem.Name = "renderStageActorsToolStripMenuItem";
-            this.renderStageActorsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.renderStageActorsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.renderStageActorsToolStripMenuItem.Text = "Render &Stage Actors";
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(181, 6);
             // 
             // autoCenterCameraToolStripMenuItem
             // 
@@ -222,10 +231,10 @@
             this.autoCenterCameraToolStripMenuItem.CheckOnClick = true;
             this.autoCenterCameraToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.autoCenterCameraToolStripMenuItem.Name = "autoCenterCameraToolStripMenuItem";
-            this.autoCenterCameraToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.autoCenterCameraToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.autoCenterCameraToolStripMenuItem.Text = "Auto-&Center Camera";
             this.autoCenterCameraToolStripMenuItem.ToolTipText = "Automatically center camera on selected chunk element when applicable (ex. PLYR, " +
-                "ACTR, TGDR).";
+    "ACTR, TGDR).";
             // 
             // helpToolStripMenuItem
             // 
@@ -234,25 +243,25 @@
             this.toolStripMenuItem5,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // showReadmeToolStripMenuItem
             // 
             this.showReadmeToolStripMenuItem.Name = "showReadmeToolStripMenuItem";
-            this.showReadmeToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.showReadmeToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.showReadmeToolStripMenuItem.Text = "&Show Readme";
             this.showReadmeToolStripMenuItem.Click += new System.EventHandler(this.showReadmeToolStripMenuItem_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(145, 6);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(146, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -261,7 +270,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 585);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 504);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1033, 22);
             this.statusStrip1.TabIndex = 3;
@@ -286,7 +295,7 @@
             // 
             this.splitter1.Location = new System.Drawing.Point(210, 24);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 561);
+            this.splitter1.Size = new System.Drawing.Size(3, 480);
             this.splitter1.TabIndex = 4;
             this.splitter1.TabStop = false;
             // 
@@ -296,7 +305,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(983, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(50, 561);
+            this.panel1.Size = new System.Drawing.Size(50, 480);
             this.panel1.TabIndex = 5;
             this.panel1.Visible = false;
             // 
@@ -304,18 +313,18 @@
             // 
             this.panel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(213, 535);
+            this.panel2.Location = new System.Drawing.Point(213, 461);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(770, 50);
+            this.panel2.Size = new System.Drawing.Size(770, 43);
             this.panel2.TabIndex = 6;
             this.panel2.Visible = false;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1033, 607);
-            this.Controls.Add(this.glControl1);
+            this.ClientSize = new System.Drawing.Size(1033, 526);
+            this.Controls.Add(this.glControl);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.splitter1);
@@ -325,9 +334,9 @@
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(800, 515);
+            this.MinimumSize = new System.Drawing.Size(800, 451);
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Text = "Wind Viewer";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -339,7 +348,7 @@
 
         #endregion
 
-        private OpenTK.GLControl glControl1;
+        private OpenTK.GLControl glControl;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.StatusStrip statusStrip1;
