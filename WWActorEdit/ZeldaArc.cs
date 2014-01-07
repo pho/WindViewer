@@ -44,7 +44,7 @@ namespace WWActorEdit
             DZBs = new List<DZB>();
             J3Dxs = new List<J3Dx>();
 
-            TreeNode NewNode = Helpers.CreateTreeNode(Archive.Filename, null);
+            TreeNode NewNode = Helpers.CreateTreeNode(Archive.Filename, this);
             PopulateFileList(NewNode, Archive.Root, IgnoreModels);
             //TV.Nodes[TV.Nodes.Count - 1].Expand();
             //TV.SelectedNode = TV.Nodes[TV.Nodes.Count - 1];

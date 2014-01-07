@@ -28,6 +28,36 @@ namespace WWActorEdit.Kazari.DZx
             Load();
         }
 
+        public void AddChunk(String chunkName)
+        {
+            
+            byte[] Data = FileEntry.GetFileData();
+
+            byte[] newChunk = new byte[0x0C];
+
+            for (int i = 0; i < 0xC; i++)
+                newChunk[i] = (i < chunkName.Length ? (byte)chunkName[i] : (byte)0);
+
+            for (int i = 0; i < Helpers.Read32(Data, 0); i++)
+            {
+                Helpers.Overwrite32(ref Data, 4 + i * 0x0C + 8, Helpers.Read32(Data, 4 + i * 0x0C + 8) + 0x0C);
+            }
+
+            Data = Helpers.AddToArray(Data, newChunk, (int)(Helpers.Read32(Data, 0) * 0x0C + 4));
+            Helpers.Overwrite32(ref Data, 0, Helpers.Read32(Data, 0) + 1);
+
+            FileEntry.SetFileData(Data);
+            foreach (DZx.FileChunk C in Chunks)
+            {
+                
+                foreach (IDZxChunkElement CE in C.Data)
+                {
+                    CE.Offset += 0x0C;
+                    CE.StoreChanges();
+                }
+            }
+        }
+
         public void Load()
         {
             int Offset = 0;
@@ -35,7 +65,7 @@ namespace WWActorEdit.Kazari.DZx
             uint ChunkCount = Helpers.Read32(FileEntry.GetFileData(), Offset);
             if (ChunkCount == 0) return;
 
-            TreeNode NewNode = Helpers.CreateTreeNode(FileEntry.FileName, null, string.Format("Size: {0:X6}\n{1} chunks", FileEntry.DataSize, ChunkCount));
+            TreeNode NewNode = Helpers.CreateTreeNode(FileEntry.FileName, this, string.Format("Size: {0:X6}\n{1} chunks", FileEntry.DataSize, ChunkCount));
 
             _Chunks = new List<FileChunk>();
 
@@ -62,6 +92,23 @@ namespace WWActorEdit.Kazari.DZx
                 foreach (IDZxChunkElement C in ((FileChunk)Obj).Data)
                     if (GL.IsList(C.GLID) == true) GL.DeleteLists(C.GLID, 1);
             }
+        }
+
+        public Control EditControl { get; set; }
+
+        public void ShowControl(Panel Parent)
+        {
+            Parent.FindForm().SuspendLayout();
+
+            EditControl = new DZxControl(this);
+            EditControl.Parent = Parent;
+
+            Parent.ClientSize = EditControl.Size;
+            EditControl.Dock = DockStyle.Fill;
+
+            Parent.Visible = true;
+
+            Parent.FindForm().ResumeLayout();
         }
 
         public class FileChunk

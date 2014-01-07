@@ -16,6 +16,15 @@ namespace WWActorEdit.Kazari
 {
     public static class Helpers
     {
+        public static byte[] AddToArray(byte[] data, byte[] array, int offset)
+        {
+            List<byte> lst = data.OfType<byte>().ToList();
+            List<byte> insert = array.OfType<byte>().ToList();
+            lst.InsertRange(offset, insert);
+            return lst.ToArray();
+
+        }
+
         public static void Swap(ref byte V1, ref byte V2)
         {
             byte Tmp = V1; V1 = V2; V2 = Tmp;

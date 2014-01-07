@@ -28,6 +28,7 @@ namespace WWActorEdit
         ZeldaArc Stage;
 
         IDZxChunkElement SelectedDZRChunkElement;
+        DZx SelectedDZx;
 
         bool GLReady = false;
         bool Wait = false;
@@ -447,13 +448,24 @@ namespace WWActorEdit
                     SelectedDZRChunkElement.EditControl.Dispose();
             }
 
+            if (SelectedDZx != null)
+            {
+                if (SelectedDZx.EditControl != null)
+                    SelectedDZx.EditControl.Dispose();
+            }
+
             Panel TargetPanel = (Selected is IDZxChunkElement && (IDZxChunkElement)Selected is Generic) ? panel2 : panel1;
             Panel OtherPanel = (Selected is IDZxChunkElement && (IDZxChunkElement)Selected is Generic) ? panel1 : panel2;
             OtherPanel.Visible = false;
 
             TargetPanel.SuspendLayout();
 
-            if (Selected is IDZxChunkElement)
+            if (Selected is DZx)
+            {
+                SelectedDZx = (DZx)Selected;
+                SelectedDZx.ShowControl(TargetPanel);
+            }
+            else if (Selected is IDZxChunkElement)
             {
                 SelectedDZRChunkElement = (IDZxChunkElement)Selected;
 
