@@ -271,7 +271,7 @@ namespace WWActorEdit
         /// can be loaded in any order in WindViewer, so my guess is that they're just set every frame instead of
         /// when a Stage/Room is loaded. Weird.
         /// </summary>
-        /// <param name="A"></param>
+        /// <param name="A"></param> 
         private void GetGlobalTranslation(ZeldaArc A)
         {
             if (Stage != null)
