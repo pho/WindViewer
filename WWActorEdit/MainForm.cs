@@ -37,11 +37,8 @@ namespace WWActorEdit
 
         public MainForm()
         {
+            //Initialize the WinForm
             InitializeComponent();
-
-            UnloadAllRARCs();
-
-            saveChangesToolStripMenuItem.Enabled = false;
          }
 
         void Application_Idle(object sender, EventArgs e)

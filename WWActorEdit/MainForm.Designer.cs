@@ -141,6 +141,7 @@
             // 
             // saveChangesToolStripMenuItem
             // 
+            this.saveChangesToolStripMenuItem.Enabled = false;
             this.saveChangesToolStripMenuItem.Name = "saveChangesToolStripMenuItem";
             this.saveChangesToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.saveChangesToolStripMenuItem.Text = "&Save Changes";
