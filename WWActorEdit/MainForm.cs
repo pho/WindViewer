@@ -235,16 +235,22 @@ namespace WWActorEdit
             //If it starts with "Room" then it's (probably) a Windwaker Archive.
             if (fileName.Substring(0, 4).ToLower() == "room")
             {
-                string trimmedNumbers = fileName.Substring(4, fileName.Length - 8);
+                //Use Regex here to grab what is between "Room" and ".arc", since it goes up to "Room23.arc"
+                string[] numbers = Regex.Split(fileName, @"\D+");
+                string trimmedNumbers = String.Join("", numbers);
+                trimmedNumbers = trimmedNumbers.Trim();
+
                 roomNumber = int.Parse(trimmedNumbers);
             }
             //If it starts with R ("Rxx_00, xx being Room Number"), it's Twlight Princess
             else if (fileName.Substring(0, 1).ToLower() == "r")
             {
                 //I *think* these follow the Rxx_00 pattern, where xx is the room number. _00 can change, xx might be 1 or 3, who knows!
-                string trimmedNumbers = fileName.Substring(1, 2); //We're going to try and just grab the XX pattern. If the program asserts here, then this logic needs to be improved!
-
-                string output = fileName.Substring(1, (fileName.Length - 1) - fileName.IndexOf("_"));
+                
+                //We're going to use RegEx here to make sure we only grab what is between R and _00 which could be multipl.e
+                string[] numbers = Regex.Split(fileName.Substring(0, fileName.Length - 6), @"\D+");
+                string trimmedNumbers = String.Join("", numbers);
+                trimmedNumbers = trimmedNumbers.Trim();
 
                 roomNumber = int.Parse(trimmedNumbers);
             }
