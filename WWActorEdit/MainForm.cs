@@ -31,9 +31,6 @@ namespace WWActorEdit
 
         bool _glContextLoaded;
 
-        bool[] KeysDown = new bool[256];
-        Helpers.MouseStruct Mouse = new Helpers.MouseStruct();
-
         public MainForm()
         {
             //Initialize the WinForm
@@ -73,56 +70,69 @@ namespace WWActorEdit
 
         void glControl_KeyDown(object sender, KeyEventArgs e)
         {
-            KeysDown[e.KeyValue] = true;
+            Helpers.Camera.KeysDown[e.KeyValue] = true;
         }
 
         void glControl_KeyUp(object sender, KeyEventArgs e)
         {
-            KeysDown[e.KeyValue] = false;
+            Helpers.Camera.KeysDown[e.KeyValue] = false;
         }
 
         void glControl_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-                Mouse.LDown = true;
-            else if (e.Button == MouseButtons.Right)
-                Mouse.RDown = true;
-            else if (e.Button == MouseButtons.Middle)
-                Mouse.MDown = true;
-
-            Mouse.Center = new Vector2(e.X, e.Y);
-
-            if (Mouse.LDown == true)
+            switch (e.Button)
             {
-                if (Mouse.Center != Mouse.Move)
-                    Helpers.Camera.MouseMove(Mouse.Move);
+                case MouseButtons.Left:
+                    Helpers.Camera.Mouse.LDown = true;
+                    break;
+                case MouseButtons.Right:
+                    Helpers.Camera.Mouse.RDown = true;
+                    break;
+                case MouseButtons.Middle:
+                    Helpers.Camera.Mouse.MDown = true;
+                    break;
+            }
+
+            Helpers.Camera.Mouse.Center = new Vector2(e.X, e.Y);
+
+            if (Helpers.Camera.Mouse.LDown == true)
+            {
+                if (Helpers.Camera.Mouse.Center != Helpers.Camera.Mouse.Move)
+                    Helpers.Camera.MouseMove(Helpers.Camera.Mouse.Move);
                 else
-                    Helpers.Camera.MouseCenter(Mouse.Move);
+                    Helpers.Camera.MouseCenter(Helpers.Camera.Mouse.Move);
             }
         }
 
         void glControl_MouseMove(object sender, MouseEventArgs e)
         {
-            Mouse.Move = new Vector2(e.X, e.Y);
+            Helpers.Camera.Mouse.Move = new Vector2(e.X, e.Y);
 
-            if (Mouse.LDown == true)
+            if (Helpers.Camera.Mouse.LDown == true)
             {
-                if (Mouse.Center != Mouse.Move)
-                    Helpers.Camera.MouseMove(Mouse.Move);
+                if (Helpers.Camera.Mouse.Center != Helpers.Camera.Mouse.Move)
+                    Helpers.Camera.MouseMove(Helpers.Camera.Mouse.Move);
                 else
-                    Helpers.Camera.MouseCenter(Mouse.Move);
+                    Helpers.Camera.MouseCenter(Helpers.Camera.Mouse.Move);
             }
         }
 
         void glControl_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-                Mouse.LDown = false;
-            else if (e.Button == MouseButtons.Right)
-                Mouse.RDown = false;
-            else if (e.Button == MouseButtons.Middle)
-                Mouse.MDown = false;
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                    Helpers.Camera.Mouse.LDown = false;
+                    break;
+                case MouseButtons.Right:
+                    Helpers.Camera.Mouse.RDown = false;
+                    break;
+                case MouseButtons.Middle:
+                    Helpers.Camera.Mouse.MDown = false;
+                    break;
+            }
         }
+
         #endregion
 
         /// <summary>
@@ -201,7 +211,7 @@ namespace WWActorEdit
                 if (Stage.DZSs != null) foreach (DZx D in Stage.DZSs) D.Render();
             }
 
-            Helpers.Camera.KeyUpdate(KeysDown);
+            Helpers.Camera.KeyUpdate();
             glControl.SwapBuffers();
         }
 

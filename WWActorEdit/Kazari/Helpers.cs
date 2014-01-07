@@ -416,6 +416,9 @@ namespace WWActorEdit.Kazari
             public static Vector3 Pos, Rot;
             public static Vector2 MouseCoord;
 
+            public static bool[] KeysDown = new bool[256];
+            public static MouseStruct Mouse = new MouseStruct();
+
             #endregion
 
             #region Camera Functions
@@ -478,7 +481,7 @@ namespace WWActorEdit.Kazari
                 MouseCoord = NewMouseCoord;
             }
 
-            public static void KeyUpdate(bool[] KeysDown)
+            public static void KeyUpdate()
             {
                 float RotYRad = (Rot.Y / 180.0f * (float)Math.PI);
                 float RotXRad = (Rot.X / 180.0f * (float)Math.PI);
