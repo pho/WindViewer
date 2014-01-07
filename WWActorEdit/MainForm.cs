@@ -243,6 +243,9 @@ namespace WWActorEdit
             {
                 //I *think* these follow the Rxx_00 pattern, where xx is the room number. _00 can change, xx might be 1 or 3, who knows!
                 string trimmedNumbers = fileName.Substring(1, 2); //We're going to try and just grab the XX pattern. If the program asserts here, then this logic needs to be improved!
+
+                string output = fileName.Substring(1, (fileName.Length - 1) - fileName.IndexOf("_"));
+
                 roomNumber = int.Parse(trimmedNumbers);
             }
             else
@@ -468,6 +471,7 @@ namespace WWActorEdit
 
             MessageBox.Show(
                 Application.ProductName + " - Written 2012 by xdaniel - Build " + BuildDate.ToString(CultureInfo.InvariantCulture) + Environment.NewLine +
+                "Improvements by LordNed, Abahbob, Pho, and Sage of Mirrors" + Environment.NewLine + 
                 Environment.NewLine +
                 "RARC, Yaz0 and J3Dx/BMD documentation by thakis" + Environment.NewLine +
                 "DZB and DZx documentation by Sage of Mirrors, Twili, fkualol, xdaniel, et al." + Environment.NewLine +
