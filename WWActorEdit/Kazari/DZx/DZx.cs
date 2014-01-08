@@ -35,8 +35,16 @@ namespace WWActorEdit.Kazari.DZx
 
             byte[] newChunk = new byte[0x0C];
 
+            int NumberChars = hex.Length;
+            byte[] address = new byte[NumberChars / 2];
+            for (int i = 0; i < NumberChars; i += 2)
+                address[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            
             for (int i = 0; i < 0xC; i++)
-                newChunk[i] = (i < chunkName.Length ? (byte)chunkName[i] : (byte)0);
+            {
+                if(i < 4) newChunk[i] = (i < chunkName.Length ? (byte)chunkName[i] : (byte)0);
+                if(i >= 8) newChunk[i] = address[i-8];
+            }
 
             for (int i = 0; i < Helpers.Read32(Data, 0); i++)
             {
