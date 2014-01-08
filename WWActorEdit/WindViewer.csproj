@@ -64,6 +64,12 @@
     <Compile Include="Forms\InvalidRoomNumber.Designer.cs">
       <DependentUpon>InvalidRoomNumber.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LightingEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\LightingEditor.Designer.cs">
+      <DependentUpon>LightingEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ZeldaArc.cs" />
     <Compile Include="Forms\ExceptionForm.cs">
       <SubType>Form</SubType>
@@ -126,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\InvalidRoomNumber.resx">
       <DependentUpon>InvalidRoomNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LightingEditor.resx">
+      <DependentUpon>LightingEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Kazari\DZx\ACTRControl.resx">
       <DependentUpon>ACTRControl.cs</DependentUpon>
