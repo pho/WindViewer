@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -427,6 +428,7 @@ namespace WWActorEdit
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             object Selected = ((TreeView)sender).SelectedNode.Tag;
+            Console.WriteLine("TreeView clicked, Selected: " + Selected);
 
             if (SelectedDZRChunkElement != null)
             {
