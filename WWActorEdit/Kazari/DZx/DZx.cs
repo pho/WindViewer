@@ -35,6 +35,8 @@ namespace WWActorEdit.Kazari.DZx
 
             byte[] newChunk = new byte[0x0C];
 
+            String hex = (Data.Length + 0x0C).ToString("X8");
+
             int NumberChars = hex.Length;
             byte[] address = new byte[NumberChars / 2];
             for (int i = 0; i < NumberChars; i += 2)
