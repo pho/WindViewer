@@ -21,8 +21,3 @@ Original author: xDaniel [ http://magicstone.de/dzd/ ]
   * http://www.amnoid.de/gc/ ( RARC and Yaz0 specs) 
 
 
-# Chat: #
-  
-  We've a github-integrated chatroom thanks to the beta service of Gitter.im: 
-  
-  Join us at https://gitter.im/pho/WindViewer
