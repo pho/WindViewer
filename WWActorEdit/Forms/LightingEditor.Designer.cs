@@ -243,7 +243,6 @@
             this.numericUpDown9.Name = "numericUpDown9";
             this.numericUpDown9.Size = new System.Drawing.Size(44, 20);
             this.numericUpDown9.TabIndex = 0;
-            this.numericUpDown9.ValueChanged += new System.EventHandler(this.numericUpDown9_ValueChanged);
             // 
             // numericUpDown10
             // 
@@ -251,7 +250,6 @@
             this.numericUpDown10.Name = "numericUpDown10";
             this.numericUpDown10.Size = new System.Drawing.Size(44, 20);
             this.numericUpDown10.TabIndex = 1;
-            this.numericUpDown10.ValueChanged += new System.EventHandler(this.numericUpDown10_ValueChanged);
             // 
             // numericUpDown11
             // 
@@ -259,7 +257,6 @@
             this.numericUpDown11.Name = "numericUpDown11";
             this.numericUpDown11.Size = new System.Drawing.Size(44, 20);
             this.numericUpDown11.TabIndex = 2;
-            this.numericUpDown11.ValueChanged += new System.EventHandler(this.numericUpDown11_ValueChanged);
             // 
             // numericUpDown12
             // 
@@ -267,7 +264,6 @@
             this.numericUpDown12.Name = "numericUpDown12";
             this.numericUpDown12.Size = new System.Drawing.Size(44, 20);
             this.numericUpDown12.TabIndex = 3;
-            this.numericUpDown12.ValueChanged += new System.EventHandler(this.numericUpDown12_ValueChanged);
             // 
             // numericUpDown13
             // 
@@ -275,7 +271,6 @@
             this.numericUpDown13.Name = "numericUpDown13";
             this.numericUpDown13.Size = new System.Drawing.Size(44, 20);
             this.numericUpDown13.TabIndex = 4;
-            this.numericUpDown13.ValueChanged += new System.EventHandler(this.numericUpDown13_ValueChanged);
             // 
             // numericUpDown14
             // 
@@ -283,7 +278,6 @@
             this.numericUpDown14.Name = "numericUpDown14";
             this.numericUpDown14.Size = new System.Drawing.Size(44, 20);
             this.numericUpDown14.TabIndex = 5;
-            this.numericUpDown14.ValueChanged += new System.EventHandler(this.numericUpDown14_ValueChanged);
             // 
             // comboBox1
             // 
@@ -301,7 +295,6 @@
             this.button1.TabIndex = 7;
             this.button1.Text = "Add";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -446,7 +439,6 @@
             this.label16.Size = new System.Drawing.Size(73, 13);
             this.label16.TabIndex = 18;
             this.label16.Text = "Shadow Color";
-            this.label16.Click += new System.EventHandler(this.label16_Click);
             // 
             // label17
             // 
@@ -483,7 +475,6 @@
             this.label20.Size = new System.Drawing.Size(76, 13);
             this.label20.TabIndex = 25;
             this.label20.Text = "Doorway Color";
-            this.label20.Click += new System.EventHandler(this.label20_Click);
             // 
             // numericUpDown21
             // 
