@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using WWActorEdit.Kazari;
 
 namespace WWActorEdit
@@ -205,12 +206,18 @@ namespace WWActorEdit
 
         public VirtChunk(byte[] data, ref int srcOffset)
         {
+            //First 16 bytes are 80 00 00 00 (repeated 4 times). Unknown why.
+            srcOffset += 16;
+
             HorizonCloudColor = new ByteColorAlpha(data, ref srcOffset);
             CenterCloudColor = new ByteColorAlpha(data, ref srcOffset);
 
             CenterSkyColor = new ByteColor(data, ref srcOffset);
             HorizonColor = new ByteColor(data, ref srcOffset);
             SkyFadeTo = new ByteColor(data, ref srcOffset);
+
+            //More apparently unused bytes.
+            srcOffset += 3;
         }
     }
 
@@ -246,6 +253,19 @@ namespace WWActorEdit
             A = Helpers.Read8(data, srcOffset + 3);
 
             srcOffset += 4;
+        }
+
+        public ByteColorAlpha()
+        {
+            R = G = B = A = 0;
+        }
+
+        public ByteColorAlpha(ByteColor color)
+        {
+            R = color.R;
+            G = color.G;
+            B = color.B;
+            A = 0;
         }
     }
     #endregion

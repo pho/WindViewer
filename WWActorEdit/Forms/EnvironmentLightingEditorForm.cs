@@ -25,6 +25,7 @@ namespace WWActorEdit.Forms
         private EnvRChunk _envrChunk;
         private ColoChunk _coloChunk;
         private PaleChunk _paleChunk;
+        private VirtChunk _virtChunk;
 
 
         public EnvironmentLightingEditorForm(MainForm parent)
@@ -66,6 +67,11 @@ namespace WWActorEdit.Forms
                         PaleDropdown.SelectedIndex = 0;
                         break;
                     case "Virt":
+                        //Populate the Dropdown
+                        for (int i = 0; i < chunk.ElementCount; i++)
+                            VirtDropdown.Items.Add("Virt [" + i + "]");
+                        VirtDropdown.SelectedIndex = 0;
+                        break;
                     default:
                         break;
                 }
@@ -108,6 +114,19 @@ namespace WWActorEdit.Forms
                 if (header.Tag == "Pale")
                 {
                     _paleChunk = (PaleChunk)header.ChunkElements[PaleDropdown.SelectedIndex];
+                    break;
+                }
+            }
+        }
+
+        private void LoadVirtElement()
+        {
+            //Need to find the ColoChunk again, and get the right index.
+            foreach (var header in _data.ChunkHeaders)
+            {
+                if (header.Tag == "Virt")
+                {
+                    _virtChunk = (VirtChunk)header.ChunkElements[VirtDropdown.SelectedIndex];
                     break;
                 }
             }
@@ -168,20 +187,17 @@ namespace WWActorEdit.Forms
             PaleOceanFadeIntoColor.BackColor = SetPaleColorBoxColor(_paleChunk.OceanFadeInto);
         }
 
-        private Color SetPaleColorBoxColor(ByteColor color)
+        private void UpdateVirtGroupBox()
         {
-            Color newColor = Color.FromArgb((int) color.R, (int) color.G, (int) color.B);
-            return newColor;
-        }
+            VirtHorizonCloudColor.BackColor = SetPaleColorBoxColor(_virtChunk.HorizonCloudColor);
+            VirtUnknown1Index.Value = _virtChunk.HorizonCloudColor.A;
 
-        private ByteColor SetPaleMemoryColor(PictureBox source)
-        {
-            ByteColor c = new ByteColor();
-            c.R = source.BackColor.R;
-            c.G = source.BackColor.G;
-            c.B = source.BackColor.B;
+            VirtCenterCloudColor.BackColor = SetPaleColorBoxColor(_virtChunk.CenterCloudColor);
+            VirtUnknown2Index.Value = _virtChunk.CenterCloudColor.A;
 
-            return c;
+            VirtCenterSkyColor.BackColor = SetPaleColorBoxColor(_virtChunk.CenterSkyColor);
+            VirtHorizonColor.BackColor = SetPaleColorBoxColor(_virtChunk.HorizonColor);
+            VirtSkyFadeToColor.BackColor = SetPaleColorBoxColor(_virtChunk.SkyFadeTo);
         }
 
         /// <summary>
@@ -236,6 +252,12 @@ namespace WWActorEdit.Forms
             UpdatePaleGroupBox();
         }
 
+        private void VirtDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadVirtElement();
+            UpdateVirtGroupBox();
+        }
+
         /// <summary>
         /// Called when ANY of the color fields in Pale are clicked on.
         /// </summary>
@@ -262,5 +284,51 @@ namespace WWActorEdit.Forms
 
             _paleChunk.OceanFadeInto = SetPaleMemoryColor(PaleOceanFadeIntoColor);
         }
+
+        private void VirtColorField_Click(object sender, EventArgs e)
+        {
+            PictureBox outputBox = (PictureBox)sender;
+
+            colorPickerDialog.Color = outputBox.BackColor;
+            colorPickerDialog.ShowDialog(this);
+
+            outputBox.BackColor = colorPickerDialog.Color;
+
+            //Hey... same hack as above, because I didn't think of any better way to do it in the last 20 minutes...
+            ByteColorAlpha HorizonCloud = new ByteColorAlpha(SetPaleMemoryColor(VirtHorizonCloudColor));
+            HorizonCloud.A = (byte)VirtUnknown1Index.Value;
+            _virtChunk.HorizonCloudColor = HorizonCloud;
+
+            ByteColorAlpha CenterCloud = new ByteColorAlpha(SetPaleMemoryColor(VirtCenterCloudColor));
+            CenterCloud.A = (byte)VirtUnknown2Index.Value;
+            _virtChunk.CenterCloudColor = CenterCloud;
+
+            _virtChunk.CenterSkyColor = SetPaleMemoryColor(VirtCenterSkyColor);
+            _virtChunk.HorizonColor = SetPaleMemoryColor(VirtHorizonColor);
+            _virtChunk.SkyFadeTo = SetPaleMemoryColor(VirtSkyFadeToColor);
+        }
+
+        private Color SetPaleColorBoxColor(ByteColor color)
+        {
+            Color newColor = Color.FromArgb(color.R, color.G, color.B);
+            return newColor;
+        }
+
+        private Color SetPaleColorBoxColor(ByteColorAlpha color)
+        {
+            Color newColor = Color.FromArgb(255, color.R, color.G, color.B);
+            return newColor;
+        }
+
+        private ByteColor SetPaleMemoryColor(PictureBox source)
+        {
+            ByteColor c = new ByteColor();
+            c.R = source.BackColor.R;
+            c.G = source.BackColor.G;
+            c.B = source.BackColor.B;
+
+            return c;
+        }
+        
     }
 }
