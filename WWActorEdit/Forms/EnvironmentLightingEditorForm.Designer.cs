@@ -97,6 +97,10 @@
             this.EnvRRainingIndex = new System.Windows.Forms.NumericUpDown();
             this.EnvRClearSkiesIndex = new System.Windows.Forms.NumericUpDown();
             this.dzsFileDropdown = new System.Windows.Forms.ComboBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.PaleFogLabel = new System.Windows.Forms.Label();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.VirtGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
@@ -126,6 +130,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.EnvRSnowingIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRRainingIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRClearSkiesIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.SuspendLayout();
             // 
             // VirtGroupBox
@@ -147,9 +152,9 @@
             this.VirtGroupBox.Controls.Add(this.VirtCenterSkyLabel);
             this.VirtGroupBox.Controls.Add(this.VirtSkyFadeToLabel);
             this.VirtGroupBox.Controls.Add(this.VirtHorizonColorLabel);
-            this.VirtGroupBox.Location = new System.Drawing.Point(12, 254);
+            this.VirtGroupBox.Location = new System.Drawing.Point(227, 254);
             this.VirtGroupBox.Name = "VirtGroupBox";
-            this.VirtGroupBox.Size = new System.Drawing.Size(201, 263);
+            this.VirtGroupBox.Size = new System.Drawing.Size(202, 263);
             this.VirtGroupBox.TabIndex = 8;
             this.VirtGroupBox.TabStop = false;
             this.VirtGroupBox.Text = "Virt";
@@ -306,6 +311,8 @@
             // 
             // PaleGroupBox
             // 
+            this.PaleGroupBox.Controls.Add(this.pictureBox7);
+            this.PaleGroupBox.Controls.Add(this.PaleFogLabel);
             this.PaleGroupBox.Controls.Add(this.pictureBox8);
             this.PaleGroupBox.Controls.Add(this.pictureBox6);
             this.PaleGroupBox.Controls.Add(this.pictureBox5);
@@ -325,9 +332,9 @@
             this.PaleGroupBox.Controls.Add(this.PaleDropdownAdd);
             this.PaleGroupBox.Controls.Add(this.pictureBox1);
             this.PaleGroupBox.Controls.Add(this.PaleDropdown);
-            this.PaleGroupBox.Location = new System.Drawing.Point(227, 254);
+            this.PaleGroupBox.Location = new System.Drawing.Point(12, 227);
             this.PaleGroupBox.Name = "PaleGroupBox";
-            this.PaleGroupBox.Size = new System.Drawing.Size(202, 263);
+            this.PaleGroupBox.Size = new System.Drawing.Size(202, 290);
             this.PaleGroupBox.TabIndex = 7;
             this.PaleGroupBox.TabStop = false;
             this.PaleGroupBox.Text = "Pale";
@@ -335,7 +342,7 @@
             // pictureBox8
             // 
             this.pictureBox8.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox8.Location = new System.Drawing.Point(148, 230);
+            this.pictureBox8.Location = new System.Drawing.Point(148, 256);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(44, 20);
             this.pictureBox8.TabIndex = 37;
@@ -389,7 +396,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(7, 232);
+            this.label22.Location = new System.Drawing.Point(7, 258);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(114, 13);
             this.label22.TabIndex = 29;
@@ -398,7 +405,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(7, 206);
+            this.label21.Location = new System.Drawing.Point(7, 232);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(51, 13);
             this.label21.TabIndex = 28;
@@ -406,7 +413,7 @@
             // 
             // numericUpDown21
             // 
-            this.numericUpDown21.Location = new System.Drawing.Point(148, 204);
+            this.numericUpDown21.Location = new System.Drawing.Point(148, 230);
             this.numericUpDown21.Name = "numericUpDown21";
             this.numericUpDown21.Size = new System.Drawing.Size(44, 20);
             this.numericUpDown21.TabIndex = 27;
@@ -667,7 +674,7 @@
             this.EnvRGroupBox.Controls.Add(this.EnvRClearSkiesIndex);
             this.EnvRGroupBox.Location = new System.Drawing.Point(12, 42);
             this.EnvRGroupBox.Name = "EnvRGroupBox";
-            this.EnvRGroupBox.Size = new System.Drawing.Size(201, 206);
+            this.EnvRGroupBox.Size = new System.Drawing.Size(201, 180);
             this.EnvRGroupBox.TabIndex = 5;
             this.EnvRGroupBox.TabStop = false;
             this.EnvRGroupBox.Text = "EnvR";
@@ -797,11 +804,51 @@
             this.dzsFileDropdown.Size = new System.Drawing.Size(417, 21);
             this.dzsFileDropdown.TabIndex = 9;
             // 
+            // pictureBox7
+            // 
+            this.pictureBox7.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pictureBox7.Location = new System.Drawing.Point(148, 204);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(44, 20);
+            this.pictureBox7.TabIndex = 39;
+            this.pictureBox7.TabStop = false;
+            // 
+            // PaleFogLabel
+            // 
+            this.PaleFogLabel.AutoSize = true;
+            this.PaleFogLabel.Location = new System.Drawing.Point(6, 206);
+            this.PaleFogLabel.Name = "PaleFogLabel";
+            this.PaleFogLabel.Size = new System.Drawing.Size(52, 13);
+            this.PaleFogLabel.TabIndex = 38;
+            this.PaleFogLabel.Text = "Fog Color";
+            // 
+            // saveButton
+            // 
+            this.saveButton.Enabled = false;
+            this.saveButton.Location = new System.Drawing.Point(295, 523);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(64, 23);
+            this.saveButton.TabIndex = 10;
+            this.saveButton.Text = "Save";
+            this.saveButton.UseVisualStyleBackColor = true;
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Enabled = false;
+            this.cancelButton.Location = new System.Drawing.Point(365, 523);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(64, 23);
+            this.cancelButton.TabIndex = 11;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            // 
             // EnvironmentLightingEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(441, 547);
+            this.ClientSize = new System.Drawing.Size(441, 553);
+            this.Controls.Add(this.cancelButton);
+            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.dzsFileDropdown);
             this.Controls.Add(this.VirtGroupBox);
             this.Controls.Add(this.PaleGroupBox);
@@ -843,6 +890,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.EnvRSnowingIndex)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRRainingIndex)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRClearSkiesIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -918,5 +966,9 @@
         private System.Windows.Forms.NumericUpDown EnvRRainingIndex;
         private System.Windows.Forms.NumericUpDown EnvRClearSkiesIndex;
         private System.Windows.Forms.ComboBox dzsFileDropdown;
+        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.Label PaleFogLabel;
+        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button cancelButton;
     }
 }
