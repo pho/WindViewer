@@ -208,6 +208,13 @@ namespace WWActorEdit.Forms
         private void EnvironmentLightingEditorForm_Load(object sender, EventArgs e)
         {
             ZeldaArc stage = _mainForm.Stage;
+            if (stage == null)
+            {
+                Console.WriteLine("Load a Stage first!");
+                return;
+            }
+
+
             //For each loaded Archive we're going to want to grab the DZS file out of them.
             foreach (DZx dzS in stage.DZSs)
             {

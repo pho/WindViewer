@@ -184,11 +184,11 @@ namespace WWActorEdit
             srcOffset += 3;
             FogColor = new ByteColor(data, ref srcOffset);
 
-            VirtIndex = Helpers.Read8(data, srcOffset); srcOffset += 1;
+            VirtIndex = Helpers.Read8(data, srcOffset);
             srcOffset += 2; //More unused values
 
             OceanFadeInto = new ByteColor(data, ref srcOffset);
-            srcOffset += 5;
+            srcOffset += 6;
         }
     }
 

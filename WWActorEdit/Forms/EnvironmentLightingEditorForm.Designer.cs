@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.VirtGroupBox = new System.Windows.Forms.GroupBox();
             this.VirtDropdownDelete = new System.Windows.Forms.Button();
             this.label29 = new System.Windows.Forms.Label();
@@ -102,6 +103,7 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.colorPickerDialog = new System.Windows.Forms.ColorDialog();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.VirtGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VirtUnknown2Index)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VirtUnknown1Index)).BeginInit();
@@ -159,6 +161,7 @@
             this.VirtGroupBox.TabIndex = 8;
             this.VirtGroupBox.TabStop = false;
             this.VirtGroupBox.Text = "Virt";
+            this.toolTip.SetToolTip(this.VirtGroupBox, "Skybox Settings.");
             // 
             // VirtDropdownDelete
             // 
@@ -355,6 +358,7 @@
             this.PaleGroupBox.TabIndex = 7;
             this.PaleGroupBox.TabStop = false;
             this.PaleGroupBox.Text = "Pale";
+            this.toolTip.SetToolTip(this.PaleGroupBox, "The actual RGB values used.");
             // 
             // PaleFogColor
             // 
@@ -581,6 +585,7 @@
             this.ColorGroupBox.TabIndex = 6;
             this.ColorGroupBox.TabStop = false;
             this.ColorGroupBox.Text = "Color";
+            this.toolTip.SetToolTip(this.ColorGroupBox, "Indexes into the Pale array.");
             // 
             // label14
             // 
@@ -728,6 +733,7 @@
             this.EnvRGroupBox.TabIndex = 5;
             this.EnvRGroupBox.TabStop = false;
             this.EnvRGroupBox.Text = "EnvR";
+            this.toolTip.SetToolTip(this.EnvRGroupBox, "Indexes into the Color array.");
             // 
             // EnvRDropdownDelete
             // 
@@ -1007,5 +1013,6 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.ColorDialog colorPickerDialog;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
