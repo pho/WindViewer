@@ -102,6 +102,7 @@ namespace WWActorEdit.Kazari.DZx
                         /* Typically in DZS */
                         case "MULT": Data[i] = new MULT(FE, ref ReadOffset, NewNode, System.Drawing.Color.LightGray); continue;
                         case "TRES": Data[i] = new TRES(FE, ref ReadOffset, NewNode, System.Drawing.Color.SaddleBrown); continue;
+                        //case "EnvR": Data[i] = new EnvRChunk(FE, ref ReadOffset, NewNode, System.Drawing.Color.DarkSlateGray); continue;
                     }
 
                     switch (Tag.Substring(0, 3))
