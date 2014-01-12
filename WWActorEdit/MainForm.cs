@@ -15,7 +15,7 @@ using System.Globalization;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-
+using WWActorEdit.Forms;
 using WWActorEdit.Kazari;
 using WWActorEdit.Kazari.DZx;
 using WWActorEdit.Kazari.DZB;
@@ -26,9 +26,9 @@ namespace WWActorEdit
     public partial class MainForm : Form
     {
         //A list of currently loaded .arc Archives
-        List<ZeldaArc> Rooms = new List<ZeldaArc>();
+        public List<ZeldaArc> Rooms = new List<ZeldaArc>();
         //Shortcut to the 'Stage' one if it is loaded.
-        ZeldaArc Stage;
+        public ZeldaArc Stage;
 
         //idek
         IDZxChunkElement SelectedDZRChunkElement;
@@ -510,6 +510,12 @@ namespace WWActorEdit
                 "  documentation about WW's file formats, so that the source makes more sense and such" + Environment.NewLine +
                 "- Here's hoping I didn't forget anyone in the About box credits :P",
                 "Readme?", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void environmentLightingEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EnvironmentLightingEditorForm popup = new EnvironmentLightingEditorForm(this);
+            popup.Show(this);
         }
     }
 }

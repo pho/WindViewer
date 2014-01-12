@@ -64,12 +64,13 @@
     <Compile Include="Forms\InvalidRoomNumber.Designer.cs">
       <DependentUpon>InvalidRoomNumber.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\LightingEditor.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="Forms\EnvironmentLightingEditorForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\LightingEditor.Designer.cs">
-      <DependentUpon>LightingEditor.cs</DependentUpon>
+    <Compile Include="Forms\EnvironmentLightingEditorForm.Designer.cs">
+      <DependentUpon>EnvironmentLightingEditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\DZS\FileFormat.cs" />
     <Compile Include="ZeldaArc.cs" />
     <Compile Include="Forms\ExceptionForm.cs">
       <SubType>Form</SubType>
@@ -133,8 +134,8 @@
     <EmbeddedResource Include="Forms\InvalidRoomNumber.resx">
       <DependentUpon>InvalidRoomNumber.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\LightingEditor.resx">
-      <DependentUpon>LightingEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\EnvironmentLightingEditorForm.resx">
+      <DependentUpon>EnvironmentLightingEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Kazari\DZx\ACTRControl.resx">
       <DependentUpon>ACTRControl.cs</DependentUpon>
@@ -193,6 +194,7 @@
   <ItemGroup>
     <Content Include="windviewer.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
