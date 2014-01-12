@@ -16,7 +16,7 @@ namespace WWActorEdit.Kazari
 
         public string Filename;
         string FullPath;
-        byte[] Data;
+        public byte[] Data { get; private set; }
         RARCHeader Header;
         public FileNode Root;
         public bool IsCompressed;

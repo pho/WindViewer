@@ -16,11 +16,21 @@ namespace WWActorEdit.Forms
         //Set by the MainForm when it opens this Popup
         private MainForm _mainForm;
 
+        private DZSFormat _data;
+
         public EnvironmentLightingEditorForm(MainForm parent)
         {
             InitializeComponent();
 
             _mainForm = parent;
+            Console.WriteLine("WARNING: WE ONLY SUPPORT EDITING A DZS FILE, AND ONLY ONE RIGHT NOW. WATCH OUT!");
+        }
+
+
+        private void LoadDZSForStage(ZeldaArc stage)
+        {
+            int srcOffset = 0;
+            _data = new DZSFormat(stage.DZSs[0].FileEntry.GetFileData(), ref srcOffset);
         }
 
         /// <summary>
@@ -37,6 +47,7 @@ namespace WWActorEdit.Forms
                 dzsFileDropdown.Items.Add(Path.GetFileName(stage.Filename) + @"\" + dzS.FileEntry.FileName);
             }
 
+            LoadDZSForStage(stage);
             dzsFileDropdown.SelectedIndex = 0;
         }
     }
