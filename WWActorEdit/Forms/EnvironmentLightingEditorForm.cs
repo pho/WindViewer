@@ -174,6 +174,16 @@ namespace WWActorEdit.Forms
             return newColor;
         }
 
+        private ByteColor SetPaleMemoryColor(PictureBox source)
+        {
+            ByteColor c = new ByteColor();
+            c.R = source.BackColor.R;
+            c.G = source.BackColor.G;
+            c.B = source.BackColor.B;
+
+            return c;
+        }
+
         /// <summary>
         /// Called when the Form is loaded. This is a temporary solution until there's some form of Event evoked by
         /// Archives being loaded. We'll grab the loaded archives from the MainForm and populate our list of DZS files
@@ -233,7 +243,24 @@ namespace WWActorEdit.Forms
         /// <param name="e"></param>
         private void PaleColorField_Click(object sender, EventArgs e)
         {
+            PictureBox outputBox = (PictureBox) sender;
 
+            colorPickerDialog.Color = outputBox.BackColor;
+            colorPickerDialog.ShowDialog(this);
+
+            outputBox.BackColor = colorPickerDialog.Color;
+
+            //Now the fun part. We've modified the PictureBox's color, but we don't know which value that actually refers to in the Pale memor.
+            //I could try and write something using metadata and looking up the value and get all complicated... but I think I'll just re-assign 
+            //all of the Pale color boxes to the Pale memory (ie: reverse of loading it). Hacky? Yes. Lazy? Yes. Works? Yes.
+            _paleChunk.ActorAmbient = SetPaleMemoryColor(PaleActorAmbientColor);
+            _paleChunk.RoomAmbient = SetPaleMemoryColor(PaleRoomAmbientColor);
+            _paleChunk.WaveColor = SetPaleMemoryColor(PaleWaveColor);
+            _paleChunk.OceanColor = SetPaleMemoryColor(PaleOceanColor);
+            _paleChunk.DoorwayColor = SetPaleMemoryColor(PaleDoorwayColor);
+            _paleChunk.FogColor = SetPaleMemoryColor(PaleFogColor);
+
+            _paleChunk.OceanFadeInto = SetPaleMemoryColor(PaleOceanFadeIntoColor);
         }
     }
 }

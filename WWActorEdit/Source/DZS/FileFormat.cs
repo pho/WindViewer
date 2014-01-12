@@ -46,7 +46,7 @@ namespace WWActorEdit
         }
     }
 
-    public struct DZSHeader
+    public class DZSHeader
     {
         public UInt32 ChunkCount;
 
@@ -57,7 +57,7 @@ namespace WWActorEdit
         }
     }
 
-    public struct DZSChunkHeader
+    public class DZSChunkHeader
     {
         public string Tag;              //ASCI Name for Chunk
         public int ElementCount;     //How many elements of this Chunk type
@@ -89,7 +89,7 @@ namespace WWActorEdit
     /// <summary>
     /// For anything not supported yet!
     /// </summary>
-    public struct DefaultChunk : IChunkType
+    public class DefaultChunk : IChunkType
     {
         
     }
@@ -98,7 +98,7 @@ namespace WWActorEdit
     /// The EnvR (short for Environment) chunk contains indexes of different color pallets
     ///  to use in different weather situations. 
     /// </summary>
-    public struct EnvRChunk : IChunkType
+    public class EnvRChunk : IChunkType
     {
         public byte ClearColorIndexA; //Index of the Color entry to use for clear weather.
         public byte RainingColorIndexA; //There's two sets, A and B. B's usage is unknown but identical.
@@ -130,7 +130,7 @@ namespace WWActorEdit
     /// Colo (short for Color) contains indexes into the Pale section. Color specifies
     /// which color to use for the different times of day.
     /// </summary>
-    public struct ColoChunk : IChunkType
+    public class ColoChunk : IChunkType
     {
         public byte DawnIndex; //Index of the Pale entry to use for Dawn
         public byte MorningIndex;
@@ -156,7 +156,7 @@ namespace WWActorEdit
     /// The Pale (short for Palette) chunk contains the actual RGB colors for different
     /// types of lighting. 
     /// </summary>
-    public struct PaleChunk : IChunkType
+    public class PaleChunk : IChunkType
     {
         public ByteColor ActorAmbient;
         public ByteColor ShadowColor;
@@ -195,7 +195,7 @@ namespace WWActorEdit
     /// The Virt (short for uh.. Virtual? I dunno) chunk contains color data for the skybox. Indexed by a Pale
     /// chunk.
     /// </summary>
-    public struct VirtChunk : IChunkType
+    public class VirtChunk : IChunkType
     {
         public ByteColorAlpha HorizonCloudColor; //The Horizon
         public ByteColorAlpha CenterCloudColor;  //Directly above you
@@ -215,9 +215,14 @@ namespace WWActorEdit
     }
 
 
-    public struct ByteColor
+    public class ByteColor
     {
         public byte R, G, B;
+
+        public ByteColor()
+        {
+            R = B = G = 0;
+        }
 
         public ByteColor(byte[] data, ref int srcOffset)
         {
@@ -229,7 +234,7 @@ namespace WWActorEdit
         }
     }
 
-    public struct ByteColorAlpha
+    public class ByteColorAlpha
     {
         public byte R, G, B, A;
 
