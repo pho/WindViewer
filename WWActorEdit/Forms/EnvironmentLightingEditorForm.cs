@@ -177,6 +177,7 @@ namespace WWActorEdit.Forms
         {
             PaleActorAmbientColor.BackColor = SetPaleColorBoxColor(_paleChunk.ActorAmbient);
             PaleShadowColor.BackColor = SetPaleColorBoxColor(_paleChunk.ShadowColor);
+            PaleRoomFillColor.BackColor = SetPaleColorBoxColor(_paleChunk.RoomFillColor);
             PaleRoomAmbientColor.BackColor = SetPaleColorBoxColor(_paleChunk.RoomAmbient);
             PaleWaveColor.BackColor = SetPaleColorBoxColor(_paleChunk.WaveColor);
             PaleOceanColor.BackColor = SetPaleColorBoxColor(_paleChunk.OceanColor);
@@ -283,6 +284,7 @@ namespace WWActorEdit.Forms
             //I could try and write something using metadata and looking up the value and get all complicated... but I think I'll just re-assign 
             //all of the Pale color boxes to the Pale memory (ie: reverse of loading it). Hacky? Yes. Lazy? Yes. Works? Yes.
             _paleChunk.ActorAmbient = SetPaleMemoryColor(PaleActorAmbientColor);
+            _paleChunk.RoomFillColor = SetPaleMemoryColor(PaleRoomFillColor);
             _paleChunk.RoomAmbient = SetPaleMemoryColor(PaleRoomAmbientColor);
             _paleChunk.WaveColor = SetPaleMemoryColor(PaleWaveColor);
             _paleChunk.OceanColor = SetPaleMemoryColor(PaleOceanColor);
@@ -335,6 +337,60 @@ namespace WWActorEdit.Forms
             c.B = source.BackColor.B;
 
             return c;
+        }
+
+        /// <summary>
+        /// Called when any of the Indexes change in the EnvRGroup.
+        /// </summary>
+        private void EnvRGroupBoxIndex_ValueChanged(object sender, EventArgs e)
+        {
+            //Going to just copy all of their values back into the _envRChunk,
+            //because I haven't come up with a better way yet!
+            //If they have Type A selected we populate the same UI elements but with different data...
+            if (EnvRTypeA.Checked)
+            {
+                _envrChunk.ClearColorIndexA = (byte) EnvRClearSkiesIndex.Value;
+                _envrChunk.RainingColorIndexA = (byte) EnvRRainingIndex.Value;
+                _envrChunk.SnowingColorIndexA = (byte) EnvRSnowingIndex.Value;
+                _envrChunk.UnknownColorIndexA = (byte) EnvRUnknownIndex.Value;
+            }
+            else
+            {
+                _envrChunk.ClearColorIndexB = (byte)EnvRClearSkiesIndex.Value;
+                _envrChunk.RainingColorIndexB = (byte)EnvRRainingIndex.Value;
+                _envrChunk.SnowingColorIndexB = (byte)EnvRSnowingIndex.Value;
+                _envrChunk.UnknownColorIndexB = (byte)EnvRUnknownIndex.Value;
+            }
+        }
+
+        /// <summary>
+        /// Called when the Virt Index changes inside the Pale group.
+        /// </summary>
+        private void PaleVirtIndex_ValueChanged(object sender, EventArgs e)
+        {
+            _paleChunk.VirtIndex = (byte) PaleVirtIndex.Value;
+        }
+
+        /// <summary>
+        /// Called when either of the Unknown groups in Virt change.
+        /// </summary>
+        private void VirtUnknownIndex_ValueChanged(object sender, EventArgs e)
+        {
+            _virtChunk.HorizonCloudColor.A = (byte) VirtUnknown1Index.Value;
+            _virtChunk.CenterCloudColor.A = (byte)VirtUnknown2Index.Value;
+        }
+
+        /// <summary>
+        /// Called when anything in the Color GroupBox change.
+        /// </summary>
+        private void ColoGroupBoxIndex_ValueChanged(object sender, EventArgs e)
+        {
+            _coloChunk.DawnIndex = (byte) ColoDawnIndex.Value;
+            _coloChunk.MorningIndex = (byte) ColoMorningIndex.Value;
+            _coloChunk.NoonIndex = (byte) ColoNoonIndex.Value;
+            _coloChunk.AfternoonIndex = (byte) ColoAfternoonIndex.Value;
+            _coloChunk.DuskIndex = (byte) ColoDuskIndex.Value;
+            _coloChunk.NightIndex = (byte) ColoNightIndex.Value;
         }
         
     }

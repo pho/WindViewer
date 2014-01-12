@@ -161,6 +161,7 @@ namespace WWActorEdit
     {
         public ByteColor ActorAmbient;
         public ByteColor ShadowColor;
+        public ByteColor RoomFillColor;
         public ByteColor RoomAmbient;
         public ByteColor WaveColor;
         public ByteColor OceanColor;
@@ -175,7 +176,7 @@ namespace WWActorEdit
         {
             ActorAmbient = new ByteColor(data, ref srcOffset);
             ShadowColor = new ByteColor(data, ref srcOffset);
-            srcOffset += 3; //Unused Values apparently
+            RoomFillColor = new ByteColor(data, ref srcOffset); 
             RoomAmbient = new ByteColor(data, ref srcOffset);
             WaveColor = new ByteColor(data, ref srcOffset);
             OceanColor = new ByteColor(data, ref srcOffset);
