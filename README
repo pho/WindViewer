@@ -1,6 +1,10 @@
-Wind Viewer is a level viewer and editor for Zelda: Wind Waker and (to an extend) Twilight Princess.
+Wind Viewer is a level viewer and editor for Zelda: Wind Waker and (to an extent) Twilight Princess.
 
-Original author: xDaniel [ http://magicstone.de/dzd/ ]
+Original author: [xDaniel](http://magicstone.de/dzd/)
+
+#Compiling the Project#
+WindViewer is written using Visual Studios 2012. This means the project solutions are **incompatible with previous versions**. To solve this issue, you can get the Virtual Studios 2012 Service Pack 1 to enable compatibility with Visual Studios 2010. Other versions will require modifying the Solution file to open. 
+
 
 # Useful Threads: #
 
@@ -10,6 +14,8 @@ Original author: xDaniel [ http://magicstone.de/dzd/ ]
 
 # Documentation: #
 
+  * Our Wiki: https://github.com/pho/WindViewer/wiki
+  
   * http://wiki.spinout182.com/w/Zelda_GCN:_DZx_files
     
   * http://www.behance.net/gallery/dzb-File-Format-Reverse-Engineering/6493035
@@ -21,8 +27,9 @@ Original author: xDaniel [ http://magicstone.de/dzd/ ]
   * http://www.amnoid.de/gc/ ( RARC and Yaz0 specs) 
 
 
+
 # Chat: #
   
-  We've a github-integrated chatroom thanks to the beta service of Gitter.im: 
+  We've been checking out HipChat. It has persistent chat log history so you can read all of our backlog chatter if you want! 
   
-  Join us at https://gitter.im/pho/WindViewer
+  Join us at: https://www.hipchat.com/invite/83557/7410c40afa136e58d4e80ce9a0c7f1d9
