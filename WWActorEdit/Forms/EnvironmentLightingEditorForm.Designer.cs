@@ -28,25 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.button5 = new System.Windows.Forms.Button();
+            this.VirtGroupBox = new System.Windows.Forms.GroupBox();
+            this.VirtDropdownDelete = new System.Windows.Forms.Button();
             this.label29 = new System.Windows.Forms.Label();
-            this.button6 = new System.Windows.Forms.Button();
+            this.VirtDropdownAdd = new System.Windows.Forms.Button();
             this.numericUpDown16 = new System.Windows.Forms.NumericUpDown();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.VirtDropdown = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.numericUpDown15 = new System.Windows.Forms.NumericUpDown();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.pictureBox12 = new System.Windows.Forms.PictureBox();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.pictureBox10 = new System.Windows.Forms.PictureBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.pictureBox11 = new System.Windows.Forms.PictureBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.VirtFadeToColor = new System.Windows.Forms.PictureBox();
+            this.VirtHorizonCloudColor = new System.Windows.Forms.PictureBox();
+            this.VirtHorizonColor = new System.Windows.Forms.PictureBox();
+            this.VirtHorizonCloudLabel = new System.Windows.Forms.Label();
+            this.VirtCenterSkyColor = new System.Windows.Forms.PictureBox();
+            this.VirtCenterCloudLabel = new System.Windows.Forms.Label();
+            this.VirtCenterCloudColor = new System.Windows.Forms.PictureBox();
+            this.VirtCenterSkyLabel = new System.Windows.Forms.Label();
+            this.VirtSkyFadeToLabel = new System.Windows.Forms.Label();
+            this.VirtHorizonColorLabel = new System.Windows.Forms.Label();
+            this.PaleGroupBox = new System.Windows.Forms.GroupBox();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -61,51 +61,51 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
+            this.PaleDropdownDelete = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
+            this.PaleDropdownAdd = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.PaleDropdown = new System.Windows.Forms.ComboBox();
+            this.ColorGroupBox = new System.Windows.Forms.GroupBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.ColorDropdownDelete = new System.Windows.Forms.Button();
+            this.ColorDropdownAdd = new System.Windows.Forms.Button();
+            this.ColorDropdown = new System.Windows.Forms.ComboBox();
             this.numericUpDown14 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown12 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown11 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown10 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button7 = new System.Windows.Forms.Button();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.button8 = new System.Windows.Forms.Button();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.EnvRGroupBox = new System.Windows.Forms.GroupBox();
+            this.EnvRDropdownDelete = new System.Windows.Forms.Button();
+            this.EnvRTypeB = new System.Windows.Forms.RadioButton();
+            this.EnvRDropdownAdd = new System.Windows.Forms.Button();
+            this.EnvRTypeA = new System.Windows.Forms.RadioButton();
+            this.EnvRDropdown = new System.Windows.Forms.ComboBox();
+            this.EnvRUnknownIndex = new System.Windows.Forms.NumericUpDown();
+            this.EnvRUnknownLabel = new System.Windows.Forms.Label();
+            this.EnvRSnowingIndex = new System.Windows.Forms.NumericUpDown();
+            this.EnvRSnowingLabel = new System.Windows.Forms.Label();
+            this.EnvRClearSkiesLabel = new System.Windows.Forms.Label();
+            this.EnvRRainingLabel = new System.Windows.Forms.Label();
+            this.EnvRRainingIndex = new System.Windows.Forms.NumericUpDown();
+            this.EnvRClearSkiesIndex = new System.Windows.Forms.NumericUpDown();
             this.dzsFileDropdown = new System.Windows.Forms.ComboBox();
-            this.groupBox5.SuspendLayout();
+            this.VirtGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
-            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VirtFadeToColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VirtHorizonCloudColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VirtHorizonColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VirtCenterSkyColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VirtCenterCloudColor)).BeginInit();
+            this.PaleGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
@@ -114,54 +114,55 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox3.SuspendLayout();
+            this.ColorGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.EnvRGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvRUnknownIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvRSnowingIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvRRainingIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvRClearSkiesIndex)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox5
+            // VirtGroupBox
             // 
-            this.groupBox5.Controls.Add(this.button5);
-            this.groupBox5.Controls.Add(this.label29);
-            this.groupBox5.Controls.Add(this.button6);
-            this.groupBox5.Controls.Add(this.numericUpDown16);
-            this.groupBox5.Controls.Add(this.comboBox3);
-            this.groupBox5.Controls.Add(this.label28);
-            this.groupBox5.Controls.Add(this.numericUpDown15);
-            this.groupBox5.Controls.Add(this.pictureBox7);
-            this.groupBox5.Controls.Add(this.pictureBox12);
-            this.groupBox5.Controls.Add(this.pictureBox9);
-            this.groupBox5.Controls.Add(this.label27);
-            this.groupBox5.Controls.Add(this.pictureBox10);
-            this.groupBox5.Controls.Add(this.label26);
-            this.groupBox5.Controls.Add(this.pictureBox11);
-            this.groupBox5.Controls.Add(this.label25);
-            this.groupBox5.Controls.Add(this.label23);
-            this.groupBox5.Controls.Add(this.label24);
-            this.groupBox5.Location = new System.Drawing.Point(12, 254);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(201, 263);
-            this.groupBox5.TabIndex = 8;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Virt";
+            this.VirtGroupBox.Controls.Add(this.VirtDropdownDelete);
+            this.VirtGroupBox.Controls.Add(this.label29);
+            this.VirtGroupBox.Controls.Add(this.VirtDropdownAdd);
+            this.VirtGroupBox.Controls.Add(this.numericUpDown16);
+            this.VirtGroupBox.Controls.Add(this.VirtDropdown);
+            this.VirtGroupBox.Controls.Add(this.label28);
+            this.VirtGroupBox.Controls.Add(this.numericUpDown15);
+            this.VirtGroupBox.Controls.Add(this.VirtFadeToColor);
+            this.VirtGroupBox.Controls.Add(this.VirtHorizonCloudColor);
+            this.VirtGroupBox.Controls.Add(this.VirtHorizonColor);
+            this.VirtGroupBox.Controls.Add(this.VirtHorizonCloudLabel);
+            this.VirtGroupBox.Controls.Add(this.VirtCenterSkyColor);
+            this.VirtGroupBox.Controls.Add(this.VirtCenterCloudLabel);
+            this.VirtGroupBox.Controls.Add(this.VirtCenterCloudColor);
+            this.VirtGroupBox.Controls.Add(this.VirtCenterSkyLabel);
+            this.VirtGroupBox.Controls.Add(this.VirtSkyFadeToLabel);
+            this.VirtGroupBox.Controls.Add(this.VirtHorizonColorLabel);
+            this.VirtGroupBox.Location = new System.Drawing.Point(12, 254);
+            this.VirtGroupBox.Name = "VirtGroupBox";
+            this.VirtGroupBox.Size = new System.Drawing.Size(201, 263);
+            this.VirtGroupBox.TabIndex = 8;
+            this.VirtGroupBox.TabStop = false;
+            this.VirtGroupBox.Text = "Virt";
             // 
-            // button5
+            // VirtDropdownDelete
             // 
-            this.button5.Location = new System.Drawing.Point(142, 18);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(50, 23);
-            this.button5.TabIndex = 40;
-            this.button5.Text = "Delete";
-            this.button5.UseVisualStyleBackColor = true;
+            this.VirtDropdownDelete.Enabled = false;
+            this.VirtDropdownDelete.Location = new System.Drawing.Point(142, 18);
+            this.VirtDropdownDelete.Name = "VirtDropdownDelete";
+            this.VirtDropdownDelete.Size = new System.Drawing.Size(50, 23);
+            this.VirtDropdownDelete.TabIndex = 40;
+            this.VirtDropdownDelete.Text = "Delete";
+            this.VirtDropdownDelete.UseVisualStyleBackColor = true;
             // 
             // label29
             // 
@@ -172,14 +173,15 @@
             this.label29.TabIndex = 50;
             this.label29.Text = "Unknown2";
             // 
-            // button6
+            // VirtDropdownAdd
             // 
-            this.button6.Location = new System.Drawing.Point(99, 18);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(37, 23);
-            this.button6.TabIndex = 39;
-            this.button6.Text = "Add";
-            this.button6.UseVisualStyleBackColor = true;
+            this.VirtDropdownAdd.Enabled = false;
+            this.VirtDropdownAdd.Location = new System.Drawing.Point(99, 18);
+            this.VirtDropdownAdd.Name = "VirtDropdownAdd";
+            this.VirtDropdownAdd.Size = new System.Drawing.Size(37, 23);
+            this.VirtDropdownAdd.TabIndex = 39;
+            this.VirtDropdownAdd.Text = "Add";
+            this.VirtDropdownAdd.UseVisualStyleBackColor = true;
             // 
             // numericUpDown16
             // 
@@ -188,13 +190,13 @@
             this.numericUpDown16.Size = new System.Drawing.Size(44, 20);
             this.numericUpDown16.TabIndex = 49;
             // 
-            // comboBox3
+            // VirtDropdown
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(6, 20);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(85, 21);
-            this.comboBox3.TabIndex = 38;
+            this.VirtDropdown.FormattingEnabled = true;
+            this.VirtDropdown.Location = new System.Drawing.Point(6, 20);
+            this.VirtDropdown.Name = "VirtDropdown";
+            this.VirtDropdown.Size = new System.Drawing.Size(85, 21);
+            this.VirtDropdown.TabIndex = 38;
             // 
             // label28
             // 
@@ -212,123 +214,123 @@
             this.numericUpDown15.Size = new System.Drawing.Size(44, 20);
             this.numericUpDown15.TabIndex = 38;
             // 
-            // pictureBox7
+            // VirtFadeToColor
             // 
-            this.pictureBox7.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox7.Location = new System.Drawing.Point(148, 209);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(44, 20);
-            this.pictureBox7.TabIndex = 47;
-            this.pictureBox7.TabStop = false;
+            this.VirtFadeToColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.VirtFadeToColor.Location = new System.Drawing.Point(148, 209);
+            this.VirtFadeToColor.Name = "VirtFadeToColor";
+            this.VirtFadeToColor.Size = new System.Drawing.Size(44, 20);
+            this.VirtFadeToColor.TabIndex = 47;
+            this.VirtFadeToColor.TabStop = false;
             // 
-            // pictureBox12
+            // VirtHorizonCloudColor
             // 
-            this.pictureBox12.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox12.Location = new System.Drawing.Point(148, 53);
-            this.pictureBox12.Name = "pictureBox12";
-            this.pictureBox12.Size = new System.Drawing.Size(44, 20);
-            this.pictureBox12.TabIndex = 38;
-            this.pictureBox12.TabStop = false;
+            this.VirtHorizonCloudColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.VirtHorizonCloudColor.Location = new System.Drawing.Point(148, 53);
+            this.VirtHorizonCloudColor.Name = "VirtHorizonCloudColor";
+            this.VirtHorizonCloudColor.Size = new System.Drawing.Size(44, 20);
+            this.VirtHorizonCloudColor.TabIndex = 38;
+            this.VirtHorizonCloudColor.TabStop = false;
             // 
-            // pictureBox9
+            // VirtHorizonColor
             // 
-            this.pictureBox9.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox9.Location = new System.Drawing.Point(148, 183);
-            this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(44, 20);
-            this.pictureBox9.TabIndex = 46;
-            this.pictureBox9.TabStop = false;
+            this.VirtHorizonColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.VirtHorizonColor.Location = new System.Drawing.Point(148, 183);
+            this.VirtHorizonColor.Name = "VirtHorizonColor";
+            this.VirtHorizonColor.Size = new System.Drawing.Size(44, 20);
+            this.VirtHorizonColor.TabIndex = 46;
+            this.VirtHorizonColor.TabStop = false;
             // 
-            // label27
+            // VirtHorizonCloudLabel
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(6, 55);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(100, 13);
-            this.label27.TabIndex = 39;
-            this.label27.Text = "Horizon Cloud Color";
+            this.VirtHorizonCloudLabel.AutoSize = true;
+            this.VirtHorizonCloudLabel.Location = new System.Drawing.Point(6, 55);
+            this.VirtHorizonCloudLabel.Name = "VirtHorizonCloudLabel";
+            this.VirtHorizonCloudLabel.Size = new System.Drawing.Size(100, 13);
+            this.VirtHorizonCloudLabel.TabIndex = 39;
+            this.VirtHorizonCloudLabel.Text = "Horizon Cloud Color";
             // 
-            // pictureBox10
+            // VirtCenterSkyColor
             // 
-            this.pictureBox10.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox10.Location = new System.Drawing.Point(148, 157);
-            this.pictureBox10.Name = "pictureBox10";
-            this.pictureBox10.Size = new System.Drawing.Size(44, 20);
-            this.pictureBox10.TabIndex = 45;
-            this.pictureBox10.TabStop = false;
+            this.VirtCenterSkyColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.VirtCenterSkyColor.Location = new System.Drawing.Point(148, 157);
+            this.VirtCenterSkyColor.Name = "VirtCenterSkyColor";
+            this.VirtCenterSkyColor.Size = new System.Drawing.Size(44, 20);
+            this.VirtCenterSkyColor.TabIndex = 45;
+            this.VirtCenterSkyColor.TabStop = false;
             // 
-            // label26
+            // VirtCenterCloudLabel
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(6, 107);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(95, 13);
-            this.label26.TabIndex = 40;
-            this.label26.Text = "Center Cloud Color";
+            this.VirtCenterCloudLabel.AutoSize = true;
+            this.VirtCenterCloudLabel.Location = new System.Drawing.Point(6, 107);
+            this.VirtCenterCloudLabel.Name = "VirtCenterCloudLabel";
+            this.VirtCenterCloudLabel.Size = new System.Drawing.Size(95, 13);
+            this.VirtCenterCloudLabel.TabIndex = 40;
+            this.VirtCenterCloudLabel.Text = "Center Cloud Color";
             // 
-            // pictureBox11
+            // VirtCenterCloudColor
             // 
-            this.pictureBox11.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox11.Location = new System.Drawing.Point(148, 105);
-            this.pictureBox11.Name = "pictureBox11";
-            this.pictureBox11.Size = new System.Drawing.Size(44, 20);
-            this.pictureBox11.TabIndex = 44;
-            this.pictureBox11.TabStop = false;
+            this.VirtCenterCloudColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.VirtCenterCloudColor.Location = new System.Drawing.Point(148, 105);
+            this.VirtCenterCloudColor.Name = "VirtCenterCloudColor";
+            this.VirtCenterCloudColor.Size = new System.Drawing.Size(44, 20);
+            this.VirtCenterCloudColor.TabIndex = 44;
+            this.VirtCenterCloudColor.TabStop = false;
             // 
-            // label25
+            // VirtCenterSkyLabel
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(6, 159);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(86, 13);
-            this.label25.TabIndex = 41;
-            this.label25.Text = "Center Sky Color";
+            this.VirtCenterSkyLabel.AutoSize = true;
+            this.VirtCenterSkyLabel.Location = new System.Drawing.Point(6, 159);
+            this.VirtCenterSkyLabel.Name = "VirtCenterSkyLabel";
+            this.VirtCenterSkyLabel.Size = new System.Drawing.Size(86, 13);
+            this.VirtCenterSkyLabel.TabIndex = 41;
+            this.VirtCenterSkyLabel.Text = "Center Sky Color";
             // 
-            // label23
+            // VirtSkyFadeToLabel
             // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(6, 211);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(95, 13);
-            this.label23.TabIndex = 43;
-            this.label23.Text = "Sky Fade To Color";
+            this.VirtSkyFadeToLabel.AutoSize = true;
+            this.VirtSkyFadeToLabel.Location = new System.Drawing.Point(6, 211);
+            this.VirtSkyFadeToLabel.Name = "VirtSkyFadeToLabel";
+            this.VirtSkyFadeToLabel.Size = new System.Drawing.Size(95, 13);
+            this.VirtSkyFadeToLabel.TabIndex = 43;
+            this.VirtSkyFadeToLabel.Text = "Sky Fade To Color";
             // 
-            // label24
+            // VirtHorizonColorLabel
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(6, 185);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(70, 13);
-            this.label24.TabIndex = 42;
-            this.label24.Text = "Horizon Color";
+            this.VirtHorizonColorLabel.AutoSize = true;
+            this.VirtHorizonColorLabel.Location = new System.Drawing.Point(6, 185);
+            this.VirtHorizonColorLabel.Name = "VirtHorizonColorLabel";
+            this.VirtHorizonColorLabel.Size = new System.Drawing.Size(70, 13);
+            this.VirtHorizonColorLabel.TabIndex = 42;
+            this.VirtHorizonColorLabel.Text = "Horizon Color";
             // 
-            // groupBox4
+            // PaleGroupBox
             // 
-            this.groupBox4.Controls.Add(this.pictureBox8);
-            this.groupBox4.Controls.Add(this.pictureBox6);
-            this.groupBox4.Controls.Add(this.pictureBox5);
-            this.groupBox4.Controls.Add(this.pictureBox4);
-            this.groupBox4.Controls.Add(this.pictureBox3);
-            this.groupBox4.Controls.Add(this.pictureBox2);
-            this.groupBox4.Controls.Add(this.label22);
-            this.groupBox4.Controls.Add(this.label21);
-            this.groupBox4.Controls.Add(this.numericUpDown21);
-            this.groupBox4.Controls.Add(this.label20);
-            this.groupBox4.Controls.Add(this.label19);
-            this.groupBox4.Controls.Add(this.label18);
-            this.groupBox4.Controls.Add(this.label17);
-            this.groupBox4.Controls.Add(this.label16);
-            this.groupBox4.Controls.Add(this.button3);
-            this.groupBox4.Controls.Add(this.label15);
-            this.groupBox4.Controls.Add(this.button4);
-            this.groupBox4.Controls.Add(this.pictureBox1);
-            this.groupBox4.Controls.Add(this.comboBox2);
-            this.groupBox4.Location = new System.Drawing.Point(227, 254);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(202, 263);
-            this.groupBox4.TabIndex = 7;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Pale";
+            this.PaleGroupBox.Controls.Add(this.pictureBox8);
+            this.PaleGroupBox.Controls.Add(this.pictureBox6);
+            this.PaleGroupBox.Controls.Add(this.pictureBox5);
+            this.PaleGroupBox.Controls.Add(this.pictureBox4);
+            this.PaleGroupBox.Controls.Add(this.pictureBox3);
+            this.PaleGroupBox.Controls.Add(this.pictureBox2);
+            this.PaleGroupBox.Controls.Add(this.label22);
+            this.PaleGroupBox.Controls.Add(this.label21);
+            this.PaleGroupBox.Controls.Add(this.numericUpDown21);
+            this.PaleGroupBox.Controls.Add(this.label20);
+            this.PaleGroupBox.Controls.Add(this.label19);
+            this.PaleGroupBox.Controls.Add(this.label18);
+            this.PaleGroupBox.Controls.Add(this.label17);
+            this.PaleGroupBox.Controls.Add(this.label16);
+            this.PaleGroupBox.Controls.Add(this.PaleDropdownDelete);
+            this.PaleGroupBox.Controls.Add(this.label15);
+            this.PaleGroupBox.Controls.Add(this.PaleDropdownAdd);
+            this.PaleGroupBox.Controls.Add(this.pictureBox1);
+            this.PaleGroupBox.Controls.Add(this.PaleDropdown);
+            this.PaleGroupBox.Location = new System.Drawing.Point(227, 254);
+            this.PaleGroupBox.Name = "PaleGroupBox";
+            this.PaleGroupBox.Size = new System.Drawing.Size(202, 263);
+            this.PaleGroupBox.TabIndex = 7;
+            this.PaleGroupBox.TabStop = false;
+            this.PaleGroupBox.Text = "Pale";
             // 
             // pictureBox8
             // 
@@ -454,14 +456,15 @@
             this.label16.TabIndex = 18;
             this.label16.Text = "Shadow Color";
             // 
-            // button3
+            // PaleDropdownDelete
             // 
-            this.button3.Location = new System.Drawing.Point(142, 17);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(50, 23);
-            this.button3.TabIndex = 17;
-            this.button3.Text = "Delete";
-            this.button3.UseVisualStyleBackColor = true;
+            this.PaleDropdownDelete.Enabled = false;
+            this.PaleDropdownDelete.Location = new System.Drawing.Point(142, 17);
+            this.PaleDropdownDelete.Name = "PaleDropdownDelete";
+            this.PaleDropdownDelete.Size = new System.Drawing.Size(50, 23);
+            this.PaleDropdownDelete.TabIndex = 17;
+            this.PaleDropdownDelete.Text = "Delete";
+            this.PaleDropdownDelete.UseVisualStyleBackColor = true;
             // 
             // label15
             // 
@@ -472,14 +475,15 @@
             this.label15.TabIndex = 15;
             this.label15.Text = "Actor Ambient Color";
             // 
-            // button4
+            // PaleDropdownAdd
             // 
-            this.button4.Location = new System.Drawing.Point(99, 17);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(37, 23);
-            this.button4.TabIndex = 16;
-            this.button4.Text = "Add";
-            this.button4.UseVisualStyleBackColor = true;
+            this.PaleDropdownAdd.Enabled = false;
+            this.PaleDropdownAdd.Location = new System.Drawing.Point(99, 17);
+            this.PaleDropdownAdd.Name = "PaleDropdownAdd";
+            this.PaleDropdownAdd.Size = new System.Drawing.Size(37, 23);
+            this.PaleDropdownAdd.TabIndex = 16;
+            this.PaleDropdownAdd.Text = "Add";
+            this.PaleDropdownAdd.UseVisualStyleBackColor = true;
             // 
             // pictureBox1
             // 
@@ -490,37 +494,37 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // comboBox2
+            // PaleDropdown
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(6, 20);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(85, 21);
-            this.comboBox2.TabIndex = 15;
+            this.PaleDropdown.FormattingEnabled = true;
+            this.PaleDropdown.Location = new System.Drawing.Point(6, 20);
+            this.PaleDropdown.Name = "PaleDropdown";
+            this.PaleDropdown.Size = new System.Drawing.Size(85, 21);
+            this.PaleDropdown.TabIndex = 15;
             // 
-            // groupBox3
+            // ColorGroupBox
             // 
-            this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Controls.Add(this.label13);
-            this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Controls.Add(this.button2);
-            this.groupBox3.Controls.Add(this.button1);
-            this.groupBox3.Controls.Add(this.comboBox1);
-            this.groupBox3.Controls.Add(this.numericUpDown14);
-            this.groupBox3.Controls.Add(this.numericUpDown13);
-            this.groupBox3.Controls.Add(this.numericUpDown12);
-            this.groupBox3.Controls.Add(this.numericUpDown11);
-            this.groupBox3.Controls.Add(this.numericUpDown10);
-            this.groupBox3.Controls.Add(this.numericUpDown9);
-            this.groupBox3.Location = new System.Drawing.Point(227, 42);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(202, 206);
-            this.groupBox3.TabIndex = 6;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Color";
+            this.ColorGroupBox.Controls.Add(this.label14);
+            this.ColorGroupBox.Controls.Add(this.label13);
+            this.ColorGroupBox.Controls.Add(this.label12);
+            this.ColorGroupBox.Controls.Add(this.label11);
+            this.ColorGroupBox.Controls.Add(this.label10);
+            this.ColorGroupBox.Controls.Add(this.label9);
+            this.ColorGroupBox.Controls.Add(this.ColorDropdownDelete);
+            this.ColorGroupBox.Controls.Add(this.ColorDropdownAdd);
+            this.ColorGroupBox.Controls.Add(this.ColorDropdown);
+            this.ColorGroupBox.Controls.Add(this.numericUpDown14);
+            this.ColorGroupBox.Controls.Add(this.numericUpDown13);
+            this.ColorGroupBox.Controls.Add(this.numericUpDown12);
+            this.ColorGroupBox.Controls.Add(this.numericUpDown11);
+            this.ColorGroupBox.Controls.Add(this.numericUpDown10);
+            this.ColorGroupBox.Controls.Add(this.numericUpDown9);
+            this.ColorGroupBox.Location = new System.Drawing.Point(227, 42);
+            this.ColorGroupBox.Name = "ColorGroupBox";
+            this.ColorGroupBox.Size = new System.Drawing.Size(202, 206);
+            this.ColorGroupBox.TabIndex = 6;
+            this.ColorGroupBox.TabStop = false;
+            this.ColorGroupBox.Text = "Color";
             // 
             // label14
             // 
@@ -576,31 +580,33 @@
             this.label9.TabIndex = 9;
             this.label9.Text = "Dawn Index";
             // 
-            // button2
+            // ColorDropdownDelete
             // 
-            this.button2.Location = new System.Drawing.Point(142, 17);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(50, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Delete";
-            this.button2.UseVisualStyleBackColor = true;
+            this.ColorDropdownDelete.Enabled = false;
+            this.ColorDropdownDelete.Location = new System.Drawing.Point(142, 17);
+            this.ColorDropdownDelete.Name = "ColorDropdownDelete";
+            this.ColorDropdownDelete.Size = new System.Drawing.Size(50, 23);
+            this.ColorDropdownDelete.TabIndex = 8;
+            this.ColorDropdownDelete.Text = "Delete";
+            this.ColorDropdownDelete.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // ColorDropdownAdd
             // 
-            this.button1.Location = new System.Drawing.Point(99, 17);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(37, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = true;
+            this.ColorDropdownAdd.Enabled = false;
+            this.ColorDropdownAdd.Location = new System.Drawing.Point(99, 17);
+            this.ColorDropdownAdd.Name = "ColorDropdownAdd";
+            this.ColorDropdownAdd.Size = new System.Drawing.Size(37, 23);
+            this.ColorDropdownAdd.TabIndex = 7;
+            this.ColorDropdownAdd.Text = "Add";
+            this.ColorDropdownAdd.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // ColorDropdown
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(6, 19);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(85, 21);
-            this.comboBox1.TabIndex = 6;
+            this.ColorDropdown.FormattingEnabled = true;
+            this.ColorDropdown.Location = new System.Drawing.Point(6, 19);
+            this.ColorDropdown.Name = "ColorDropdown";
+            this.ColorDropdown.Size = new System.Drawing.Size(85, 21);
+            this.ColorDropdown.TabIndex = 6;
             // 
             // numericUpDown14
             // 
@@ -644,139 +650,144 @@
             this.numericUpDown9.Size = new System.Drawing.Size(44, 20);
             this.numericUpDown9.TabIndex = 0;
             // 
-            // groupBox1
+            // EnvRGroupBox
             // 
-            this.groupBox1.Controls.Add(this.button7);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.button8);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Controls.Add(this.comboBox4);
-            this.groupBox1.Controls.Add(this.numericUpDown4);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.numericUpDown3);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.numericUpDown2);
-            this.groupBox1.Controls.Add(this.numericUpDown1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 42);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(201, 206);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "EnvR";
+            this.EnvRGroupBox.Controls.Add(this.EnvRDropdownDelete);
+            this.EnvRGroupBox.Controls.Add(this.EnvRTypeB);
+            this.EnvRGroupBox.Controls.Add(this.EnvRDropdownAdd);
+            this.EnvRGroupBox.Controls.Add(this.EnvRTypeA);
+            this.EnvRGroupBox.Controls.Add(this.EnvRDropdown);
+            this.EnvRGroupBox.Controls.Add(this.EnvRUnknownIndex);
+            this.EnvRGroupBox.Controls.Add(this.EnvRUnknownLabel);
+            this.EnvRGroupBox.Controls.Add(this.EnvRSnowingIndex);
+            this.EnvRGroupBox.Controls.Add(this.EnvRSnowingLabel);
+            this.EnvRGroupBox.Controls.Add(this.EnvRClearSkiesLabel);
+            this.EnvRGroupBox.Controls.Add(this.EnvRRainingLabel);
+            this.EnvRGroupBox.Controls.Add(this.EnvRRainingIndex);
+            this.EnvRGroupBox.Controls.Add(this.EnvRClearSkiesIndex);
+            this.EnvRGroupBox.Location = new System.Drawing.Point(12, 42);
+            this.EnvRGroupBox.Name = "EnvRGroupBox";
+            this.EnvRGroupBox.Size = new System.Drawing.Size(201, 206);
+            this.EnvRGroupBox.TabIndex = 5;
+            this.EnvRGroupBox.TabStop = false;
+            this.EnvRGroupBox.Text = "EnvR";
             // 
-            // button7
+            // EnvRDropdownDelete
             // 
-            this.button7.Location = new System.Drawing.Point(145, 15);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(50, 23);
-            this.button7.TabIndex = 17;
-            this.button7.Text = "Delete";
-            this.button7.UseVisualStyleBackColor = true;
+            this.EnvRDropdownDelete.Enabled = false;
+            this.EnvRDropdownDelete.Location = new System.Drawing.Point(145, 15);
+            this.EnvRDropdownDelete.Name = "EnvRDropdownDelete";
+            this.EnvRDropdownDelete.Size = new System.Drawing.Size(50, 23);
+            this.EnvRDropdownDelete.TabIndex = 17;
+            this.EnvRDropdownDelete.Text = "Delete";
+            this.EnvRDropdownDelete.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // EnvRTypeB
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(102, 44);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(87, 17);
-            this.radioButton2.TabIndex = 9;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Unknown (B)";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.EnvRTypeB.AutoSize = true;
+            this.EnvRTypeB.Location = new System.Drawing.Point(102, 44);
+            this.EnvRTypeB.Name = "EnvRTypeB";
+            this.EnvRTypeB.Size = new System.Drawing.Size(87, 17);
+            this.EnvRTypeB.TabIndex = 9;
+            this.EnvRTypeB.Text = "Unknown (B)";
+            this.EnvRTypeB.UseVisualStyleBackColor = true;
+            this.EnvRTypeB.CheckedChanged += new System.EventHandler(this.EnvRType_CheckedChanged);
             // 
-            // button8
+            // EnvRDropdownAdd
             // 
-            this.button8.Location = new System.Drawing.Point(102, 15);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(37, 23);
-            this.button8.TabIndex = 16;
-            this.button8.Text = "Add";
-            this.button8.UseVisualStyleBackColor = true;
+            this.EnvRDropdownAdd.Enabled = false;
+            this.EnvRDropdownAdd.Location = new System.Drawing.Point(102, 15);
+            this.EnvRDropdownAdd.Name = "EnvRDropdownAdd";
+            this.EnvRDropdownAdd.Size = new System.Drawing.Size(37, 23);
+            this.EnvRDropdownAdd.TabIndex = 16;
+            this.EnvRDropdownAdd.Text = "Add";
+            this.EnvRDropdownAdd.UseVisualStyleBackColor = true;
             // 
-            // radioButton1
+            // EnvRTypeA
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(9, 44);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(75, 17);
-            this.radioButton1.TabIndex = 8;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Default (A)";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.EnvRTypeA.AutoSize = true;
+            this.EnvRTypeA.Checked = true;
+            this.EnvRTypeA.Location = new System.Drawing.Point(9, 44);
+            this.EnvRTypeA.Name = "EnvRTypeA";
+            this.EnvRTypeA.Size = new System.Drawing.Size(75, 17);
+            this.EnvRTypeA.TabIndex = 8;
+            this.EnvRTypeA.TabStop = true;
+            this.EnvRTypeA.Text = "Default (A)";
+            this.EnvRTypeA.UseVisualStyleBackColor = true;
+            this.EnvRTypeA.CheckedChanged += new System.EventHandler(this.EnvRType_CheckedChanged);
             // 
-            // comboBox4
+            // EnvRDropdown
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(6, 17);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(85, 21);
-            this.comboBox4.TabIndex = 15;
+            this.EnvRDropdown.FormattingEnabled = true;
+            this.EnvRDropdown.Location = new System.Drawing.Point(6, 17);
+            this.EnvRDropdown.Name = "EnvRDropdown";
+            this.EnvRDropdown.Size = new System.Drawing.Size(85, 21);
+            this.EnvRDropdown.TabIndex = 15;
+            this.EnvRDropdown.SelectedIndexChanged += new System.EventHandler(this.EnvRDropdown_SelectedIndexChanged);
             // 
-            // numericUpDown4
+            // EnvRUnknownIndex
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(148, 145);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDown4.TabIndex = 7;
+            this.EnvRUnknownIndex.Location = new System.Drawing.Point(148, 145);
+            this.EnvRUnknownIndex.Name = "EnvRUnknownIndex";
+            this.EnvRUnknownIndex.Size = new System.Drawing.Size(44, 20);
+            this.EnvRUnknownIndex.TabIndex = 7;
             // 
-            // label4
+            // EnvRUnknownLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 147);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(82, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Unknown Index";
+            this.EnvRUnknownLabel.AutoSize = true;
+            this.EnvRUnknownLabel.Location = new System.Drawing.Point(3, 147);
+            this.EnvRUnknownLabel.Name = "EnvRUnknownLabel";
+            this.EnvRUnknownLabel.Size = new System.Drawing.Size(82, 13);
+            this.EnvRUnknownLabel.TabIndex = 3;
+            this.EnvRUnknownLabel.Text = "Unknown Index";
             // 
-            // numericUpDown3
+            // EnvRSnowingIndex
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(148, 119);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDown3.TabIndex = 6;
+            this.EnvRSnowingIndex.Location = new System.Drawing.Point(148, 119);
+            this.EnvRSnowingIndex.Name = "EnvRSnowingIndex";
+            this.EnvRSnowingIndex.Size = new System.Drawing.Size(44, 20);
+            this.EnvRSnowingIndex.TabIndex = 6;
             // 
-            // label3
+            // EnvRSnowingLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 121);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Snowing Index";
+            this.EnvRSnowingLabel.AutoSize = true;
+            this.EnvRSnowingLabel.Location = new System.Drawing.Point(3, 121);
+            this.EnvRSnowingLabel.Name = "EnvRSnowingLabel";
+            this.EnvRSnowingLabel.Size = new System.Drawing.Size(77, 13);
+            this.EnvRSnowingLabel.TabIndex = 2;
+            this.EnvRSnowingLabel.Text = "Snowing Index";
             // 
-            // label1
+            // EnvRClearSkiesLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 69);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Clear Skies Index";
+            this.EnvRClearSkiesLabel.AutoSize = true;
+            this.EnvRClearSkiesLabel.Location = new System.Drawing.Point(3, 69);
+            this.EnvRClearSkiesLabel.Name = "EnvRClearSkiesLabel";
+            this.EnvRClearSkiesLabel.Size = new System.Drawing.Size(89, 13);
+            this.EnvRClearSkiesLabel.TabIndex = 0;
+            this.EnvRClearSkiesLabel.Text = "Clear Skies Index";
             // 
-            // label2
+            // EnvRRainingLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 95);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Raining Index";
+            this.EnvRRainingLabel.AutoSize = true;
+            this.EnvRRainingLabel.Location = new System.Drawing.Point(3, 95);
+            this.EnvRRainingLabel.Name = "EnvRRainingLabel";
+            this.EnvRRainingLabel.Size = new System.Drawing.Size(72, 13);
+            this.EnvRRainingLabel.TabIndex = 1;
+            this.EnvRRainingLabel.Text = "Raining Index";
             // 
-            // numericUpDown2
+            // EnvRRainingIndex
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(148, 93);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDown2.TabIndex = 5;
+            this.EnvRRainingIndex.Location = new System.Drawing.Point(148, 93);
+            this.EnvRRainingIndex.Name = "EnvRRainingIndex";
+            this.EnvRRainingIndex.Size = new System.Drawing.Size(44, 20);
+            this.EnvRRainingIndex.TabIndex = 5;
             // 
-            // numericUpDown1
+            // EnvRClearSkiesIndex
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(148, 67);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDown1.TabIndex = 4;
+            this.EnvRClearSkiesIndex.Location = new System.Drawing.Point(148, 67);
+            this.EnvRClearSkiesIndex.Name = "EnvRClearSkiesIndex";
+            this.EnvRClearSkiesIndex.Size = new System.Drawing.Size(44, 20);
+            this.EnvRClearSkiesIndex.TabIndex = 4;
             // 
             // dzsFileDropdown
             // 
@@ -792,24 +803,24 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(441, 547);
             this.Controls.Add(this.dzsFileDropdown);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.VirtGroupBox);
+            this.Controls.Add(this.PaleGroupBox);
+            this.Controls.Add(this.ColorGroupBox);
+            this.Controls.Add(this.EnvRGroupBox);
             this.Name = "EnvironmentLightingEditorForm";
             this.Text = "Environment Lighting Editor";
             this.Load += new System.EventHandler(this.EnvironmentLightingEditorForm_Load);
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.VirtGroupBox.ResumeLayout(false);
+            this.VirtGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VirtFadeToColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VirtHorizonCloudColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VirtHorizonColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VirtCenterSkyColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VirtCenterCloudColor)).EndInit();
+            this.PaleGroupBox.ResumeLayout(false);
+            this.PaleGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
@@ -818,45 +829,45 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.ColorGroupBox.ResumeLayout(false);
+            this.ColorGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.EnvRGroupBox.ResumeLayout(false);
+            this.EnvRGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvRUnknownIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvRSnowingIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvRRainingIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EnvRClearSkiesIndex)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.GroupBox VirtGroupBox;
+        private System.Windows.Forms.Button VirtDropdownDelete;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button VirtDropdownAdd;
         private System.Windows.Forms.NumericUpDown numericUpDown16;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox VirtDropdown;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.NumericUpDown numericUpDown15;
-        private System.Windows.Forms.PictureBox pictureBox7;
-        private System.Windows.Forms.PictureBox pictureBox12;
-        private System.Windows.Forms.PictureBox pictureBox9;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.PictureBox pictureBox10;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.PictureBox pictureBox11;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.PictureBox VirtFadeToColor;
+        private System.Windows.Forms.PictureBox VirtHorizonCloudColor;
+        private System.Windows.Forms.PictureBox VirtHorizonColor;
+        private System.Windows.Forms.Label VirtHorizonCloudLabel;
+        private System.Windows.Forms.PictureBox VirtCenterSkyColor;
+        private System.Windows.Forms.Label VirtCenterCloudLabel;
+        private System.Windows.Forms.PictureBox VirtCenterCloudColor;
+        private System.Windows.Forms.Label VirtCenterSkyLabel;
+        private System.Windows.Forms.Label VirtSkyFadeToLabel;
+        private System.Windows.Forms.Label VirtHorizonColorLabel;
+        private System.Windows.Forms.GroupBox PaleGroupBox;
         private System.Windows.Forms.PictureBox pictureBox8;
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.PictureBox pictureBox5;
@@ -871,41 +882,41 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button PaleDropdownDelete;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button PaleDropdownAdd;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ComboBox PaleDropdown;
+        private System.Windows.Forms.GroupBox ColorGroupBox;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button ColorDropdownDelete;
+        private System.Windows.Forms.Button ColorDropdownAdd;
+        private System.Windows.Forms.ComboBox ColorDropdown;
         private System.Windows.Forms.NumericUpDown numericUpDown14;
         private System.Windows.Forms.NumericUpDown numericUpDown13;
         private System.Windows.Forms.NumericUpDown numericUpDown12;
         private System.Windows.Forms.NumericUpDown numericUpDown11;
         private System.Windows.Forms.NumericUpDown numericUpDown10;
         private System.Windows.Forms.NumericUpDown numericUpDown9;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.GroupBox EnvRGroupBox;
+        private System.Windows.Forms.Button EnvRDropdownDelete;
+        private System.Windows.Forms.RadioButton EnvRTypeB;
+        private System.Windows.Forms.Button EnvRDropdownAdd;
+        private System.Windows.Forms.RadioButton EnvRTypeA;
+        private System.Windows.Forms.ComboBox EnvRDropdown;
+        private System.Windows.Forms.NumericUpDown EnvRUnknownIndex;
+        private System.Windows.Forms.Label EnvRUnknownLabel;
+        private System.Windows.Forms.NumericUpDown EnvRSnowingIndex;
+        private System.Windows.Forms.Label EnvRSnowingLabel;
+        private System.Windows.Forms.Label EnvRClearSkiesLabel;
+        private System.Windows.Forms.Label EnvRRainingLabel;
+        private System.Windows.Forms.NumericUpDown EnvRRainingIndex;
+        private System.Windows.Forms.NumericUpDown EnvRClearSkiesIndex;
         private System.Windows.Forms.ComboBox dzsFileDropdown;
     }
 }
