@@ -26,9 +26,9 @@ namespace WWActorEdit
     public partial class MainForm : Form
     {
         //A list of currently loaded .arc Archives
-        List<ZeldaArc> Rooms = new List<ZeldaArc>();
+        public List<ZeldaArc> Rooms = new List<ZeldaArc>();
         //Shortcut to the 'Stage' one if it is loaded.
-        ZeldaArc Stage;
+        public ZeldaArc Stage;
 
         //idek
         IDZxChunkElement SelectedDZRChunkElement;
@@ -514,7 +514,7 @@ namespace WWActorEdit
 
         private void environmentLightingEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EnvironmentLightingEditorForm popup = new EnvironmentLightingEditorForm();
+            EnvironmentLightingEditorForm popup = new EnvironmentLightingEditorForm(this);
             popup.Show(this);
         }
     }

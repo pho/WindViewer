@@ -96,6 +96,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.dzsFileDropdown = new System.Windows.Forms.ComboBox();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
@@ -146,7 +147,7 @@
             this.groupBox5.Controls.Add(this.label25);
             this.groupBox5.Controls.Add(this.label23);
             this.groupBox5.Controls.Add(this.label24);
-            this.groupBox5.Location = new System.Drawing.Point(12, 224);
+            this.groupBox5.Location = new System.Drawing.Point(12, 254);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(201, 263);
             this.groupBox5.TabIndex = 8;
@@ -322,7 +323,7 @@
             this.groupBox4.Controls.Add(this.button4);
             this.groupBox4.Controls.Add(this.pictureBox1);
             this.groupBox4.Controls.Add(this.comboBox2);
-            this.groupBox4.Location = new System.Drawing.Point(227, 224);
+            this.groupBox4.Location = new System.Drawing.Point(227, 254);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(202, 263);
             this.groupBox4.TabIndex = 7;
@@ -514,7 +515,7 @@
             this.groupBox3.Controls.Add(this.numericUpDown11);
             this.groupBox3.Controls.Add(this.numericUpDown10);
             this.groupBox3.Controls.Add(this.numericUpDown9);
-            this.groupBox3.Location = new System.Drawing.Point(227, 12);
+            this.groupBox3.Location = new System.Drawing.Point(227, 42);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(202, 206);
             this.groupBox3.TabIndex = 6;
@@ -658,7 +659,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.numericUpDown2);
             this.groupBox1.Controls.Add(this.numericUpDown1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(12, 42);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(201, 206);
             this.groupBox1.TabIndex = 5;
@@ -777,17 +778,27 @@
             this.numericUpDown1.Size = new System.Drawing.Size(44, 20);
             this.numericUpDown1.TabIndex = 4;
             // 
-            // LightingEditorForm
+            // dzsFileDropdown
+            // 
+            this.dzsFileDropdown.FormattingEnabled = true;
+            this.dzsFileDropdown.Location = new System.Drawing.Point(12, 13);
+            this.dzsFileDropdown.Name = "dzsFileDropdown";
+            this.dzsFileDropdown.Size = new System.Drawing.Size(417, 21);
+            this.dzsFileDropdown.TabIndex = 9;
+            // 
+            // EnvironmentLightingEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(441, 500);
+            this.ClientSize = new System.Drawing.Size(441, 547);
+            this.Controls.Add(this.dzsFileDropdown);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
-            this.Name = "LightingEditorForm";
+            this.Name = "EnvironmentLightingEditorForm";
             this.Text = "Environment Lighting Editor";
+            this.Load += new System.EventHandler(this.EnvironmentLightingEditorForm_Load);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).EndInit();
@@ -895,5 +906,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.ComboBox dzsFileDropdown;
     }
 }

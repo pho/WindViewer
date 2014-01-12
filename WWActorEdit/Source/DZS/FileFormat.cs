@@ -1,7 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WWActorEdit
 {
+    public class DZSFormat
+    {
+        public DZSHeader Header;
+        public List<DZSChunk> Chunks;
+    }
+
+
+
     public struct DZSHeader
     {
         public UInt32 ChunkCount;
