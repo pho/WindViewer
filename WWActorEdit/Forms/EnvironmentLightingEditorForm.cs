@@ -20,6 +20,7 @@ namespace WWActorEdit.Forms
 
         //We're going to keep a quick reference to these here.
         private EnvRChunk _envrChunk;
+        private ColoChunk _coloChunk;
 
         public EnvironmentLightingEditorForm(MainForm parent)
         {
@@ -48,6 +49,11 @@ namespace WWActorEdit.Forms
                         EnvRDropdown.SelectedIndex = 0;
                         break;
                     case "Colo": 
+                        //Populate the Dropdown
+                        for (int i = 0; i < chunk.ElementCount; i++)
+                            ColorDropdown.Items.Add("Colo [" + i + "]");
+                        ColorDropdown.SelectedIndex = 0;
+                        break;
                     case "Pale":
                     case "Virt":
                     default:
@@ -57,7 +63,7 @@ namespace WWActorEdit.Forms
 
         }
 
-
+        //I'm not really sure... what this should be called. Ech.
         private void LoadEnvrElement()
         {
             //Need to find the EnvRchunk again, and get the right index.
@@ -71,8 +77,24 @@ namespace WWActorEdit.Forms
             }
         }
 
+        private void LoadColorElement()
+        {
+            //Need to find the ColoChunk again, and get the right index.
+            foreach (var header in _data.ChunkHeaders)
+            {
+                if (header.Tag == "Colo")
+                {
+                    _coloChunk = (ColoChunk)header.ChunkElements[ColorDropdown.SelectedIndex];
+                    break;
+                }
+            }
+        }
 
-        private void UpdateEnvrUI()
+        /// <summary>
+        /// This will update the values within the Environment GroupBox to point to whatever the
+        /// current _envrChunk's values are. 
+        /// </summary>
+        private void UpdateEnvrGroupBox()
         {
             //If they have Type A selected we populate the same UI elements but with different data...
             if (EnvRTypeA.Checked)
@@ -89,6 +111,20 @@ namespace WWActorEdit.Forms
                 EnvRSnowingIndex.Value = _envrChunk.SnowingColorIndexB;
                 EnvRUnknownIndex.Value = _envrChunk.UnknownColorIndexB;
             }
+        }
+
+        /// <summary>
+        /// This will update all of the values within the Color GroupBox to point to whatever the
+        /// //current _coloChunk's values are.
+        /// </summary>
+        private void UpdateColoGroupBox()
+        {
+            ColoDawnIndex.Value = _coloChunk.DawnIndex;
+            ColoMorningIndex.Value = _coloChunk.MorningIndex;
+            ColoNoonIndex.Value = _coloChunk.NoonIndex;
+            ColoAfternoonIndex.Value = _coloChunk.AfternoonIndex;
+            ColoDuskIndex.Value = _coloChunk.DuskIndex;
+            ColoNightIndex.Value = _coloChunk.NightIndex;
         }
 
         /// <summary>
@@ -115,7 +151,7 @@ namespace WWActorEdit.Forms
         /// </summary>
         private void EnvRType_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateEnvrUI();
+            UpdateEnvrGroupBox();
         }
 
         /// <summary>
@@ -125,7 +161,16 @@ namespace WWActorEdit.Forms
         private void EnvRDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadEnvrElement();
-            UpdateEnvrUI();
+            UpdateEnvrGroupBox();
+        }
+
+        /// <summary>
+        /// Called when the user changes the Color dropdown index.
+        /// </summary>
+        private void ColorDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadColorElement();
+            UpdateColoGroupBox();
         }
     }
 }

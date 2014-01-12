@@ -76,12 +76,12 @@
             this.ColorDropdownDelete = new System.Windows.Forms.Button();
             this.ColorDropdownAdd = new System.Windows.Forms.Button();
             this.ColorDropdown = new System.Windows.Forms.ComboBox();
-            this.numericUpDown14 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown12 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown11 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown10 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
+            this.ColoNightIndex = new System.Windows.Forms.NumericUpDown();
+            this.ColoDawnIndex = new System.Windows.Forms.NumericUpDown();
+            this.ColoMorningIndex = new System.Windows.Forms.NumericUpDown();
+            this.ColoNoonIndex = new System.Windows.Forms.NumericUpDown();
+            this.ColoAfternoonIndex = new System.Windows.Forms.NumericUpDown();
+            this.ColoDuskIndex = new System.Windows.Forms.NumericUpDown();
             this.EnvRGroupBox = new System.Windows.Forms.GroupBox();
             this.EnvRDropdownDelete = new System.Windows.Forms.Button();
             this.EnvRTypeB = new System.Windows.Forms.RadioButton();
@@ -119,12 +119,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.ColorGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColoNightIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColoDawnIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColoMorningIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColoNoonIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColoAfternoonIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColoDuskIndex)).BeginInit();
             this.EnvRGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRUnknownIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRSnowingIndex)).BeginInit();
@@ -520,12 +520,12 @@
             this.ColorGroupBox.Controls.Add(this.ColorDropdownDelete);
             this.ColorGroupBox.Controls.Add(this.ColorDropdownAdd);
             this.ColorGroupBox.Controls.Add(this.ColorDropdown);
-            this.ColorGroupBox.Controls.Add(this.numericUpDown14);
-            this.ColorGroupBox.Controls.Add(this.numericUpDown13);
-            this.ColorGroupBox.Controls.Add(this.numericUpDown12);
-            this.ColorGroupBox.Controls.Add(this.numericUpDown11);
-            this.ColorGroupBox.Controls.Add(this.numericUpDown10);
-            this.ColorGroupBox.Controls.Add(this.numericUpDown9);
+            this.ColorGroupBox.Controls.Add(this.ColoNightIndex);
+            this.ColorGroupBox.Controls.Add(this.ColoDawnIndex);
+            this.ColorGroupBox.Controls.Add(this.ColoMorningIndex);
+            this.ColorGroupBox.Controls.Add(this.ColoNoonIndex);
+            this.ColorGroupBox.Controls.Add(this.ColoAfternoonIndex);
+            this.ColorGroupBox.Controls.Add(this.ColoDuskIndex);
             this.ColorGroupBox.Location = new System.Drawing.Point(227, 42);
             this.ColorGroupBox.Name = "ColorGroupBox";
             this.ColorGroupBox.Size = new System.Drawing.Size(202, 206);
@@ -614,48 +614,49 @@
             this.ColorDropdown.Name = "ColorDropdown";
             this.ColorDropdown.Size = new System.Drawing.Size(85, 21);
             this.ColorDropdown.TabIndex = 6;
+            this.ColorDropdown.SelectedIndexChanged += new System.EventHandler(this.ColorDropdown_SelectedIndexChanged);
             // 
-            // numericUpDown14
+            // ColoNightIndex
             // 
-            this.numericUpDown14.Location = new System.Drawing.Point(148, 175);
-            this.numericUpDown14.Name = "numericUpDown14";
-            this.numericUpDown14.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDown14.TabIndex = 5;
+            this.ColoNightIndex.Location = new System.Drawing.Point(148, 175);
+            this.ColoNightIndex.Name = "ColoNightIndex";
+            this.ColoNightIndex.Size = new System.Drawing.Size(44, 20);
+            this.ColoNightIndex.TabIndex = 5;
             // 
-            // numericUpDown13
+            // ColoDawnIndex
             // 
-            this.numericUpDown13.Location = new System.Drawing.Point(148, 45);
-            this.numericUpDown13.Name = "numericUpDown13";
-            this.numericUpDown13.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDown13.TabIndex = 4;
+            this.ColoDawnIndex.Location = new System.Drawing.Point(148, 45);
+            this.ColoDawnIndex.Name = "ColoDawnIndex";
+            this.ColoDawnIndex.Size = new System.Drawing.Size(44, 20);
+            this.ColoDawnIndex.TabIndex = 4;
             // 
-            // numericUpDown12
+            // ColoMorningIndex
             // 
-            this.numericUpDown12.Location = new System.Drawing.Point(148, 71);
-            this.numericUpDown12.Name = "numericUpDown12";
-            this.numericUpDown12.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDown12.TabIndex = 3;
+            this.ColoMorningIndex.Location = new System.Drawing.Point(148, 71);
+            this.ColoMorningIndex.Name = "ColoMorningIndex";
+            this.ColoMorningIndex.Size = new System.Drawing.Size(44, 20);
+            this.ColoMorningIndex.TabIndex = 3;
             // 
-            // numericUpDown11
+            // ColoNoonIndex
             // 
-            this.numericUpDown11.Location = new System.Drawing.Point(148, 97);
-            this.numericUpDown11.Name = "numericUpDown11";
-            this.numericUpDown11.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDown11.TabIndex = 2;
+            this.ColoNoonIndex.Location = new System.Drawing.Point(148, 97);
+            this.ColoNoonIndex.Name = "ColoNoonIndex";
+            this.ColoNoonIndex.Size = new System.Drawing.Size(44, 20);
+            this.ColoNoonIndex.TabIndex = 2;
             // 
-            // numericUpDown10
+            // ColoAfternoonIndex
             // 
-            this.numericUpDown10.Location = new System.Drawing.Point(148, 123);
-            this.numericUpDown10.Name = "numericUpDown10";
-            this.numericUpDown10.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDown10.TabIndex = 1;
+            this.ColoAfternoonIndex.Location = new System.Drawing.Point(148, 123);
+            this.ColoAfternoonIndex.Name = "ColoAfternoonIndex";
+            this.ColoAfternoonIndex.Size = new System.Drawing.Size(44, 20);
+            this.ColoAfternoonIndex.TabIndex = 1;
             // 
-            // numericUpDown9
+            // ColoDuskIndex
             // 
-            this.numericUpDown9.Location = new System.Drawing.Point(148, 149);
-            this.numericUpDown9.Name = "numericUpDown9";
-            this.numericUpDown9.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDown9.TabIndex = 0;
+            this.ColoDuskIndex.Location = new System.Drawing.Point(148, 149);
+            this.ColoDuskIndex.Name = "ColoDuskIndex";
+            this.ColoDuskIndex.Size = new System.Drawing.Size(44, 20);
+            this.ColoDuskIndex.TabIndex = 0;
             // 
             // EnvRGroupBox
             // 
@@ -878,12 +879,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ColorGroupBox.ResumeLayout(false);
             this.ColorGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColoNightIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColoDawnIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColoMorningIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColoNoonIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColoAfternoonIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColoDuskIndex)).EndInit();
             this.EnvRGroupBox.ResumeLayout(false);
             this.EnvRGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRUnknownIndex)).EndInit();
@@ -945,12 +946,12 @@
         private System.Windows.Forms.Button ColorDropdownDelete;
         private System.Windows.Forms.Button ColorDropdownAdd;
         private System.Windows.Forms.ComboBox ColorDropdown;
-        private System.Windows.Forms.NumericUpDown numericUpDown14;
-        private System.Windows.Forms.NumericUpDown numericUpDown13;
-        private System.Windows.Forms.NumericUpDown numericUpDown12;
-        private System.Windows.Forms.NumericUpDown numericUpDown11;
-        private System.Windows.Forms.NumericUpDown numericUpDown10;
-        private System.Windows.Forms.NumericUpDown numericUpDown9;
+        private System.Windows.Forms.NumericUpDown ColoNightIndex;
+        private System.Windows.Forms.NumericUpDown ColoDawnIndex;
+        private System.Windows.Forms.NumericUpDown ColoMorningIndex;
+        private System.Windows.Forms.NumericUpDown ColoNoonIndex;
+        private System.Windows.Forms.NumericUpDown ColoAfternoonIndex;
+        private System.Windows.Forms.NumericUpDown ColoDuskIndex;
         private System.Windows.Forms.GroupBox EnvRGroupBox;
         private System.Windows.Forms.Button EnvRDropdownDelete;
         private System.Windows.Forms.RadioButton EnvRTypeB;
