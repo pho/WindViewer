@@ -47,15 +47,15 @@
             this.VirtSkyFadeToLabel = new System.Windows.Forms.Label();
             this.VirtHorizonColorLabel = new System.Windows.Forms.Label();
             this.PaleGroupBox = new System.Windows.Forms.GroupBox();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.PaleOceanFadeIntoColor = new System.Windows.Forms.PictureBox();
+            this.PaleDoorwayColor = new System.Windows.Forms.PictureBox();
+            this.PaleOceanColor = new System.Windows.Forms.PictureBox();
+            this.PaleWaveColor = new System.Windows.Forms.PictureBox();
+            this.PaleRoomAmbientColor = new System.Windows.Forms.PictureBox();
+            this.PaleShadowColor = new System.Windows.Forms.PictureBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.numericUpDown21 = new System.Windows.Forms.NumericUpDown();
+            this.PaleVirtIndex = new System.Windows.Forms.NumericUpDown();
             this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -64,7 +64,7 @@
             this.PaleDropdownDelete = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.PaleDropdownAdd = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.PaleActorAmbientColor = new System.Windows.Forms.PictureBox();
             this.PaleDropdown = new System.Windows.Forms.ComboBox();
             this.ColorGroupBox = new System.Windows.Forms.GroupBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -97,10 +97,11 @@
             this.EnvRRainingIndex = new System.Windows.Forms.NumericUpDown();
             this.EnvRClearSkiesIndex = new System.Windows.Forms.NumericUpDown();
             this.dzsFileDropdown = new System.Windows.Forms.ComboBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.PaleFogColor = new System.Windows.Forms.PictureBox();
             this.PaleFogLabel = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.colorPickerDialog = new System.Windows.Forms.ColorDialog();
             this.VirtGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
@@ -110,14 +111,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.VirtCenterSkyColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VirtCenterCloudColor)).BeginInit();
             this.PaleGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleOceanFadeIntoColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleDoorwayColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleOceanColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleWaveColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleRoomAmbientColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleShadowColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleVirtIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleActorAmbientColor)).BeginInit();
             this.ColorGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ColoNightIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ColoDawnIndex)).BeginInit();
@@ -130,7 +131,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.EnvRSnowingIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRRainingIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRClearSkiesIndex)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleFogColor)).BeginInit();
             this.SuspendLayout();
             // 
             // VirtGroupBox
@@ -311,17 +312,17 @@
             // 
             // PaleGroupBox
             // 
-            this.PaleGroupBox.Controls.Add(this.pictureBox7);
+            this.PaleGroupBox.Controls.Add(this.PaleFogColor);
             this.PaleGroupBox.Controls.Add(this.PaleFogLabel);
-            this.PaleGroupBox.Controls.Add(this.pictureBox8);
-            this.PaleGroupBox.Controls.Add(this.pictureBox6);
-            this.PaleGroupBox.Controls.Add(this.pictureBox5);
-            this.PaleGroupBox.Controls.Add(this.pictureBox4);
-            this.PaleGroupBox.Controls.Add(this.pictureBox3);
-            this.PaleGroupBox.Controls.Add(this.pictureBox2);
+            this.PaleGroupBox.Controls.Add(this.PaleOceanFadeIntoColor);
+            this.PaleGroupBox.Controls.Add(this.PaleDoorwayColor);
+            this.PaleGroupBox.Controls.Add(this.PaleOceanColor);
+            this.PaleGroupBox.Controls.Add(this.PaleWaveColor);
+            this.PaleGroupBox.Controls.Add(this.PaleRoomAmbientColor);
+            this.PaleGroupBox.Controls.Add(this.PaleShadowColor);
             this.PaleGroupBox.Controls.Add(this.label22);
             this.PaleGroupBox.Controls.Add(this.label21);
-            this.PaleGroupBox.Controls.Add(this.numericUpDown21);
+            this.PaleGroupBox.Controls.Add(this.PaleVirtIndex);
             this.PaleGroupBox.Controls.Add(this.label20);
             this.PaleGroupBox.Controls.Add(this.label19);
             this.PaleGroupBox.Controls.Add(this.label18);
@@ -330,7 +331,7 @@
             this.PaleGroupBox.Controls.Add(this.PaleDropdownDelete);
             this.PaleGroupBox.Controls.Add(this.label15);
             this.PaleGroupBox.Controls.Add(this.PaleDropdownAdd);
-            this.PaleGroupBox.Controls.Add(this.pictureBox1);
+            this.PaleGroupBox.Controls.Add(this.PaleActorAmbientColor);
             this.PaleGroupBox.Controls.Add(this.PaleDropdown);
             this.PaleGroupBox.Location = new System.Drawing.Point(12, 227);
             this.PaleGroupBox.Name = "PaleGroupBox";
@@ -339,59 +340,65 @@
             this.PaleGroupBox.TabStop = false;
             this.PaleGroupBox.Text = "Pale";
             // 
-            // pictureBox8
+            // PaleOceanFadeIntoColor
             // 
-            this.pictureBox8.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox8.Location = new System.Drawing.Point(148, 256);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(44, 20);
-            this.pictureBox8.TabIndex = 37;
-            this.pictureBox8.TabStop = false;
+            this.PaleOceanFadeIntoColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.PaleOceanFadeIntoColor.Location = new System.Drawing.Point(148, 256);
+            this.PaleOceanFadeIntoColor.Name = "PaleOceanFadeIntoColor";
+            this.PaleOceanFadeIntoColor.Size = new System.Drawing.Size(44, 20);
+            this.PaleOceanFadeIntoColor.TabIndex = 37;
+            this.PaleOceanFadeIntoColor.TabStop = false;
+            this.PaleOceanFadeIntoColor.Click += new System.EventHandler(this.PaleColorField_Click);
             // 
-            // pictureBox6
+            // PaleDoorwayColor
             // 
-            this.pictureBox6.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox6.Location = new System.Drawing.Point(148, 178);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(44, 20);
-            this.pictureBox6.TabIndex = 35;
-            this.pictureBox6.TabStop = false;
+            this.PaleDoorwayColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.PaleDoorwayColor.Location = new System.Drawing.Point(148, 178);
+            this.PaleDoorwayColor.Name = "PaleDoorwayColor";
+            this.PaleDoorwayColor.Size = new System.Drawing.Size(44, 20);
+            this.PaleDoorwayColor.TabIndex = 35;
+            this.PaleDoorwayColor.TabStop = false;
+            this.PaleDoorwayColor.Click += new System.EventHandler(this.PaleColorField_Click);
             // 
-            // pictureBox5
+            // PaleOceanColor
             // 
-            this.pictureBox5.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox5.Location = new System.Drawing.Point(148, 152);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(44, 20);
-            this.pictureBox5.TabIndex = 34;
-            this.pictureBox5.TabStop = false;
+            this.PaleOceanColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.PaleOceanColor.Location = new System.Drawing.Point(148, 152);
+            this.PaleOceanColor.Name = "PaleOceanColor";
+            this.PaleOceanColor.Size = new System.Drawing.Size(44, 20);
+            this.PaleOceanColor.TabIndex = 34;
+            this.PaleOceanColor.TabStop = false;
+            this.PaleOceanColor.Click += new System.EventHandler(this.PaleColorField_Click);
             // 
-            // pictureBox4
+            // PaleWaveColor
             // 
-            this.pictureBox4.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox4.Location = new System.Drawing.Point(148, 126);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(44, 20);
-            this.pictureBox4.TabIndex = 33;
-            this.pictureBox4.TabStop = false;
+            this.PaleWaveColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.PaleWaveColor.Location = new System.Drawing.Point(148, 126);
+            this.PaleWaveColor.Name = "PaleWaveColor";
+            this.PaleWaveColor.Size = new System.Drawing.Size(44, 20);
+            this.PaleWaveColor.TabIndex = 33;
+            this.PaleWaveColor.TabStop = false;
+            this.PaleWaveColor.Click += new System.EventHandler(this.PaleColorField_Click);
             // 
-            // pictureBox3
+            // PaleRoomAmbientColor
             // 
-            this.pictureBox3.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox3.Location = new System.Drawing.Point(148, 100);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(44, 20);
-            this.pictureBox3.TabIndex = 32;
-            this.pictureBox3.TabStop = false;
+            this.PaleRoomAmbientColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.PaleRoomAmbientColor.Location = new System.Drawing.Point(148, 100);
+            this.PaleRoomAmbientColor.Name = "PaleRoomAmbientColor";
+            this.PaleRoomAmbientColor.Size = new System.Drawing.Size(44, 20);
+            this.PaleRoomAmbientColor.TabIndex = 32;
+            this.PaleRoomAmbientColor.TabStop = false;
+            this.PaleRoomAmbientColor.Click += new System.EventHandler(this.PaleColorField_Click);
             // 
-            // pictureBox2
+            // PaleShadowColor
             // 
-            this.pictureBox2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox2.Location = new System.Drawing.Point(148, 74);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(44, 20);
-            this.pictureBox2.TabIndex = 31;
-            this.pictureBox2.TabStop = false;
+            this.PaleShadowColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.PaleShadowColor.Location = new System.Drawing.Point(148, 74);
+            this.PaleShadowColor.Name = "PaleShadowColor";
+            this.PaleShadowColor.Size = new System.Drawing.Size(44, 20);
+            this.PaleShadowColor.TabIndex = 31;
+            this.PaleShadowColor.TabStop = false;
+            this.PaleShadowColor.Click += new System.EventHandler(this.PaleColorField_Click);
             // 
             // label22
             // 
@@ -411,12 +418,17 @@
             this.label21.TabIndex = 28;
             this.label21.Text = "Virt Index";
             // 
-            // numericUpDown21
+            // PaleVirtIndex
             // 
-            this.numericUpDown21.Location = new System.Drawing.Point(148, 230);
-            this.numericUpDown21.Name = "numericUpDown21";
-            this.numericUpDown21.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDown21.TabIndex = 27;
+            this.PaleVirtIndex.Location = new System.Drawing.Point(148, 230);
+            this.PaleVirtIndex.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.PaleVirtIndex.Name = "PaleVirtIndex";
+            this.PaleVirtIndex.Size = new System.Drawing.Size(44, 20);
+            this.PaleVirtIndex.TabIndex = 27;
             // 
             // label20
             // 
@@ -492,14 +504,15 @@
             this.PaleDropdownAdd.Text = "Add";
             this.PaleDropdownAdd.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // PaleActorAmbientColor
             // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox1.Location = new System.Drawing.Point(148, 48);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(44, 20);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.PaleActorAmbientColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.PaleActorAmbientColor.Location = new System.Drawing.Point(148, 48);
+            this.PaleActorAmbientColor.Name = "PaleActorAmbientColor";
+            this.PaleActorAmbientColor.Size = new System.Drawing.Size(44, 20);
+            this.PaleActorAmbientColor.TabIndex = 0;
+            this.PaleActorAmbientColor.TabStop = false;
+            this.PaleActorAmbientColor.Click += new System.EventHandler(this.PaleColorField_Click);
             // 
             // PaleDropdown
             // 
@@ -508,6 +521,7 @@
             this.PaleDropdown.Name = "PaleDropdown";
             this.PaleDropdown.Size = new System.Drawing.Size(85, 21);
             this.PaleDropdown.TabIndex = 15;
+            this.PaleDropdown.SelectedIndexChanged += new System.EventHandler(this.PaleDropdown_SelectedIndexChanged);
             // 
             // ColorGroupBox
             // 
@@ -805,14 +819,15 @@
             this.dzsFileDropdown.Size = new System.Drawing.Size(417, 21);
             this.dzsFileDropdown.TabIndex = 9;
             // 
-            // pictureBox7
+            // PaleFogColor
             // 
-            this.pictureBox7.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pictureBox7.Location = new System.Drawing.Point(148, 204);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(44, 20);
-            this.pictureBox7.TabIndex = 39;
-            this.pictureBox7.TabStop = false;
+            this.PaleFogColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.PaleFogColor.Location = new System.Drawing.Point(148, 204);
+            this.PaleFogColor.Name = "PaleFogColor";
+            this.PaleFogColor.Size = new System.Drawing.Size(44, 20);
+            this.PaleFogColor.TabIndex = 39;
+            this.PaleFogColor.TabStop = false;
+            this.PaleFogColor.Click += new System.EventHandler(this.PaleColorField_Click);
             // 
             // PaleFogLabel
             // 
@@ -843,6 +858,10 @@
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
+            // colorPickerDialog
+            // 
+            this.colorPickerDialog.FullOpen = true;
+            // 
             // EnvironmentLightingEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -869,14 +888,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.VirtCenterCloudColor)).EndInit();
             this.PaleGroupBox.ResumeLayout(false);
             this.PaleGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleOceanFadeIntoColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleDoorwayColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleOceanColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleWaveColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleRoomAmbientColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleShadowColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleVirtIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleActorAmbientColor)).EndInit();
             this.ColorGroupBox.ResumeLayout(false);
             this.ColorGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ColoNightIndex)).EndInit();
@@ -891,7 +910,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.EnvRSnowingIndex)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRRainingIndex)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRClearSkiesIndex)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleFogColor)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -917,15 +936,15 @@
         private System.Windows.Forms.Label VirtSkyFadeToLabel;
         private System.Windows.Forms.Label VirtHorizonColorLabel;
         private System.Windows.Forms.GroupBox PaleGroupBox;
-        private System.Windows.Forms.PictureBox pictureBox8;
-        private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox PaleOceanFadeIntoColor;
+        private System.Windows.Forms.PictureBox PaleDoorwayColor;
+        private System.Windows.Forms.PictureBox PaleOceanColor;
+        private System.Windows.Forms.PictureBox PaleWaveColor;
+        private System.Windows.Forms.PictureBox PaleRoomAmbientColor;
+        private System.Windows.Forms.PictureBox PaleShadowColor;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.NumericUpDown numericUpDown21;
+        private System.Windows.Forms.NumericUpDown PaleVirtIndex;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label18;
@@ -934,7 +953,7 @@
         private System.Windows.Forms.Button PaleDropdownDelete;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button PaleDropdownAdd;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox PaleActorAmbientColor;
         private System.Windows.Forms.ComboBox PaleDropdown;
         private System.Windows.Forms.GroupBox ColorGroupBox;
         private System.Windows.Forms.Label label14;
@@ -967,9 +986,10 @@
         private System.Windows.Forms.NumericUpDown EnvRRainingIndex;
         private System.Windows.Forms.NumericUpDown EnvRClearSkiesIndex;
         private System.Windows.Forms.ComboBox dzsFileDropdown;
-        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.PictureBox PaleFogColor;
         private System.Windows.Forms.Label PaleFogLabel;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.ColorDialog colorPickerDialog;
     }
 }

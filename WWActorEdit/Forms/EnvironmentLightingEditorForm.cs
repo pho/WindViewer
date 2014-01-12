@@ -18,9 +18,14 @@ namespace WWActorEdit.Forms
 
         private DZSFormat _data;
 
-        //We're going to keep a quick reference to these here.
+        //These are references to the currently selected EnvR/Color/Etc. chunks. They are
+        //used to populate the UI with the values of the selected index. When the index
+        //is changed the data is still kept (inside the _data tree), but these references
+        //will change.
         private EnvRChunk _envrChunk;
         private ColoChunk _coloChunk;
+        private PaleChunk _paleChunk;
+
 
         public EnvironmentLightingEditorForm(MainForm parent)
         {
@@ -55,6 +60,11 @@ namespace WWActorEdit.Forms
                         ColorDropdown.SelectedIndex = 0;
                         break;
                     case "Pale":
+                        //Populate the Dropdown
+                        for (int i = 0; i < chunk.ElementCount; i++)
+                            PaleDropdown.Items.Add("Pale [" + i + "]");
+                        PaleDropdown.SelectedIndex = 0;
+                        break;
                     case "Virt":
                     default:
                         break;
@@ -85,6 +95,19 @@ namespace WWActorEdit.Forms
                 if (header.Tag == "Colo")
                 {
                     _coloChunk = (ColoChunk)header.ChunkElements[ColorDropdown.SelectedIndex];
+                    break;
+                }
+            }
+        }
+
+        private void LoadPaleElement()
+        {
+            //Need to find the ColoChunk again, and get the right index.
+            foreach (var header in _data.ChunkHeaders)
+            {
+                if (header.Tag == "Pale")
+                {
+                    _paleChunk = (PaleChunk)header.ChunkElements[PaleDropdown.SelectedIndex];
                     break;
                 }
             }
@@ -125,6 +148,30 @@ namespace WWActorEdit.Forms
             ColoAfternoonIndex.Value = _coloChunk.AfternoonIndex;
             ColoDuskIndex.Value = _coloChunk.DuskIndex;
             ColoNightIndex.Value = _coloChunk.NightIndex;
+        }
+
+        /// <summary>
+        /// This updates all of the values within the Pale Groupbox to point to whatever the current
+        /// _paleChunk's values are.
+        /// </summary>
+        private void UpdatePaleGroupBox()
+        {
+            PaleActorAmbientColor.BackColor = SetPaleColorBoxColor(_paleChunk.ActorAmbient);
+            PaleShadowColor.BackColor = SetPaleColorBoxColor(_paleChunk.ShadowColor);
+            PaleRoomAmbientColor.BackColor = SetPaleColorBoxColor(_paleChunk.RoomAmbient);
+            PaleWaveColor.BackColor = SetPaleColorBoxColor(_paleChunk.WaveColor);
+            PaleOceanColor.BackColor = SetPaleColorBoxColor(_paleChunk.OceanColor);
+            PaleDoorwayColor.BackColor = SetPaleColorBoxColor(_paleChunk.DoorwayColor);
+            PaleFogColor.BackColor = SetPaleColorBoxColor(_paleChunk.FogColor);
+
+            PaleVirtIndex.Value = _paleChunk.VirtIndex;
+            PaleOceanFadeIntoColor.BackColor = SetPaleColorBoxColor(_paleChunk.OceanFadeInto);
+        }
+
+        private Color SetPaleColorBoxColor(ByteColor color)
+        {
+            Color newColor = Color.FromArgb((int) color.R, (int) color.G, (int) color.B);
+            return newColor;
         }
 
         /// <summary>
@@ -171,6 +218,22 @@ namespace WWActorEdit.Forms
         {
             LoadColorElement();
             UpdateColoGroupBox();
+        }
+
+        private void PaleDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadPaleElement();
+            UpdatePaleGroupBox();
+        }
+
+        /// <summary>
+        /// Called when ANY of the color fields in Pale are clicked on.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PaleColorField_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

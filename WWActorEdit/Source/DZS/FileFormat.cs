@@ -174,16 +174,20 @@ namespace WWActorEdit
         {
             ActorAmbient = new ByteColor(data, ref srcOffset);
             ShadowColor = new ByteColor(data, ref srcOffset);
+            srcOffset += 3; //Unused Values apparently
             RoomAmbient = new ByteColor(data, ref srcOffset);
             WaveColor = new ByteColor(data, ref srcOffset);
             OceanColor = new ByteColor(data, ref srcOffset);
+            srcOffset += 6; //More unused values
             DoorwayColor = new ByteColor(data, ref srcOffset);
+            srcOffset += 3;
             FogColor = new ByteColor(data, ref srcOffset);
 
-            VirtIndex = Helpers.Read8(data, srcOffset);
-            srcOffset += 1;
+            VirtIndex = Helpers.Read8(data, srcOffset); srcOffset += 1;
+            srcOffset += 2; //More unused values
 
             OceanFadeInto = new ByteColor(data, ref srcOffset);
+            srcOffset += 5;
         }
     }
 
