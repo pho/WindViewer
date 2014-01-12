@@ -104,6 +104,8 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.colorPickerDialog = new System.Windows.Forms.ColorDialog();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.PaleRoomFillColor = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.VirtGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VirtUnknown2Index)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VirtUnknown1Index)).BeginInit();
@@ -134,6 +136,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.EnvRSnowingIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRRainingIndex)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRClearSkiesIndex)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleRoomFillColor)).BeginInit();
             this.SuspendLayout();
             // 
             // VirtGroupBox
@@ -203,6 +206,7 @@
             this.VirtUnknown2Index.Name = "VirtUnknown2Index";
             this.VirtUnknown2Index.Size = new System.Drawing.Size(44, 20);
             this.VirtUnknown2Index.TabIndex = 49;
+            this.VirtUnknown2Index.ValueChanged += new System.EventHandler(this.VirtUnknownIndex_ValueChanged);
             // 
             // VirtDropdown
             // 
@@ -233,6 +237,7 @@
             this.VirtUnknown1Index.Name = "VirtUnknown1Index";
             this.VirtUnknown1Index.Size = new System.Drawing.Size(44, 20);
             this.VirtUnknown1Index.TabIndex = 38;
+            this.VirtUnknown1Index.ValueChanged += new System.EventHandler(this.VirtUnknownIndex_ValueChanged);
             // 
             // VirtSkyFadeToColor
             // 
@@ -331,6 +336,8 @@
             // 
             // PaleGroupBox
             // 
+            this.PaleGroupBox.Controls.Add(this.PaleRoomFillColor);
+            this.PaleGroupBox.Controls.Add(this.label1);
             this.PaleGroupBox.Controls.Add(this.PaleFogColor);
             this.PaleGroupBox.Controls.Add(this.PaleFogLabel);
             this.PaleGroupBox.Controls.Add(this.PaleOceanFadeIntoColor);
@@ -354,7 +361,7 @@
             this.PaleGroupBox.Controls.Add(this.PaleDropdown);
             this.PaleGroupBox.Location = new System.Drawing.Point(12, 227);
             this.PaleGroupBox.Name = "PaleGroupBox";
-            this.PaleGroupBox.Size = new System.Drawing.Size(202, 290);
+            this.PaleGroupBox.Size = new System.Drawing.Size(202, 314);
             this.PaleGroupBox.TabIndex = 7;
             this.PaleGroupBox.TabStop = false;
             this.PaleGroupBox.Text = "Pale";
@@ -363,7 +370,7 @@
             // PaleFogColor
             // 
             this.PaleFogColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.PaleFogColor.Location = new System.Drawing.Point(148, 204);
+            this.PaleFogColor.Location = new System.Drawing.Point(148, 230);
             this.PaleFogColor.Name = "PaleFogColor";
             this.PaleFogColor.Size = new System.Drawing.Size(44, 20);
             this.PaleFogColor.TabIndex = 39;
@@ -373,7 +380,7 @@
             // PaleFogLabel
             // 
             this.PaleFogLabel.AutoSize = true;
-            this.PaleFogLabel.Location = new System.Drawing.Point(6, 206);
+            this.PaleFogLabel.Location = new System.Drawing.Point(6, 232);
             this.PaleFogLabel.Name = "PaleFogLabel";
             this.PaleFogLabel.Size = new System.Drawing.Size(52, 13);
             this.PaleFogLabel.TabIndex = 38;
@@ -382,7 +389,7 @@
             // PaleOceanFadeIntoColor
             // 
             this.PaleOceanFadeIntoColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.PaleOceanFadeIntoColor.Location = new System.Drawing.Point(148, 256);
+            this.PaleOceanFadeIntoColor.Location = new System.Drawing.Point(148, 282);
             this.PaleOceanFadeIntoColor.Name = "PaleOceanFadeIntoColor";
             this.PaleOceanFadeIntoColor.Size = new System.Drawing.Size(44, 20);
             this.PaleOceanFadeIntoColor.TabIndex = 37;
@@ -392,7 +399,7 @@
             // PaleDoorwayColor
             // 
             this.PaleDoorwayColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.PaleDoorwayColor.Location = new System.Drawing.Point(148, 178);
+            this.PaleDoorwayColor.Location = new System.Drawing.Point(148, 204);
             this.PaleDoorwayColor.Name = "PaleDoorwayColor";
             this.PaleDoorwayColor.Size = new System.Drawing.Size(44, 20);
             this.PaleDoorwayColor.TabIndex = 35;
@@ -402,7 +409,7 @@
             // PaleOceanColor
             // 
             this.PaleOceanColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.PaleOceanColor.Location = new System.Drawing.Point(148, 152);
+            this.PaleOceanColor.Location = new System.Drawing.Point(148, 178);
             this.PaleOceanColor.Name = "PaleOceanColor";
             this.PaleOceanColor.Size = new System.Drawing.Size(44, 20);
             this.PaleOceanColor.TabIndex = 34;
@@ -412,7 +419,7 @@
             // PaleWaveColor
             // 
             this.PaleWaveColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.PaleWaveColor.Location = new System.Drawing.Point(148, 126);
+            this.PaleWaveColor.Location = new System.Drawing.Point(148, 152);
             this.PaleWaveColor.Name = "PaleWaveColor";
             this.PaleWaveColor.Size = new System.Drawing.Size(44, 20);
             this.PaleWaveColor.TabIndex = 33;
@@ -422,7 +429,7 @@
             // PaleRoomAmbientColor
             // 
             this.PaleRoomAmbientColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.PaleRoomAmbientColor.Location = new System.Drawing.Point(148, 100);
+            this.PaleRoomAmbientColor.Location = new System.Drawing.Point(148, 126);
             this.PaleRoomAmbientColor.Name = "PaleRoomAmbientColor";
             this.PaleRoomAmbientColor.Size = new System.Drawing.Size(44, 20);
             this.PaleRoomAmbientColor.TabIndex = 32;
@@ -442,7 +449,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(7, 258);
+            this.label22.Location = new System.Drawing.Point(7, 284);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(114, 13);
             this.label22.TabIndex = 29;
@@ -451,7 +458,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(7, 232);
+            this.label21.Location = new System.Drawing.Point(7, 258);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(51, 13);
             this.label21.TabIndex = 28;
@@ -459,7 +466,7 @@
             // 
             // PaleVirtIndex
             // 
-            this.PaleVirtIndex.Location = new System.Drawing.Point(148, 230);
+            this.PaleVirtIndex.Location = new System.Drawing.Point(148, 256);
             this.PaleVirtIndex.Maximum = new decimal(new int[] {
             255,
             0,
@@ -468,11 +475,12 @@
             this.PaleVirtIndex.Name = "PaleVirtIndex";
             this.PaleVirtIndex.Size = new System.Drawing.Size(44, 20);
             this.PaleVirtIndex.TabIndex = 27;
+            this.PaleVirtIndex.ValueChanged += new System.EventHandler(this.PaleVirtIndex_ValueChanged);
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(6, 180);
+            this.label20.Location = new System.Drawing.Point(6, 206);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(76, 13);
             this.label20.TabIndex = 25;
@@ -481,7 +489,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(6, 154);
+            this.label19.Location = new System.Drawing.Point(6, 180);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(66, 13);
             this.label19.TabIndex = 24;
@@ -490,7 +498,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(6, 128);
+            this.label18.Location = new System.Drawing.Point(6, 154);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(63, 13);
             this.label18.TabIndex = 23;
@@ -499,7 +507,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(6, 102);
+            this.label17.Location = new System.Drawing.Point(6, 128);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(103, 13);
             this.label17.TabIndex = 22;
@@ -676,6 +684,7 @@
             this.ColoNightIndex.Name = "ColoNightIndex";
             this.ColoNightIndex.Size = new System.Drawing.Size(44, 20);
             this.ColoNightIndex.TabIndex = 5;
+            this.ColoNightIndex.ValueChanged += new System.EventHandler(this.ColoGroupBoxIndex_ValueChanged);
             // 
             // ColoDawnIndex
             // 
@@ -683,6 +692,7 @@
             this.ColoDawnIndex.Name = "ColoDawnIndex";
             this.ColoDawnIndex.Size = new System.Drawing.Size(44, 20);
             this.ColoDawnIndex.TabIndex = 4;
+            this.ColoDawnIndex.ValueChanged += new System.EventHandler(this.ColoGroupBoxIndex_ValueChanged);
             // 
             // ColoMorningIndex
             // 
@@ -690,6 +700,7 @@
             this.ColoMorningIndex.Name = "ColoMorningIndex";
             this.ColoMorningIndex.Size = new System.Drawing.Size(44, 20);
             this.ColoMorningIndex.TabIndex = 3;
+            this.ColoMorningIndex.ValueChanged += new System.EventHandler(this.ColoGroupBoxIndex_ValueChanged);
             // 
             // ColoNoonIndex
             // 
@@ -697,6 +708,7 @@
             this.ColoNoonIndex.Name = "ColoNoonIndex";
             this.ColoNoonIndex.Size = new System.Drawing.Size(44, 20);
             this.ColoNoonIndex.TabIndex = 2;
+            this.ColoNoonIndex.ValueChanged += new System.EventHandler(this.ColoGroupBoxIndex_ValueChanged);
             // 
             // ColoAfternoonIndex
             // 
@@ -704,6 +716,7 @@
             this.ColoAfternoonIndex.Name = "ColoAfternoonIndex";
             this.ColoAfternoonIndex.Size = new System.Drawing.Size(44, 20);
             this.ColoAfternoonIndex.TabIndex = 1;
+            this.ColoAfternoonIndex.ValueChanged += new System.EventHandler(this.ColoGroupBoxIndex_ValueChanged);
             // 
             // ColoDuskIndex
             // 
@@ -711,6 +724,7 @@
             this.ColoDuskIndex.Name = "ColoDuskIndex";
             this.ColoDuskIndex.Size = new System.Drawing.Size(44, 20);
             this.ColoDuskIndex.TabIndex = 0;
+            this.ColoDuskIndex.ValueChanged += new System.EventHandler(this.ColoGroupBoxIndex_ValueChanged);
             // 
             // EnvRGroupBox
             // 
@@ -794,6 +808,7 @@
             this.EnvRUnknownIndex.Name = "EnvRUnknownIndex";
             this.EnvRUnknownIndex.Size = new System.Drawing.Size(44, 20);
             this.EnvRUnknownIndex.TabIndex = 7;
+            this.EnvRUnknownIndex.ValueChanged += new System.EventHandler(this.EnvRGroupBoxIndex_ValueChanged);
             // 
             // EnvRUnknownLabel
             // 
@@ -810,6 +825,7 @@
             this.EnvRSnowingIndex.Name = "EnvRSnowingIndex";
             this.EnvRSnowingIndex.Size = new System.Drawing.Size(44, 20);
             this.EnvRSnowingIndex.TabIndex = 6;
+            this.EnvRSnowingIndex.ValueChanged += new System.EventHandler(this.EnvRGroupBoxIndex_ValueChanged);
             // 
             // EnvRSnowingLabel
             // 
@@ -844,6 +860,7 @@
             this.EnvRRainingIndex.Name = "EnvRRainingIndex";
             this.EnvRRainingIndex.Size = new System.Drawing.Size(44, 20);
             this.EnvRRainingIndex.TabIndex = 5;
+            this.EnvRRainingIndex.ValueChanged += new System.EventHandler(this.EnvRGroupBoxIndex_ValueChanged);
             // 
             // EnvRClearSkiesIndex
             // 
@@ -851,6 +868,7 @@
             this.EnvRClearSkiesIndex.Name = "EnvRClearSkiesIndex";
             this.EnvRClearSkiesIndex.Size = new System.Drawing.Size(44, 20);
             this.EnvRClearSkiesIndex.TabIndex = 4;
+            this.EnvRClearSkiesIndex.ValueChanged += new System.EventHandler(this.EnvRGroupBoxIndex_ValueChanged);
             // 
             // dzsFileDropdown
             // 
@@ -883,6 +901,24 @@
             // colorPickerDialog
             // 
             this.colorPickerDialog.FullOpen = true;
+            // 
+            // PaleRoomFillColor
+            // 
+            this.PaleRoomFillColor.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.PaleRoomFillColor.Location = new System.Drawing.Point(148, 100);
+            this.PaleRoomFillColor.Name = "PaleRoomFillColor";
+            this.PaleRoomFillColor.Size = new System.Drawing.Size(44, 20);
+            this.PaleRoomFillColor.TabIndex = 41;
+            this.PaleRoomFillColor.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 102);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(77, 13);
+            this.label1.TabIndex = 40;
+            this.label1.Text = "Room Fill Color";
             // 
             // EnvironmentLightingEditorForm
             // 
@@ -933,6 +969,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.EnvRSnowingIndex)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRRainingIndex)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnvRClearSkiesIndex)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PaleRoomFillColor)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1014,5 +1051,7 @@
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.ColorDialog colorPickerDialog;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.PictureBox PaleRoomFillColor;
+        private System.Windows.Forms.Label label1;
     }
 }
