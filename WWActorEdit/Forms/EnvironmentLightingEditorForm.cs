@@ -29,12 +29,6 @@ namespace WWActorEdit.Forms
         private PaleChunk _paleChunk;
         private VirtChunk _virtChunk;
 
-
-        //WinForms will fire off events on programatically assigning values, so we need to ignore
-        //those on the event handler while the file is loading.
-        private bool _fileIsLoading;
-
-
         public EnvironmentLightingEditorForm(MainForm parent)
         {
             InitializeComponent();
@@ -46,16 +40,6 @@ namespace WWActorEdit.Forms
         private void LoadDZSForStage(ZeldaArc stage)
         {
             int srcOffset = 0;
-
-
-            //When we programatically change the .Value of boxes, it will fire off the Value changed event handler.
-            //This is problematic because in the Value changed event handlers we're assigning the value from the
-            //Form Control to the object in memory. This overwrites the values we have yet to load into the Form
-            //Control and is causing all sorts of oops. So to solve this we'll just ignore the event handlers being
-            //fired while the file is loading.
-            _fileIsLoading = true;
-
-
             _data = new DZSFormat(stage.DZSs[0].FileEntry.GetFileData(), ref srcOffset);
 
             //Now that the DZSFormat is populated with information, we're going to load the UI up!
@@ -93,10 +77,6 @@ namespace WWActorEdit.Forms
                         break;
                 }
             }
-
-
-            _fileIsLoading = false;
-
         }
 
         //I'm not really sure... what this should be called. Ech.
@@ -293,9 +273,6 @@ namespace WWActorEdit.Forms
         /// <param name="e"></param>
         private void PaleColorField_Click(object sender, EventArgs e)
         {
-            if (_fileIsLoading)
-                return;
-
             PictureBox outputBox = (PictureBox) sender;
 
             colorPickerDialog.Color = outputBox.BackColor;
@@ -314,7 +291,13 @@ namespace WWActorEdit.Forms
             _paleChunk.DoorwayColor = SetPaleMemoryColor(PaleDoorwayColor);
             _paleChunk.FogColor = SetPaleMemoryColor(PaleFogColor);
 
-            _paleChunk.OceanFadeInto = SetPaleMemoryColor(PaleOceanFadeIntoColor);
+            ByteColorAlpha OceanFadeInto = new ByteColorAlpha(SetPaleMemoryColor(PaleOceanFadeIntoColor));
+            OceanFadeInto.A = (byte) PaleOceanFadeAlpha.Value;
+            _paleChunk.OceanFadeInto = OceanFadeInto;
+
+            ByteColorAlpha ShoreFadeInto = new ByteColorAlpha(SetPaleMemoryColor(PaleShoreFadeIntoColor));
+            ShoreFadeInto.A = (byte)PaleShoreFadeAlpha.Value;
+            _paleChunk.ShoreFadeInto = ShoreFadeInto;
         }
 
         private void VirtColorField_Click(object sender, EventArgs e)
@@ -367,25 +350,30 @@ namespace WWActorEdit.Forms
         /// </summary>
         private void EnvRGroupBoxIndex_ValueChanged(object sender, EventArgs e)
         {
-            if (_fileIsLoading)
-                return;
-
             //Going to just copy all of their values back into the _envRChunk,
             //because I haven't come up with a better way yet!
             //If they have Type A selected we populate the same UI elements but with different data...
             if (EnvRTypeA.Checked)
             {
-                _envrChunk.ClearColorIndexA = (byte) EnvRClearSkiesIndex.Value;
-                _envrChunk.RainingColorIndexA = (byte) EnvRRainingIndex.Value;
-                _envrChunk.SnowingColorIndexA = (byte) EnvRSnowingIndex.Value;
-                _envrChunk.UnknownColorIndexA = (byte) EnvRUnknownIndex.Value;
+                if(sender == EnvRClearSkiesIndex)
+                    _envrChunk.ClearColorIndexA = (byte) EnvRClearSkiesIndex.Value;
+                if(sender == EnvRRainingIndex)
+                    _envrChunk.RainingColorIndexA = (byte) EnvRRainingIndex.Value;
+                if(sender == EnvRSnowingIndex)
+                    _envrChunk.SnowingColorIndexA = (byte) EnvRSnowingIndex.Value;
+                if(sender == EnvRUnknownIndex)
+                    _envrChunk.UnknownColorIndexA = (byte) EnvRUnknownIndex.Value;
             }
             else
             {
-                _envrChunk.ClearColorIndexB = (byte)EnvRClearSkiesIndex.Value;
-                _envrChunk.RainingColorIndexB = (byte)EnvRRainingIndex.Value;
-                _envrChunk.SnowingColorIndexB = (byte)EnvRSnowingIndex.Value;
-                _envrChunk.UnknownColorIndexB = (byte)EnvRUnknownIndex.Value;
+                if (sender == EnvRClearSkiesIndex)
+                    _envrChunk.ClearColorIndexB = (byte)EnvRClearSkiesIndex.Value;
+                if (sender == EnvRRainingIndex)
+                    _envrChunk.RainingColorIndexB = (byte)EnvRRainingIndex.Value;
+                if (sender == EnvRSnowingIndex)
+                    _envrChunk.SnowingColorIndexB = (byte)EnvRSnowingIndex.Value;
+                if (sender == EnvRUnknownIndex)
+                    _envrChunk.UnknownColorIndexB = (byte)EnvRUnknownIndex.Value;
             }
         }
 
@@ -394,9 +382,6 @@ namespace WWActorEdit.Forms
         /// </summary>
         private void PaleVirtIndex_ValueChanged(object sender, EventArgs e)
         {
-            if (_fileIsLoading)
-                return;
-
             _paleChunk.VirtIndex = (byte) PaleVirtIndex.Value;
         }
 
@@ -405,11 +390,10 @@ namespace WWActorEdit.Forms
         /// </summary>
         private void VirtUnknownIndex_ValueChanged(object sender, EventArgs e)
         {
-            if (_fileIsLoading)
-                return;
-
-            _virtChunk.HorizonCloudColor.A = (byte) VirtUnknown1Index.Value;
-            _virtChunk.CenterCloudColor.A = (byte)VirtUnknown2Index.Value;
+            if(sender == VirtUnknown1Index)
+                _virtChunk.HorizonCloudColor.A = (byte) VirtUnknown1Index.Value;
+            if(sender == VirtUnknown2Index)
+                _virtChunk.CenterCloudColor.A = (byte)VirtUnknown2Index.Value;
         }
 
         /// <summary>
@@ -417,15 +401,18 @@ namespace WWActorEdit.Forms
         /// </summary>
         private void ColoGroupBoxIndex_ValueChanged(object sender, EventArgs e)
         {
-            if (_fileIsLoading)
-                return;
-
-            _coloChunk.DawnIndex = (byte) ColoDawnIndex.Value;
-            _coloChunk.MorningIndex = (byte) ColoMorningIndex.Value;
-            _coloChunk.NoonIndex = (byte) ColoNoonIndex.Value;
-            _coloChunk.AfternoonIndex = (byte) ColoAfternoonIndex.Value;
-            _coloChunk.DuskIndex = (byte) ColoDuskIndex.Value;
-            _coloChunk.NightIndex = (byte) ColoNightIndex.Value;
+            if(sender == ColoDawnIndex)
+                _coloChunk.DawnIndex = (byte) ColoDawnIndex.Value;
+            if(sender == ColoMorningIndex)
+                _coloChunk.MorningIndex = (byte) ColoMorningIndex.Value;
+            if(sender == ColoNoonIndex)
+                _coloChunk.NoonIndex = (byte) ColoNoonIndex.Value;
+            if(sender == ColoAfternoonIndex)
+                _coloChunk.AfternoonIndex = (byte) ColoAfternoonIndex.Value;
+            if(sender == ColoDuskIndex)
+                _coloChunk.DuskIndex = (byte) ColoDuskIndex.Value;
+            if(sender == ColoNightIndex)
+                _coloChunk.NightIndex = (byte) ColoNightIndex.Value;
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -435,7 +422,9 @@ namespace WWActorEdit.Forms
 
             foreach (DZSChunkHeader chunk in _data.ChunkHeaders)
             {
-                FileStream fs = File.Create(chunk.Tag, 2048, FileOptions.None);
+                //By creating the file this way we can still write to it while it's open in another program (ie:
+                //a hex editor) and then the hex editor can notice the change and reload.
+                FileStream fs = File.Open(chunk.Tag, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
                 BinaryWriter bw = new BinaryWriter(fs);
 
                 for (int i = 0; i < chunk.ElementCount; i++)

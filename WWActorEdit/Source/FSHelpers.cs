@@ -48,5 +48,10 @@ namespace WWActorEdit.Source
 
             bWriter.Write(stringAsBytes);
         }
+
+        public static void WriteArray(BinaryWriter binaryWriter, byte[] value)
+        {
+            binaryWriter.Write(value);
+        }
     }
 }

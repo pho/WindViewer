@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using WWActorEdit.Kazari;
+using WWActorEdit.Source;
 
 namespace WWActorEdit
 {
@@ -83,7 +84,7 @@ namespace WWActorEdit
     /// </summary>
     public interface IChunkType
     {
-        //void WriteData(FileStream stream);
+        void WriteData(BinaryWriter stream);
     }
 
     #region DZS Chunk File Formats
@@ -93,7 +94,7 @@ namespace WWActorEdit
     /// </summary>
     public class DefaultChunk : IChunkType
     {
-        
+        public void WriteData(BinaryWriter stream) {}
     }
 
     /// <summary>
@@ -126,6 +127,19 @@ namespace WWActorEdit
 
             srcOffset += 8;
         }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.Write8(stream, ClearColorIndexA);
+            FSHelpers.Write8(stream, RainingColorIndexA);
+            FSHelpers.Write8(stream, SnowingColorIndexA);
+            FSHelpers.Write8(stream, UnknownColorIndexA);
+
+            FSHelpers.Write8(stream, ClearColorIndexB);
+            FSHelpers.Write8(stream, RainingColorIndexB);
+            FSHelpers.Write8(stream, SnowingColorIndexB);
+            FSHelpers.Write8(stream, UnknownColorIndexB);
+        }
     }
 
     /// <summary>
@@ -152,6 +166,16 @@ namespace WWActorEdit
 
             srcOffset += 6;
         }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.Write8(stream, DawnIndex);
+            FSHelpers.Write8(stream, MorningIndex);
+            FSHelpers.Write8(stream, NoonIndex);
+            FSHelpers.Write8(stream, AfternoonIndex);
+            FSHelpers.Write8(stream, DuskIndex);
+            FSHelpers.Write8(stream, NightIndex);
+        }
     }
 
     /// <summary>
@@ -171,7 +195,8 @@ namespace WWActorEdit
 
         public byte VirtIndex; //Index of the Virt entry to use for Skybox Colors
 
-        public ByteColor OceanFadeInto;
+        public ByteColorAlpha OceanFadeInto;
+        public ByteColorAlpha ShoreFadeInto;
 
         public PaleChunk(byte[] data, ref int srcOffset)
         {
@@ -189,8 +214,36 @@ namespace WWActorEdit
             VirtIndex = Helpers.Read8(data, srcOffset);
             srcOffset += 2; //More unused values
 
-            OceanFadeInto = new ByteColor(data, ref srcOffset);
-            srcOffset += 6;
+            OceanFadeInto = new ByteColorAlpha(data, ref srcOffset);
+            ShoreFadeInto = new ByteColorAlpha(data, ref srcOffset);
+            srcOffset += 1;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteArray(stream, ActorAmbient.GetBytes());
+            FSHelpers.WriteArray(stream, ShadowColor.GetBytes());
+            FSHelpers.WriteArray(stream, RoomFillColor.GetBytes());
+            FSHelpers.WriteArray(stream, RoomAmbient.GetBytes());
+            FSHelpers.WriteArray(stream, WaveColor.GetBytes());
+            FSHelpers.WriteArray(stream, OceanColor.GetBytes());
+            
+            //Write our 6 unknown bytes in as FF FF FF for now.
+            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0xFFFFFF));
+            byte[] test = BitConverter.GetBytes(0xFFFFFF);
+            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0xFFFFFF));
+
+            FSHelpers.WriteArray(stream, DoorwayColor.GetBytes());
+
+            //Unknown 3
+            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0xFFFFFF));
+
+            FSHelpers.WriteArray(stream, FogColor.GetBytes());
+            FSHelpers.Write8(stream, VirtIndex);
+            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0xFFFF));//Two bytes padding on Virt Index
+
+            FSHelpers.WriteArray(stream, OceanFadeInto.GetBytes());
+            FSHelpers.WriteArray(stream, ShoreFadeInto.GetBytes());
         }
     }
 
@@ -221,6 +274,23 @@ namespace WWActorEdit
             //More apparently unused bytes.
             srcOffset += 3;
         }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            //Fixed values that doesn't seem to change.
+            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0x80000000));
+            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0x80000000));
+            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0x80000000));
+            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0x80000000));
+
+            FSHelpers.WriteArray(stream, HorizonCloudColor.GetBytes());
+            FSHelpers.WriteArray(stream, CenterCloudColor.GetBytes());
+            FSHelpers.WriteArray(stream, CenterSkyColor.GetBytes());
+            FSHelpers.WriteArray(stream, HorizonColor.GetBytes());
+            FSHelpers.WriteArray(stream, SkyFadeTo.GetBytes());
+
+            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0xFFFFFF)); //Padding
+        }
     }
 
 
@@ -240,6 +310,16 @@ namespace WWActorEdit
             B = Helpers.Read8(data, srcOffset + 2);
 
             srcOffset += 3;
+        }
+
+        public byte[] GetBytes()
+        {
+            byte[] bytes = new byte[3];
+            bytes[0] = R;
+            bytes[1] = G;
+            bytes[2] = B;
+
+            return bytes;
         }
     }
 
@@ -268,6 +348,17 @@ namespace WWActorEdit
             G = color.G;
             B = color.B;
             A = 0;
+        }
+
+        public byte[] GetBytes()
+        {
+            byte[] bytes = new byte[4];
+            bytes[0] = R;
+            bytes[1] = G;
+            bytes[2] = B;
+            bytes[3] = A;
+
+            return bytes;
         }
     }
     #endregion
