@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using WWActorEdit.Kazari;
 
 namespace WWActorEdit
@@ -82,7 +83,7 @@ namespace WWActorEdit
     /// </summary>
     public interface IChunkType
     {
-        
+        //void WriteData(FileStream stream);
     }
 
     #region DZS Chunk File Formats

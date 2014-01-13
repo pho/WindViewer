@@ -70,7 +70,14 @@
     <Compile Include="Forms\EnvironmentLightingEditorForm.Designer.cs">
       <DependentUpon>EnvironmentLightingEditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RoomExitEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RoomExitEditor.Designer.cs">
+      <DependentUpon>RoomExitEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\DZS\FileFormat.cs" />
+    <Compile Include="Source\FSHelpers.cs" />
     <Compile Include="ZeldaArc.cs" />
     <Compile Include="Forms\ExceptionForm.cs">
       <SubType>Form</SubType>
@@ -136,6 +143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EnvironmentLightingEditorForm.resx">
       <DependentUpon>EnvironmentLightingEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RoomExitEditor.resx">
+      <DependentUpon>RoomExitEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Kazari\DZx\ACTRControl.resx">
       <DependentUpon>ACTRControl.cs</DependentUpon>
