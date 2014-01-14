@@ -28,4 +28,4 @@ WindViewer is written using Visual Studios 2012. This means the project solution
  
 # Chat: #
   
-  We've been checking out HipChat. It has a maximum of 5 users (of which we use most already!) so if you're interested in joining us open an issue on the project and we'll get in touch with you.
+  We've been checking out HipChat. You can join us here: https://www.hipchat.com/gbubSdvIA
