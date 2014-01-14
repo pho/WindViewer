@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using OpenTK;
 using WWActorEdit.Kazari;
 using WWActorEdit.Source;
 
@@ -13,6 +14,8 @@ namespace WWActorEdit
         EnvR, Colo, Pale, Virt,
         /* Stage and Room Exits */
         SCLS,
+        /* Player Spawn Points */
+        PLYR,
 
     }
     public class DZSFormat
@@ -46,6 +49,7 @@ namespace WWActorEdit
                         case "Pale": chunk = new PaleChunk(); break;
                         case "Virt": chunk = new VirtChunk(); break;
                         case "SCLS": chunk = new SclsChunk(); break;
+                        case "PLYR": chunk = new PlyrChunk(); break;
                         default:
                             chunk = new DefaultChunk();
                             break;
@@ -352,6 +356,10 @@ namespace WWActorEdit
         }
     }
 
+    /// <summary>
+    /// The SCLS Chunk defines information about exits on a map. It is pointed to by
+    /// the maps collision data (which supplies the actual positions)
+    /// </summary>
     public class SclsChunk : IChunkType
     {
         public string DestinationName;
@@ -381,7 +389,85 @@ namespace WWActorEdit
             FSHelpers.Write8(stream, UnknownPadding);
         }
     }
+
+
+    public class PlyrChunk : IChunkType
+    {
+        public string Name; //"Link"
+        public byte EventIndex; //Spcifies an event from the DZS file to play upon spawn. FF = no event.
+        public byte Unknown1; //Padding?
+        public byte SpawnType; //How Link enters the room.
+        public byte RoomNumber; //Room number the spawn is in.
+        public Vector3 Position;
+        public HalfRotation Rotation;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            Name = Helpers.ReadString(data, srcOffset, 8);
+            EventIndex = Helpers.Read8(data, srcOffset + 8);
+            Unknown1 = Helpers.Read8(data, srcOffset + 9);
+            SpawnType = Helpers.Read8(data, srcOffset + 10);
+            RoomNumber = Helpers.Read8(data, srcOffset + 11);
+
+            Position.X = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 12));
+            Position.Y = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 16));
+            Position.Z = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 20));
+
+            srcOffset += 24;
+            Rotation = new HalfRotation(data, ref srcOffset);
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteString(stream, Name, 8);
+            FSHelpers.Write8(stream, EventIndex);
+            FSHelpers.Write8(stream, Unknown1);
+            FSHelpers.Write8(stream, SpawnType);
+            FSHelpers.Write8(stream, RoomNumber);
+            FSHelpers.WriteFloat(stream, Position.X);
+            FSHelpers.WriteFloat(stream, Position.Y);
+            FSHelpers.WriteFloat(stream, Position.Z);
+            FSHelpers.Write16(stream, (ushort)Rotation.X);
+            FSHelpers.Write16(stream, (ushort) Rotation.Y);
+            FSHelpers.Write16(stream, (ushort) Rotation.Z);
+        }
+
+    }
     #endregion
+
+    public class HalfRotation
+    {
+        public short X, Y, Z;
+
+        public HalfRotation()
+        {
+            X = Y = Z = 0;
+        }
+
+        public HalfRotation(byte[] data, ref int srcOffset)
+        {
+            X = (short) Helpers.Read16(data, srcOffset);
+            Y = (short) Helpers.Read16(data, srcOffset);
+            Z = (short) Helpers.Read16(data, srcOffset);
+        }
+
+        public Vector3 ToDegrees()
+        {
+            Vector3 rot = new Vector3();
+            rot.X = X/182.04444444444f;
+            rot.Y = Y/182.04444444444f;
+            rot.Z = Z/182.04444444444f;
+
+            return rot;
+        }
+
+        public void SetDegrees(Vector3 rot)
+        {
+            X = (short) (rot.X*182.04444444444f);
+            Y = (short) (rot.Y*182.04444444444f);
+            Z = (short) (rot.Z*182.04444444444f);
+        }
+    }
 
     public class ByteColor
     {

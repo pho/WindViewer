@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Schema;
+using WWActorEdit.Kazari;
 
 namespace WWActorEdit.Source
 {
@@ -12,6 +13,7 @@ namespace WWActorEdit.Source
     /// </summary>
     class FSHelpers
     {
+        #region Writing
         public static void Write8(BinaryWriter bWriter, byte value)
         {
             bWriter.Write(value);
@@ -53,6 +55,15 @@ namespace WWActorEdit.Source
         {
             binaryWriter.Write(value);
         }
+
+        public static void WriteFloat(BinaryWriter binaryWriter, float value)
+        {
+            byte[] reversed = BitConverter.GetBytes(value);
+            Array.Reverse(reversed);
+
+            binaryWriter.Write(reversed);
+        }
+        #endregion
 
         /// <summary>
         /// Used to easily convert "0xFFFFFF" into 3 bytes, each with the value of FF.
