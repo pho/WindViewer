@@ -48,6 +48,8 @@
             this.renderStageActorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.autoCenterCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.environmentLightingEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showReadmeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
@@ -58,8 +60,6 @@
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.environmentLightingEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -239,6 +239,21 @@
             this.autoCenterCameraToolStripMenuItem.ToolTipText = "Automatically center camera on selected chunk element when applicable (ex. PLYR, " +
     "ACTR, TGDR).";
             // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.environmentLightingEditorToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Text = "&Tools";
+            // 
+            // environmentLightingEditorToolStripMenuItem
+            // 
+            this.environmentLightingEditorToolStripMenuItem.Name = "environmentLightingEditorToolStripMenuItem";
+            this.environmentLightingEditorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.environmentLightingEditorToolStripMenuItem.Text = "&Environment Lighting Editor";
+            this.environmentLightingEditorToolStripMenuItem.Click += new System.EventHandler(this.environmentLightingEditorToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -321,21 +336,6 @@
             this.panel2.Size = new System.Drawing.Size(770, 43);
             this.panel2.TabIndex = 6;
             this.panel2.Visible = false;
-            // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.environmentLightingEditorToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.toolsToolStripMenuItem.Text = "&Tools";
-            // 
-            // environmentLightingEditorToolStripMenuItem
-            // 
-            this.environmentLightingEditorToolStripMenuItem.Name = "environmentLightingEditorToolStripMenuItem";
-            this.environmentLightingEditorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
-            this.environmentLightingEditorToolStripMenuItem.Text = "&Environment Lighting Editor";
-            this.environmentLightingEditorToolStripMenuItem.Click += new System.EventHandler(this.environmentLightingEditorToolStripMenuItem_Click);
             // 
             // MainForm
             // 

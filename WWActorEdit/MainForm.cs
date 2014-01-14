@@ -149,7 +149,7 @@ namespace WWActorEdit
         {
             if (_glContextLoaded == false) return;
 
-            GL.ClearColor(Color.FromArgb(255, 51, 128, 179));
+            GL.ClearColor(Color.DodgerBlue);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             Helpers.Enable3DRendering(new SizeF(glControl.Width, glControl.Height));
 
@@ -257,10 +257,6 @@ namespace WWActorEdit
             }
             else
             {
-                Console.WriteLine(
-                    "Failed to determine room number from file name. Expected: Room<x>.arc or R<xx>_00, got: " +
-                    fileName);
-                
                 InvalidRoomNumber popup = new InvalidRoomNumber();
                 popup.DescriptionLabel.Text =
                     "Failed to determine room number from file name." + Environment.NewLine + "Expected: Room<x>.arc or R<xx>_00, got: " +
