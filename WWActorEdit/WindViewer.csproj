@@ -99,6 +99,7 @@
     </Compile>
     <Compile Include="Source\DZS\FileFormat.cs" />
     <Compile Include="Source\FSHelpers.cs" />
+    <Compile Include="Source\StickyWindow.cs" />
     <Compile Include="ZeldaArc.cs" />
     <Compile Include="Forms\ExceptionForm.cs">
       <SubType>Form</SubType>

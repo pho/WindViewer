@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Blue.Windows;
 using WWActorEdit.Kazari;
 using WWActorEdit.Kazari.DZx;
 using WWActorEdit.Source;
@@ -29,13 +30,17 @@ namespace WWActorEdit.Forms
         private PaleChunk _paleChunk;
         private VirtChunk _virtChunk;
 
+        //Used for "dockable" WinForms
+        private StickyWindow _stickyWindow;
+
         public EnvironmentLightingEditorForm(MainForm parent)
         {
             InitializeComponent();
 
             _mainForm = parent;
-        }
 
+            _stickyWindow = new StickyWindow(this);
+        }
 
         private void LoadDZSForStage(ZeldaArc stage)
         {

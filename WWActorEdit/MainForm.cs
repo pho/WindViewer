@@ -11,7 +11,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Globalization;
-
+using Blue.Windows;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -36,10 +36,15 @@ namespace WWActorEdit
         //Has the GL Control been loaded? Used to prevent rendering before GL is Initialized.
         private bool _glContextLoaded;
 
+        //Used for "dockable" WinForms
+        private StickyWindow _stickyWindow;
+
         public MainForm()
         {
             //Initialize the WinForm
-            InitializeComponent(); 
+            InitializeComponent();
+
+            _stickyWindow = new StickyWindow(this);
         }
 
         #region GLControl

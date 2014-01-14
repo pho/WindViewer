@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Windows.Forms;
+using Blue.Windows;
 using OpenTK;
 
 namespace WWActorEdit.Forms
@@ -18,11 +19,17 @@ namespace WWActorEdit.Forms
         private DZSFormat _data;
         private PlyrChunk _plyrChunk;
 
+        //Used for "dockable" WinForms
+        private StickyWindow _stickyWindow;
+
         public SpawnpointEditor(MainForm parent)
         {
             InitializeComponent();
             _mainForm = parent;
+            _stickyWindow = new StickyWindow(this);
         }
+
+ 
 
         private void SpawnpointEditor_Load(object sender, EventArgs e)
         {

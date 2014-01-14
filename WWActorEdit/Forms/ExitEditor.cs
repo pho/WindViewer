@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Blue.Windows;
 using WWActorEdit.Kazari.DZx;
 
 namespace WWActorEdit.Forms
@@ -19,10 +20,14 @@ namespace WWActorEdit.Forms
         //Change this and then call UpdateSCLSControlsFromFile to update the UI.
         private SclsChunk _sclsChunk;
 
+        //Used for "dockable" WinForms
+        private StickyWindow _stickyWindow;
+
         public ExitEditor(MainForm mainForm)
         {
             InitializeComponent();
             _mainForm = mainForm;
+            _stickyWindow = new StickyWindow(this);
         }
 
         /// <summary>
