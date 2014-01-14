@@ -524,5 +524,11 @@ namespace WWActorEdit
         {
             System.Diagnostics.Process.Start(@"https://github.com/pho/WindViewer/wiki/");
         }
+
+        private void spawnEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SpawnpointEditor popup = new SpawnpointEditor(this);
+            popup.Show(this);
+        }
     }
 }

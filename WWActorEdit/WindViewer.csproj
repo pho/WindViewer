@@ -91,6 +91,12 @@
     <Compile Include="Forms\ExitEditor.Designer.cs">
       <DependentUpon>ExitEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SpawnpointEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SpawnpointEditor.Designer.cs">
+      <DependentUpon>SpawnpointEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\DZS\FileFormat.cs" />
     <Compile Include="Source\FSHelpers.cs" />
     <Compile Include="ZeldaArc.cs" />
@@ -161,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ExitEditor.resx">
       <DependentUpon>ExitEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SpawnpointEditor.resx">
+      <DependentUpon>SpawnpointEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Kazari\DZx\ACTRControl.resx">
       <DependentUpon>ACTRControl.cs</DependentUpon>

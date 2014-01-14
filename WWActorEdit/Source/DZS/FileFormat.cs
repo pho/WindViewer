@@ -390,7 +390,9 @@ namespace WWActorEdit
         }
     }
 
-
+    /// <summary>
+    /// The Plyr (Player) chunk defines spawn points for Link.
+    /// </summary>
     public class PlyrChunk : IChunkType
     {
         public string Name; //"Link"
@@ -415,6 +417,8 @@ namespace WWActorEdit
 
             srcOffset += 24;
             Rotation = new HalfRotation(data, ref srcOffset);
+         
+            srcOffset += 2; //Two bytes Padding
         }
 
         public void WriteData(BinaryWriter stream)
@@ -430,6 +434,8 @@ namespace WWActorEdit
             FSHelpers.Write16(stream, (ushort)Rotation.X);
             FSHelpers.Write16(stream, (ushort) Rotation.Y);
             FSHelpers.Write16(stream, (ushort) Rotation.Z);
+
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0xFFFF, 2));
         }
 
     }
@@ -449,6 +455,8 @@ namespace WWActorEdit
             X = (short) Helpers.Read16(data, srcOffset);
             Y = (short) Helpers.Read16(data, srcOffset);
             Z = (short) Helpers.Read16(data, srcOffset);
+
+            srcOffset += 6;
         }
 
         public Vector3 ToDegrees()
