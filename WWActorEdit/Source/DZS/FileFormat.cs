@@ -1,10 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using OpenTK;
 using WWActorEdit.Kazari;
+using WWActorEdit.Source;
 
 namespace WWActorEdit
 {
+    public enum DZSChunkTypes
+    {
+        /* Stage Environment Lighting */
+        EnvR, Colo, Pale, Virt,
+        /* Stage and Room Exits */
+        SCLS,
+        /* Player Spawn Points */
+        PLYR,
+
+    }
     public class DZSFormat
     {
         public DZSHeader Header;
@@ -31,19 +44,32 @@ namespace WWActorEdit
 
                     switch (chunkHeader.Tag)
                     {
-                        case "EnvR": chunk = new EnvRChunk(data, ref chunkHeader.ChunkOffset); break;
-                        case "Colo": chunk = new ColoChunk(data, ref chunkHeader.ChunkOffset); break;
-                        case "Pale": chunk = new PaleChunk(data, ref chunkHeader.ChunkOffset); break;
-                        case "Virt": chunk = new VirtChunk(data, ref chunkHeader.ChunkOffset); break;
+                        case "EnvR": chunk = new EnvRChunk(); break;
+                        case "Colo": chunk = new ColoChunk(); break;
+                        case "Pale": chunk = new PaleChunk(); break;
+                        case "Virt": chunk = new VirtChunk(); break;
+                        case "SCLS": chunk = new SclsChunk(); break;
+                        case "PLYR": chunk = new PlyrChunk(); break;
                         default:
-                            Console.WriteLine("Unsupported Chunk Type: " + chunkHeader.Tag + ", ignoring...");
                             chunk = new DefaultChunk();
                             break;
                     }
 
+                    chunk.LoadData(data, ref chunkHeader.ChunkOffset);
                     chunkHeader.ChunkElements.Add(chunk);
                 }
             }
+        }
+
+        public List<IChunkType> GetChunksOfType(DZSChunkTypes type)
+        {
+            foreach (DZSChunkHeader chunkHeader in ChunkHeaders)
+            {
+                if (chunkHeader.Tag == type.ToString())
+                    return chunkHeader.ChunkElements;
+            }
+
+            return null;
         }
     }
 
@@ -82,7 +108,8 @@ namespace WWActorEdit
     /// </summary>
     public interface IChunkType
     {
-        
+        void WriteData(BinaryWriter stream);
+        void LoadData(byte[] data, ref int srcOffset);
     }
 
     #region DZS Chunk File Formats
@@ -92,7 +119,8 @@ namespace WWActorEdit
     /// </summary>
     public class DefaultChunk : IChunkType
     {
-        
+        public void LoadData(byte[] data, ref int srcOffset) {}
+        public void WriteData(BinaryWriter stream) {}
     }
 
     /// <summary>
@@ -111,7 +139,13 @@ namespace WWActorEdit
         public byte SnowingColorIndexB;
         public byte UnknownColorIndexB;
 
-        public EnvRChunk(byte[] data, ref int srcOffset)
+        public EnvRChunk()
+        {
+            ClearColorIndexA = RainingColorIndexA = SnowingColorIndexA = UnknownColorIndexA = 0;
+            ClearColorIndexB = RainingColorIndexB = SnowingColorIndexB = UnknownColorIndexB = 0;
+        }
+
+        public void LoadData(byte[] data, ref int srcOffset)
         {
             ClearColorIndexA = Helpers.Read8(data, srcOffset + 0);
             RainingColorIndexA = Helpers.Read8(data, srcOffset + 1);
@@ -124,6 +158,19 @@ namespace WWActorEdit
             UnknownColorIndexB = Helpers.Read8(data, srcOffset + 7);
 
             srcOffset += 8;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.Write8(stream, ClearColorIndexA);
+            FSHelpers.Write8(stream, RainingColorIndexA);
+            FSHelpers.Write8(stream, SnowingColorIndexA);
+            FSHelpers.Write8(stream, UnknownColorIndexA);
+
+            FSHelpers.Write8(stream, ClearColorIndexB);
+            FSHelpers.Write8(stream, RainingColorIndexB);
+            FSHelpers.Write8(stream, SnowingColorIndexB);
+            FSHelpers.Write8(stream, UnknownColorIndexB);
         }
     }
 
@@ -140,7 +187,12 @@ namespace WWActorEdit
         public byte DuskIndex;
         public byte NightIndex;
 
-        public ColoChunk(byte[] data, ref int srcOffset)
+        public ColoChunk()
+        {
+            DawnIndex = MorningIndex = NoonIndex = AfternoonIndex = DuskIndex = NightIndex = 0;
+        }
+
+        public void LoadData(byte[] data, ref int srcOffset)
         {
             DawnIndex =     Helpers.Read8(data, srcOffset + 0);
             MorningIndex =  Helpers.Read8(data, srcOffset + 1);
@@ -150,6 +202,16 @@ namespace WWActorEdit
             NightIndex =    Helpers.Read8(data, srcOffset + 5);
 
             srcOffset += 6;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.Write8(stream, DawnIndex);
+            FSHelpers.Write8(stream, MorningIndex);
+            FSHelpers.Write8(stream, NoonIndex);
+            FSHelpers.Write8(stream, AfternoonIndex);
+            FSHelpers.Write8(stream, DuskIndex);
+            FSHelpers.Write8(stream, NightIndex);
         }
     }
 
@@ -165,14 +227,38 @@ namespace WWActorEdit
         public ByteColor RoomAmbient;
         public ByteColor WaveColor;
         public ByteColor OceanColor;
+        public ByteColor UnknownColor1; //Unknown
+        public ByteColor UnknownColor2; //Unknown
         public ByteColor DoorwayColor; //Tints the 'Light' mesh behind doors for entering/exiting to the exterior
+        public ByteColor UnknownColor3; //Unknown
         public ByteColor FogColor;
 
         public byte VirtIndex; //Index of the Virt entry to use for Skybox Colors
 
-        public ByteColor OceanFadeInto;
+        public ByteColorAlpha OceanFadeInto;
+        public ByteColorAlpha ShoreFadeInto;
 
-        public PaleChunk(byte[] data, ref int srcOffset)
+        public PaleChunk()
+        {
+            ActorAmbient = new ByteColor();
+            ShadowColor = new ByteColor();
+            RoomFillColor = new ByteColor();
+            RoomAmbient = new ByteColor();
+            WaveColor = new ByteColor();
+            OceanColor = new ByteColor();
+            UnknownColor1 = new ByteColor();
+            UnknownColor2 = new ByteColor();
+            DoorwayColor = new ByteColor();
+            UnknownColor3 = new ByteColor();
+            FogColor = new ByteColor();
+
+            VirtIndex = 0;
+
+            OceanFadeInto = new ByteColorAlpha();
+            ShoreFadeInto = new ByteColorAlpha();
+        }
+
+        public void LoadData(byte[] data, ref int srcOffset)
         {
             ActorAmbient = new ByteColor(data, ref srcOffset);
             ShadowColor = new ByteColor(data, ref srcOffset);
@@ -180,16 +266,38 @@ namespace WWActorEdit
             RoomAmbient = new ByteColor(data, ref srcOffset);
             WaveColor = new ByteColor(data, ref srcOffset);
             OceanColor = new ByteColor(data, ref srcOffset);
-            srcOffset += 6; //More unused values
+            UnknownColor1 = new ByteColor(data, ref srcOffset); //Unknown
+            UnknownColor2 = new ByteColor(data, ref srcOffset); //Unknown
             DoorwayColor = new ByteColor(data, ref srcOffset);
-            srcOffset += 3;
+            UnknownColor3 = new ByteColor(data, ref srcOffset); //Unknown
             FogColor = new ByteColor(data, ref srcOffset);
 
             VirtIndex = Helpers.Read8(data, srcOffset);
-            srcOffset += 2; //More unused values
+            srcOffset += 3; //Read8 + 2x Padding
 
-            OceanFadeInto = new ByteColor(data, ref srcOffset);
-            srcOffset += 6;
+            OceanFadeInto = new ByteColorAlpha(data, ref srcOffset);
+            ShoreFadeInto = new ByteColorAlpha(data, ref srcOffset);
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteArray(stream, ActorAmbient.GetBytes());
+            FSHelpers.WriteArray(stream, ShadowColor.GetBytes());
+            FSHelpers.WriteArray(stream, RoomFillColor.GetBytes());
+            FSHelpers.WriteArray(stream, RoomAmbient.GetBytes());
+            FSHelpers.WriteArray(stream, WaveColor.GetBytes());
+            FSHelpers.WriteArray(stream, OceanColor.GetBytes());
+            FSHelpers.WriteArray(stream, UnknownColor1.GetBytes()); //Unknown
+            FSHelpers.WriteArray(stream, UnknownColor2.GetBytes()); //Unknown
+            FSHelpers.WriteArray(stream, DoorwayColor.GetBytes());
+            FSHelpers.WriteArray(stream, UnknownColor3.GetBytes()); //Unknown
+
+            FSHelpers.WriteArray(stream, FogColor.GetBytes());
+            FSHelpers.Write8(stream, VirtIndex);
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0x0000, 2));//Two bytes padding on Virt Index
+
+            FSHelpers.WriteArray(stream, OceanFadeInto.GetBytes());
+            FSHelpers.WriteArray(stream, ShoreFadeInto.GetBytes());
         }
     }
 
@@ -205,7 +313,16 @@ namespace WWActorEdit
         public ByteColor HorizonColor;
         public ByteColor SkyFadeTo; //Color to fade to from CenterSky. 
 
-        public VirtChunk(byte[] data, ref int srcOffset)
+        public VirtChunk() 
+        {
+            HorizonCloudColor = new ByteColorAlpha();
+            CenterCloudColor = new ByteColorAlpha();
+            CenterSkyColor = new ByteColor();
+            HorizonColor = new ByteColor();
+            SkyFadeTo = new ByteColor();
+        }
+
+        public void LoadData(byte[] data, ref int srcOffset)
         {
             //First 16 bytes are 80 00 00 00 (repeated 4 times). Unknown why.
             srcOffset += 16;
@@ -220,8 +337,145 @@ namespace WWActorEdit
             //More apparently unused bytes.
             srcOffset += 3;
         }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            //Fixed values that doesn't seem to change.
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0x80000000, 4));
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0x80000000, 4));
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0x80000000, 4));
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0x80000000, 4));
+
+            FSHelpers.WriteArray(stream, HorizonCloudColor.GetBytes());
+            FSHelpers.WriteArray(stream, CenterCloudColor.GetBytes());
+            FSHelpers.WriteArray(stream, CenterSkyColor.GetBytes());
+            FSHelpers.WriteArray(stream, HorizonColor.GetBytes());
+            FSHelpers.WriteArray(stream, SkyFadeTo.GetBytes());
+
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0xFFFFFF, 3)); //3 Bytes Padding
+        }
     }
 
+    /// <summary>
+    /// The SCLS Chunk defines information about exits on a map. It is pointed to by
+    /// the maps collision data (which supplies the actual positions)
+    /// </summary>
+    public class SclsChunk : IChunkType
+    {
+        public string DestinationName;
+        public byte SpawnNumber;
+        public byte DestinationRoomNumber;
+        public byte ExitType;
+        public byte UnknownPadding;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            DestinationName = Helpers.ReadString(data, srcOffset, 8);
+            SpawnNumber = Helpers.Read8(data, srcOffset + 8);
+            DestinationRoomNumber = Helpers.Read8(data, srcOffset + 9);
+            ExitType = Helpers.Read8(data, srcOffset + 10);
+            UnknownPadding = Helpers.Read8(data, srcOffset + 11);
+
+            srcOffset += 12;
+        }
+
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteString(stream, DestinationName, 8);
+            FSHelpers.Write8(stream, SpawnNumber);
+            FSHelpers.Write8(stream, DestinationRoomNumber);
+            FSHelpers.Write8(stream, ExitType);
+            FSHelpers.Write8(stream, UnknownPadding);
+        }
+    }
+
+    /// <summary>
+    /// The Plyr (Player) chunk defines spawn points for Link.
+    /// </summary>
+    public class PlyrChunk : IChunkType
+    {
+        public string Name; //"Link"
+        public byte EventIndex; //Spcifies an event from the DZS file to play upon spawn. FF = no event.
+        public byte Unknown1; //Padding?
+        public byte SpawnType; //How Link enters the room.
+        public byte RoomNumber; //Room number the spawn is in.
+        public Vector3 Position;
+        public HalfRotation Rotation;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            Name = Helpers.ReadString(data, srcOffset, 8);
+            EventIndex = Helpers.Read8(data, srcOffset + 8);
+            Unknown1 = Helpers.Read8(data, srcOffset + 9);
+            SpawnType = Helpers.Read8(data, srcOffset + 10);
+            RoomNumber = Helpers.Read8(data, srcOffset + 11);
+
+            Position.X = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 12));
+            Position.Y = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 16));
+            Position.Z = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 20));
+
+            srcOffset += 24;
+            Rotation = new HalfRotation(data, ref srcOffset);
+         
+            srcOffset += 2; //Two bytes Padding
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteString(stream, Name, 8);
+            FSHelpers.Write8(stream, EventIndex);
+            FSHelpers.Write8(stream, Unknown1);
+            FSHelpers.Write8(stream, SpawnType);
+            FSHelpers.Write8(stream, RoomNumber);
+            FSHelpers.WriteFloat(stream, Position.X);
+            FSHelpers.WriteFloat(stream, Position.Y);
+            FSHelpers.WriteFloat(stream, Position.Z);
+            FSHelpers.Write16(stream, (ushort)Rotation.X);
+            FSHelpers.Write16(stream, (ushort) Rotation.Y);
+            FSHelpers.Write16(stream, (ushort) Rotation.Z);
+
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0xFFFF, 2));
+        }
+
+    }
+    #endregion
+
+    public class HalfRotation
+    {
+        public short X, Y, Z;
+
+        public HalfRotation()
+        {
+            X = Y = Z = 0;
+        }
+
+        public HalfRotation(byte[] data, ref int srcOffset)
+        {
+            X = (short) Helpers.Read16(data, srcOffset);
+            Y = (short) Helpers.Read16(data, srcOffset);
+            Z = (short) Helpers.Read16(data, srcOffset);
+
+            srcOffset += 6;
+        }
+
+        public Vector3 ToDegrees()
+        {
+            Vector3 rot = new Vector3();
+            rot.X = X/182.04444444444f;
+            rot.Y = Y/182.04444444444f;
+            rot.Z = Z/182.04444444444f;
+
+            return rot;
+        }
+
+        public void SetDegrees(Vector3 rot)
+        {
+            X = (short) (rot.X*182.04444444444f);
+            Y = (short) (rot.Y*182.04444444444f);
+            Z = (short) (rot.Z*182.04444444444f);
+        }
+    }
 
     public class ByteColor
     {
@@ -239,6 +493,16 @@ namespace WWActorEdit
             B = Helpers.Read8(data, srcOffset + 2);
 
             srcOffset += 3;
+        }
+
+        public byte[] GetBytes()
+        {
+            byte[] bytes = new byte[3];
+            bytes[0] = R;
+            bytes[1] = G;
+            bytes[2] = B;
+
+            return bytes;
         }
     }
 
@@ -268,6 +532,17 @@ namespace WWActorEdit
             B = color.B;
             A = 0;
         }
+
+        public byte[] GetBytes()
+        {
+            byte[] bytes = new byte[4];
+            bytes[0] = R;
+            bytes[1] = G;
+            bytes[2] = B;
+            bytes[3] = A;
+
+            return bytes;
+        }
     }
-    #endregion
+    
 }

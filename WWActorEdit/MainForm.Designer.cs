@@ -48,18 +48,27 @@
             this.renderStageActorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.autoCenterCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.environmentLightingEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.roomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.sharedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showReadmeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wikiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.environmentLightingEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spawnEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -239,12 +248,79 @@
             this.autoCenterCameraToolStripMenuItem.ToolTipText = "Automatically center camera on selected chunk element when applicable (ex. PLYR, " +
     "ACTR, TGDR).";
             // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stageToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.environmentLightingEditorToolStripMenuItem,
+            this.roomToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.spawnEditorToolStripMenuItem,
+            this.sharedToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.exitEditorToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Text = "&Tools";
+            // 
+            // stageToolStripMenuItem
+            // 
+            this.stageToolStripMenuItem.Enabled = false;
+            this.stageToolStripMenuItem.Name = "stageToolStripMenuItem";
+            this.stageToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.stageToolStripMenuItem.Text = "Stage";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(220, 6);
+            // 
+            // environmentLightingEditorToolStripMenuItem
+            // 
+            this.environmentLightingEditorToolStripMenuItem.Name = "environmentLightingEditorToolStripMenuItem";
+            this.environmentLightingEditorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.environmentLightingEditorToolStripMenuItem.Text = "&Environment Lighting Editor";
+            this.environmentLightingEditorToolStripMenuItem.Click += new System.EventHandler(this.environmentLightingEditorToolStripMenuItem_Click);
+            // 
+            // roomToolStripMenuItem
+            // 
+            this.roomToolStripMenuItem.Enabled = false;
+            this.roomToolStripMenuItem.Name = "roomToolStripMenuItem";
+            this.roomToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.roomToolStripMenuItem.Text = "Room";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(220, 6);
+            // 
+            // sharedToolStripMenuItem
+            // 
+            this.sharedToolStripMenuItem.Enabled = false;
+            this.sharedToolStripMenuItem.Name = "sharedToolStripMenuItem";
+            this.sharedToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.sharedToolStripMenuItem.Text = "Shared";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(220, 6);
+            // 
+            // exitEditorToolStripMenuItem
+            // 
+            this.exitEditorToolStripMenuItem.Name = "exitEditorToolStripMenuItem";
+            this.exitEditorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.exitEditorToolStripMenuItem.Text = "Exit Editor";
+            this.exitEditorToolStripMenuItem.Click += new System.EventHandler(this.exitEditorToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showReadmeToolStripMenuItem,
             this.toolStripMenuItem5,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.wikiToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
@@ -267,6 +343,13 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // wikiToolStripMenuItem
+            // 
+            this.wikiToolStripMenuItem.Name = "wikiToolStripMenuItem";
+            this.wikiToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.wikiToolStripMenuItem.Text = "&Wiki";
+            this.wikiToolStripMenuItem.Click += new System.EventHandler(this.wikiToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -322,20 +405,12 @@
             this.panel2.TabIndex = 6;
             this.panel2.Visible = false;
             // 
-            // toolsToolStripMenuItem
+            // spawnEditorToolStripMenuItem
             // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.environmentLightingEditorToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.toolsToolStripMenuItem.Text = "&Tools";
-            // 
-            // environmentLightingEditorToolStripMenuItem
-            // 
-            this.environmentLightingEditorToolStripMenuItem.Name = "environmentLightingEditorToolStripMenuItem";
-            this.environmentLightingEditorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
-            this.environmentLightingEditorToolStripMenuItem.Text = "&Environment Lighting Editor";
-            this.environmentLightingEditorToolStripMenuItem.Click += new System.EventHandler(this.environmentLightingEditorToolStripMenuItem_Click);
+            this.spawnEditorToolStripMenuItem.Name = "spawnEditorToolStripMenuItem";
+            this.spawnEditorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.spawnEditorToolStripMenuItem.Text = "Spawn Editor";
+            this.spawnEditorToolStripMenuItem.Click += new System.EventHandler(this.spawnEditorToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -397,6 +472,15 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem environmentLightingEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem roomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem exitEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sharedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem wikiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem spawnEditorToolStripMenuItem;
     }
 }
 

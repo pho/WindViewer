@@ -11,7 +11,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Globalization;
-
+using Blue.Windows;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -36,10 +36,15 @@ namespace WWActorEdit
         //Has the GL Control been loaded? Used to prevent rendering before GL is Initialized.
         private bool _glContextLoaded;
 
+        //Used for "dockable" WinForms
+        private StickyWindow _stickyWindow;
+
         public MainForm()
         {
             //Initialize the WinForm
-            InitializeComponent(); 
+            InitializeComponent();
+
+            _stickyWindow = new StickyWindow(this);
         }
 
         #region GLControl
@@ -149,7 +154,7 @@ namespace WWActorEdit
         {
             if (_glContextLoaded == false) return;
 
-            GL.ClearColor(Color.FromArgb(255, 51, 128, 179));
+            GL.ClearColor(Color.DodgerBlue);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             Helpers.Enable3DRendering(new SizeF(glControl.Width, glControl.Height));
 
@@ -257,10 +262,6 @@ namespace WWActorEdit
             }
             else
             {
-                Console.WriteLine(
-                    "Failed to determine room number from file name. Expected: Room<x>.arc or R<xx>_00, got: " +
-                    fileName);
-                
                 InvalidRoomNumber popup = new InvalidRoomNumber();
                 popup.DescriptionLabel.Text =
                     "Failed to determine room number from file name." + Environment.NewLine + "Expected: Room<x>.arc or R<xx>_00, got: " +
@@ -515,6 +516,23 @@ namespace WWActorEdit
         private void environmentLightingEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EnvironmentLightingEditorForm popup = new EnvironmentLightingEditorForm(this);
+            popup.Show(this);
+        }
+
+        private void exitEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExitEditor popup = new ExitEditor(this);
+            popup.Show(this);
+        }
+
+        private void wikiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(@"https://github.com/pho/WindViewer/wiki/");
+        }
+
+        private void spawnEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SpawnpointEditor popup = new SpawnpointEditor(this);
             popup.Show(this);
         }
     }
