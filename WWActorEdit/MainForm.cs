@@ -519,5 +519,10 @@ namespace WWActorEdit
             ExitEditor popup = new ExitEditor(this);
             popup.Show(this);
         }
+
+        private void wikiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(@"https://github.com/pho/WindViewer/wiki/");
+        }
     }
 }

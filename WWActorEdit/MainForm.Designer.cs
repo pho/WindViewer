@@ -67,6 +67,7 @@
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.wikiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -316,7 +317,8 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showReadmeToolStripMenuItem,
             this.toolStripMenuItem5,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.wikiToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
@@ -324,19 +326,19 @@
             // showReadmeToolStripMenuItem
             // 
             this.showReadmeToolStripMenuItem.Name = "showReadmeToolStripMenuItem";
-            this.showReadmeToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.showReadmeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.showReadmeToolStripMenuItem.Text = "&Show Readme";
             this.showReadmeToolStripMenuItem.Click += new System.EventHandler(this.showReadmeToolStripMenuItem_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(146, 6);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(149, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -393,6 +395,13 @@
             this.panel2.Size = new System.Drawing.Size(770, 43);
             this.panel2.TabIndex = 6;
             this.panel2.Visible = false;
+            // 
+            // wikiToolStripMenuItem
+            // 
+            this.wikiToolStripMenuItem.Name = "wikiToolStripMenuItem";
+            this.wikiToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.wikiToolStripMenuItem.Text = "&Wiki";
+            this.wikiToolStripMenuItem.Click += new System.EventHandler(this.wikiToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -461,6 +470,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sharedToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem wikiToolStripMenuItem;
     }
 }
 
