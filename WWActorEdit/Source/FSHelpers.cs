@@ -36,7 +36,7 @@ namespace WWActorEdit.Source
 
             for (int i = 0; i < length; i++)
             {
-                if (i < stringAsBytes.Length - 1)
+                if (i < str.Length)
                 {
                     stringAsBytes[i] = (byte) str[i];
                 }

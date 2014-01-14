@@ -408,18 +408,22 @@ namespace WWActorEdit.Forms
 
             foreach (DZSChunkHeader chunk in _data.ChunkHeaders)
             {
-                //By creating the file this way we can still write to it while it's open in another program (ie:
-                //a hex editor) and then the hex editor can notice the change and reload.
-                FileStream fs = File.Open(chunk.Tag, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
-                BinaryWriter bw = new BinaryWriter(fs);
-
-                for (int i = 0; i < chunk.ElementCount; i++)
+                if (chunk.Tag == "EnvR" || chunk.Tag == "Pale" || chunk.Tag == "Virt" || chunk.Tag == "Colo")
                 {
-                    chunk.ChunkElements[i].WriteData(bw); 
-                }
+                    //By creating the file this way we can still write to it while it's open in another program (ie:
+                    //a hex editor) and then the hex editor can notice the change and reload.
+                    FileStream fs = File.Open(chunk.Tag, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
+                    BinaryWriter bw = new BinaryWriter(fs);
 
-                bw.Close();
-                fs.Close();
+                    for (int i = 0; i < chunk.ElementCount; i++)
+                    {
+                        chunk.ChunkElements[i].WriteData(bw);
+                    }
+
+                    bw.Close();
+                    fs.Close();
+                }
+                
             }
         }
 

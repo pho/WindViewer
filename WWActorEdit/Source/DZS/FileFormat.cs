@@ -9,7 +9,11 @@ namespace WWActorEdit
 {
     public enum DZSChunkTypes
     {
-        EnvR, Colo, Pale, Virt
+        /* Stage Environment Lighting */
+        EnvR, Colo, Pale, Virt,
+        /* Stage and Room Exits */
+        SCLS,
+
     }
     public class DZSFormat
     {
@@ -41,6 +45,7 @@ namespace WWActorEdit
                         case "Colo": chunk = new ColoChunk(); break;
                         case "Pale": chunk = new PaleChunk(); break;
                         case "Virt": chunk = new VirtChunk(); break;
+                        case "SCLS": chunk = new SclsChunk(); break;
                         default:
                             chunk = new DefaultChunk();
                             break;
@@ -347,6 +352,36 @@ namespace WWActorEdit
         }
     }
 
+    public class SclsChunk : IChunkType
+    {
+        public string DestinationName;
+        public byte SpawnNumber;
+        public byte DestinationRoomNumber;
+        public byte ExitType;
+        public byte UnknownPadding;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            DestinationName = Helpers.ReadString(data, srcOffset, 8);
+            SpawnNumber = Helpers.Read8(data, srcOffset + 8);
+            DestinationRoomNumber = Helpers.Read8(data, srcOffset + 9);
+            ExitType = Helpers.Read8(data, srcOffset + 10);
+            UnknownPadding = Helpers.Read8(data, srcOffset + 11);
+
+            srcOffset += 12;
+        }
+
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteString(stream, DestinationName, 8);
+            FSHelpers.Write8(stream, SpawnNumber);
+            FSHelpers.Write8(stream, DestinationRoomNumber);
+            FSHelpers.Write8(stream, ExitType);
+            FSHelpers.Write8(stream, UnknownPadding);
+        }
+    }
+    #endregion
 
     public class ByteColor
     {
@@ -415,5 +450,5 @@ namespace WWActorEdit
             return bytes;
         }
     }
-    #endregion
+    
 }

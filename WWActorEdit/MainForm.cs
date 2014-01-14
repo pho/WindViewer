@@ -513,5 +513,11 @@ namespace WWActorEdit
             EnvironmentLightingEditorForm popup = new EnvironmentLightingEditorForm(this);
             popup.Show(this);
         }
+
+        private void exitEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExitEditor popup = new ExitEditor(this);
+            popup.Show(this);
+        }
     }
 }
