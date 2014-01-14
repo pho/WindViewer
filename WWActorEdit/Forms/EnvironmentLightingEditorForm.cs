@@ -181,11 +181,18 @@ namespace WWActorEdit.Forms
             PaleRoomAmbientColor.BackColor = SetPaleColorBoxColor(_paleChunk.RoomAmbient);
             PaleWaveColor.BackColor = SetPaleColorBoxColor(_paleChunk.WaveColor);
             PaleOceanColor.BackColor = SetPaleColorBoxColor(_paleChunk.OceanColor);
+            PaleUnknown1Color.BackColor = SetPaleColorBoxColor(_paleChunk.UnknownColor1);
+            PaleUnknown2Color.BackColor = SetPaleColorBoxColor(_paleChunk.UnknownColor2);
             PaleDoorwayColor.BackColor = SetPaleColorBoxColor(_paleChunk.DoorwayColor);
+            PaleUnknown3Color.BackColor = SetPaleColorBoxColor(_paleChunk.UnknownColor3);
             PaleFogColor.BackColor = SetPaleColorBoxColor(_paleChunk.FogColor);
 
             PaleVirtIndex.Value = _paleChunk.VirtIndex;
             PaleOceanFadeIntoColor.BackColor = SetPaleColorBoxColor(_paleChunk.OceanFadeInto);
+            PaleOceanFadeAlpha.Value = _paleChunk.OceanFadeInto.A;
+
+            PaleShoreFadeIntoColor.BackColor = SetPaleColorBoxColor(_paleChunk.ShoreFadeInto);
+            PaleShoreFadeAlpha.Value = _paleChunk.ShoreFadeInto.A;
         }
 
         private void UpdateVirtGroupBox()
@@ -273,6 +280,8 @@ namespace WWActorEdit.Forms
         /// <param name="e"></param>
         private void PaleColorField_Click(object sender, EventArgs e)
         {
+            //Set the color in the Color Picker to what it currently is
+            //And then pause the app till we get a new color.
             PictureBox outputBox = (PictureBox) sender;
 
             colorPickerDialog.Color = outputBox.BackColor;
@@ -280,24 +289,41 @@ namespace WWActorEdit.Forms
 
             outputBox.BackColor = colorPickerDialog.Color;
 
-            //Now the fun part. We've modified the PictureBox's color, but we don't know which value that actually refers to in the Pale memor.
-            //I could try and write something using metadata and looking up the value and get all complicated... but I think I'll just re-assign 
-            //all of the Pale color boxes to the Pale memory (ie: reverse of loading it). Hacky? Yes. Lazy? Yes. Works? Yes.
-            _paleChunk.ActorAmbient = SetPaleMemoryColor(PaleActorAmbientColor);
-            _paleChunk.RoomFillColor = SetPaleMemoryColor(PaleRoomFillColor);
-            _paleChunk.RoomAmbient = SetPaleMemoryColor(PaleRoomAmbientColor);
-            _paleChunk.WaveColor = SetPaleMemoryColor(PaleWaveColor);
-            _paleChunk.OceanColor = SetPaleMemoryColor(PaleOceanColor);
-            _paleChunk.DoorwayColor = SetPaleMemoryColor(PaleDoorwayColor);
-            _paleChunk.FogColor = SetPaleMemoryColor(PaleFogColor);
+            //Update whoever generated the event.
+            if(sender == PaleActorAmbientColor)
+                _paleChunk.ActorAmbient = SetPaleMemoryColor(PaleActorAmbientColor);
+            if(sender == PaleRoomFillColor)
+                _paleChunk.RoomFillColor = SetPaleMemoryColor(PaleRoomFillColor);
+            if(sender == PaleRoomAmbientColor)
+                _paleChunk.RoomAmbient = SetPaleMemoryColor(PaleRoomAmbientColor);
+            if(sender == PaleWaveColor)
+                _paleChunk.WaveColor = SetPaleMemoryColor(PaleWaveColor);
+            if (sender == PaleUnknown1Color)
+                _paleChunk.UnknownColor1 = SetPaleMemoryColor(PaleUnknown1Color);
+            if (sender == PaleUnknown2Color)
+                _paleChunk.UnknownColor2 = SetPaleMemoryColor(PaleUnknown2Color);
+            if(sender == PaleOceanColor)
+                _paleChunk.OceanColor = SetPaleMemoryColor(PaleOceanColor);
+            if (sender == PaleUnknown3Color)
+                _paleChunk.UnknownColor3 = SetPaleMemoryColor(PaleUnknown3Color);
+            if(sender == PaleDoorwayColor)
+                _paleChunk.DoorwayColor = SetPaleMemoryColor(PaleDoorwayColor);
+            if(sender == PaleFogColor)
+                _paleChunk.FogColor = SetPaleMemoryColor(PaleFogColor);
 
-            ByteColorAlpha OceanFadeInto = new ByteColorAlpha(SetPaleMemoryColor(PaleOceanFadeIntoColor));
-            OceanFadeInto.A = (byte) PaleOceanFadeAlpha.Value;
-            _paleChunk.OceanFadeInto = OceanFadeInto;
+            if (sender == PaleOceanFadeIntoColor)
+            {
+                ByteColorAlpha OceanFadeInto = new ByteColorAlpha(SetPaleMemoryColor(PaleOceanFadeIntoColor));
+                OceanFadeInto.A = (byte)PaleOceanFadeAlpha.Value;
+                _paleChunk.OceanFadeInto = OceanFadeInto;
+            }
 
-            ByteColorAlpha ShoreFadeInto = new ByteColorAlpha(SetPaleMemoryColor(PaleShoreFadeIntoColor));
-            ShoreFadeInto.A = (byte)PaleShoreFadeAlpha.Value;
-            _paleChunk.ShoreFadeInto = ShoreFadeInto;
+            if (sender == PaleShoreFadeIntoColor)
+            {
+                ByteColorAlpha ShoreFadeInto = new ByteColorAlpha(SetPaleMemoryColor(PaleShoreFadeIntoColor));
+                ShoreFadeInto.A = (byte) PaleShoreFadeAlpha.Value;
+                _paleChunk.ShoreFadeInto = ShoreFadeInto;
+            }
         }
 
         private void VirtColorField_Click(object sender, EventArgs e)
@@ -309,18 +335,26 @@ namespace WWActorEdit.Forms
 
             outputBox.BackColor = colorPickerDialog.Color;
 
-            //Hey... same hack as above, because I didn't think of any better way to do it in the last 20 minutes...
-            ByteColorAlpha HorizonCloud = new ByteColorAlpha(SetPaleMemoryColor(VirtHorizonCloudColor));
-            HorizonCloud.A = (byte)VirtUnknown1Index.Value;
-            _virtChunk.HorizonCloudColor = HorizonCloud;
+            if (sender == VirtHorizonCloudColor)
+            {
+                ByteColorAlpha HorizonCloud = new ByteColorAlpha(SetPaleMemoryColor(VirtHorizonCloudColor));
+                HorizonCloud.A = (byte) VirtUnknown1Index.Value;
+                _virtChunk.HorizonCloudColor = HorizonCloud;
+            }
 
-            ByteColorAlpha CenterCloud = new ByteColorAlpha(SetPaleMemoryColor(VirtCenterCloudColor));
-            CenterCloud.A = (byte)VirtUnknown2Index.Value;
-            _virtChunk.CenterCloudColor = CenterCloud;
-
-            _virtChunk.CenterSkyColor = SetPaleMemoryColor(VirtCenterSkyColor);
-            _virtChunk.HorizonColor = SetPaleMemoryColor(VirtHorizonColor);
-            _virtChunk.SkyFadeTo = SetPaleMemoryColor(VirtSkyFadeToColor);
+            if (sender == VirtCenterCloudColor)
+            {
+                ByteColorAlpha CenterCloud = new ByteColorAlpha(SetPaleMemoryColor(VirtCenterCloudColor));
+                CenterCloud.A = (byte)VirtUnknown2Index.Value;
+                _virtChunk.CenterCloudColor = CenterCloud;
+            }
+           
+            if(sender == VirtCenterSkyColor)
+                _virtChunk.CenterSkyColor = SetPaleMemoryColor(VirtCenterSkyColor);
+            if(sender == VirtHorizonColor)
+                _virtChunk.HorizonColor = SetPaleMemoryColor(VirtHorizonColor);
+            if(sender == VirtSkyFadeToColor)
+                _virtChunk.SkyFadeTo = SetPaleMemoryColor(VirtSkyFadeToColor);
         }
 
         private Color SetPaleColorBoxColor(ByteColor color)
@@ -378,11 +412,16 @@ namespace WWActorEdit.Forms
         }
 
         /// <summary>
-        /// Called when the Virt Index changes inside the Pale group.
+        /// Called when any of the indexes in the Pale group change.
         /// </summary>
-        private void PaleVirtIndex_ValueChanged(object sender, EventArgs e)
+        private void PaleIndex_ValueChanged(object sender, EventArgs e)
         {
-            _paleChunk.VirtIndex = (byte) PaleVirtIndex.Value;
+            if(sender == PaleVirtIndex)
+                _paleChunk.VirtIndex = (byte) PaleVirtIndex.Value;
+            if (sender == PaleOceanFadeAlpha)
+                _paleChunk.OceanFadeInto.A = (byte) PaleOceanFadeAlpha.Value;
+            if (sender == PaleShoreFadeAlpha)
+                _paleChunk.ShoreFadeInto.A = (byte) PaleShoreFadeAlpha.Value;
         }
 
         /// <summary>
@@ -429,40 +468,17 @@ namespace WWActorEdit.Forms
 
                 for (int i = 0; i < chunk.ElementCount; i++)
                 {
-                    
-
-                    switch (chunk.Tag)
-                    {
-                        case "EnvR":
-
-                            EnvRChunk envrChunk = (EnvRChunk) chunk.ChunkElements[i];
-                            FSHelpers.Write8(bw, envrChunk.ClearColorIndexA);
-                            FSHelpers.Write8(bw, envrChunk.RainingColorIndexA);
-                            FSHelpers.Write8(bw, envrChunk.SnowingColorIndexA);
-                            FSHelpers.Write8(bw, envrChunk.UnknownColorIndexA);
-
-                            FSHelpers.Write8(bw, envrChunk.ClearColorIndexB);
-                            FSHelpers.Write8(bw, envrChunk.RainingColorIndexB);
-                            FSHelpers.Write8(bw, envrChunk.SnowingColorIndexB);
-                            FSHelpers.Write8(bw, envrChunk.UnknownColorIndexB);
-                            break;
-                        case "Colo":
-
-                            break;
-                        case "Pale":
-
-                            break;
-                        case "Virt":
-
-                            break;
-                        default:
-                            break;
-                    }   
+                    chunk.ChunkElements[i].WriteData(bw); 
                 }
 
                 bw.Close();
                 fs.Close();
             }
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            Close();
         }
         
     }

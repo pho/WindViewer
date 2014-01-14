@@ -53,5 +53,27 @@ namespace WWActorEdit.Source
         {
             binaryWriter.Write(value);
         }
+
+        /// <summary>
+        /// Used to easily convert "0xFFFFFF" into 3 bytes, each with the value of FF.
+        /// </summary>
+        /// <param name="value">Value of bytes in Hexadecimal format, ie: 0xFF or 0xFF00FF</param>
+        /// <param name="length">Number of bytes in length, ie: 1 or 3.</param>
+        /// <returns>The first "length" worth of bytes when converted to an int. </returns>
+        public static byte[] ToBytes(uint value, int length)
+        {
+            byte[] fullLength = BitConverter.GetBytes(value);
+
+            byte[] clippedBytes = new byte[length];
+            for (int i = 0; i < length; i++)
+                clippedBytes[i] = fullLength[i];
+
+            //If we're running on a Little Endian machine (most of them...) we need to reverse the Array order
+            //So that we don't turn 0x800000 into 0 0 128, but instead 128 0 0. 
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(clippedBytes);
+
+            return clippedBytes;
+        }
     }
 }

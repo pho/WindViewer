@@ -190,7 +190,10 @@ namespace WWActorEdit
         public ByteColor RoomAmbient;
         public ByteColor WaveColor;
         public ByteColor OceanColor;
+        public ByteColor UnknownColor1; //Unknown
+        public ByteColor UnknownColor2; //Unknown
         public ByteColor DoorwayColor; //Tints the 'Light' mesh behind doors for entering/exiting to the exterior
+        public ByteColor UnknownColor3; //Unknown
         public ByteColor FogColor;
 
         public byte VirtIndex; //Index of the Virt entry to use for Skybox Colors
@@ -206,17 +209,17 @@ namespace WWActorEdit
             RoomAmbient = new ByteColor(data, ref srcOffset);
             WaveColor = new ByteColor(data, ref srcOffset);
             OceanColor = new ByteColor(data, ref srcOffset);
-            srcOffset += 6; //More unused values
+            UnknownColor1 = new ByteColor(data, ref srcOffset); //Unknown
+            UnknownColor2 = new ByteColor(data, ref srcOffset); //Unknown
             DoorwayColor = new ByteColor(data, ref srcOffset);
-            srcOffset += 3;
+            UnknownColor3 = new ByteColor(data, ref srcOffset); //Unknown
             FogColor = new ByteColor(data, ref srcOffset);
 
             VirtIndex = Helpers.Read8(data, srcOffset);
-            srcOffset += 2; //More unused values
+            srcOffset += 3; //Read8 + 2x Padding
 
             OceanFadeInto = new ByteColorAlpha(data, ref srcOffset);
             ShoreFadeInto = new ByteColorAlpha(data, ref srcOffset);
-            srcOffset += 1;
         }
 
         public void WriteData(BinaryWriter stream)
@@ -227,20 +230,14 @@ namespace WWActorEdit
             FSHelpers.WriteArray(stream, RoomAmbient.GetBytes());
             FSHelpers.WriteArray(stream, WaveColor.GetBytes());
             FSHelpers.WriteArray(stream, OceanColor.GetBytes());
-            
-            //Write our 6 unknown bytes in as FF FF FF for now.
-            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0xFFFFFF));
-            byte[] test = BitConverter.GetBytes(0xFFFFFF);
-            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0xFFFFFF));
-
+            FSHelpers.WriteArray(stream, UnknownColor1.GetBytes()); //Unknown
+            FSHelpers.WriteArray(stream, UnknownColor2.GetBytes()); //Unknown
             FSHelpers.WriteArray(stream, DoorwayColor.GetBytes());
-
-            //Unknown 3
-            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0xFFFFFF));
+            FSHelpers.WriteArray(stream, UnknownColor3.GetBytes()); //Unknown
 
             FSHelpers.WriteArray(stream, FogColor.GetBytes());
             FSHelpers.Write8(stream, VirtIndex);
-            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0xFFFF));//Two bytes padding on Virt Index
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0x0000, 2));//Two bytes padding on Virt Index
 
             FSHelpers.WriteArray(stream, OceanFadeInto.GetBytes());
             FSHelpers.WriteArray(stream, ShoreFadeInto.GetBytes());
@@ -278,10 +275,10 @@ namespace WWActorEdit
         public void WriteData(BinaryWriter stream)
         {
             //Fixed values that doesn't seem to change.
-            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0x80000000));
-            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0x80000000));
-            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0x80000000));
-            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0x80000000));
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0x80000000, 4));
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0x80000000, 4));
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0x80000000, 4));
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0x80000000, 4));
 
             FSHelpers.WriteArray(stream, HorizonCloudColor.GetBytes());
             FSHelpers.WriteArray(stream, CenterCloudColor.GetBytes());
@@ -289,7 +286,7 @@ namespace WWActorEdit
             FSHelpers.WriteArray(stream, HorizonColor.GetBytes());
             FSHelpers.WriteArray(stream, SkyFadeTo.GetBytes());
 
-            FSHelpers.WriteArray(stream, BitConverter.GetBytes(0xFFFFFF)); //Padding
+            FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0xFFFFFF, 3)); //3 Bytes Padding
         }
     }
 
