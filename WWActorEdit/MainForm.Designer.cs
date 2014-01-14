@@ -49,7 +49,14 @@
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.autoCenterCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.environmentLightingEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.roomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.sharedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showReadmeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
@@ -60,13 +67,6 @@
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.stageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.roomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sharedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -261,12 +261,55 @@
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
+            // stageToolStripMenuItem
+            // 
+            this.stageToolStripMenuItem.Enabled = false;
+            this.stageToolStripMenuItem.Name = "stageToolStripMenuItem";
+            this.stageToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.stageToolStripMenuItem.Text = "Stage";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(220, 6);
+            // 
             // environmentLightingEditorToolStripMenuItem
             // 
             this.environmentLightingEditorToolStripMenuItem.Name = "environmentLightingEditorToolStripMenuItem";
             this.environmentLightingEditorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.environmentLightingEditorToolStripMenuItem.Text = "&Environment Lighting Editor";
             this.environmentLightingEditorToolStripMenuItem.Click += new System.EventHandler(this.environmentLightingEditorToolStripMenuItem_Click);
+            // 
+            // roomToolStripMenuItem
+            // 
+            this.roomToolStripMenuItem.Enabled = false;
+            this.roomToolStripMenuItem.Name = "roomToolStripMenuItem";
+            this.roomToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.roomToolStripMenuItem.Text = "Room";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(220, 6);
+            // 
+            // sharedToolStripMenuItem
+            // 
+            this.sharedToolStripMenuItem.Enabled = false;
+            this.sharedToolStripMenuItem.Name = "sharedToolStripMenuItem";
+            this.sharedToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.sharedToolStripMenuItem.Text = "Shared";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(220, 6);
+            // 
+            // exitEditorToolStripMenuItem
+            // 
+            this.exitEditorToolStripMenuItem.Name = "exitEditorToolStripMenuItem";
+            this.exitEditorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.exitEditorToolStripMenuItem.Text = "Exit Editor";
+            this.exitEditorToolStripMenuItem.Click += new System.EventHandler(this.exitEditorToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -350,49 +393,6 @@
             this.panel2.Size = new System.Drawing.Size(770, 43);
             this.panel2.TabIndex = 6;
             this.panel2.Visible = false;
-            // 
-            // stageToolStripMenuItem
-            // 
-            this.stageToolStripMenuItem.Enabled = false;
-            this.stageToolStripMenuItem.Name = "stageToolStripMenuItem";
-            this.stageToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
-            this.stageToolStripMenuItem.Text = "Stage";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(220, 6);
-            // 
-            // roomToolStripMenuItem
-            // 
-            this.roomToolStripMenuItem.Enabled = false;
-            this.roomToolStripMenuItem.Name = "roomToolStripMenuItem";
-            this.roomToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
-            this.roomToolStripMenuItem.Text = "Room";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(220, 6);
-            // 
-            // exitEditorToolStripMenuItem
-            // 
-            this.exitEditorToolStripMenuItem.Name = "exitEditorToolStripMenuItem";
-            this.exitEditorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
-            this.exitEditorToolStripMenuItem.Text = "Exit Editor";
-            this.exitEditorToolStripMenuItem.Click += new System.EventHandler(this.exitEditorToolStripMenuItem_Click);
-            // 
-            // sharedToolStripMenuItem
-            // 
-            this.sharedToolStripMenuItem.Enabled = false;
-            this.sharedToolStripMenuItem.Name = "sharedToolStripMenuItem";
-            this.sharedToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
-            this.sharedToolStripMenuItem.Text = "Shared";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(220, 6);
             // 
             // MainForm
             // 
