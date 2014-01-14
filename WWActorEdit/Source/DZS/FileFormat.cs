@@ -7,6 +7,10 @@ using WWActorEdit.Source;
 
 namespace WWActorEdit
 {
+    public enum DZSChunkTypes
+    {
+        EnvR, Colo, Pale, Virt
+    }
     public class DZSFormat
     {
         public DZSHeader Header;
@@ -33,19 +37,30 @@ namespace WWActorEdit
 
                     switch (chunkHeader.Tag)
                     {
-                        case "EnvR": chunk = new EnvRChunk(data, ref chunkHeader.ChunkOffset); break;
-                        case "Colo": chunk = new ColoChunk(data, ref chunkHeader.ChunkOffset); break;
-                        case "Pale": chunk = new PaleChunk(data, ref chunkHeader.ChunkOffset); break;
-                        case "Virt": chunk = new VirtChunk(data, ref chunkHeader.ChunkOffset); break;
+                        case "EnvR": chunk = new EnvRChunk(); break;
+                        case "Colo": chunk = new ColoChunk(); break;
+                        case "Pale": chunk = new PaleChunk(); break;
+                        case "Virt": chunk = new VirtChunk(); break;
                         default:
-                            Console.WriteLine("Unsupported Chunk Type: " + chunkHeader.Tag + ", ignoring...");
                             chunk = new DefaultChunk();
                             break;
                     }
 
+                    chunk.LoadData(data, ref chunkHeader.ChunkOffset);
                     chunkHeader.ChunkElements.Add(chunk);
                 }
             }
+        }
+
+        public List<IChunkType> GetChunksOfType(DZSChunkTypes type)
+        {
+            foreach (DZSChunkHeader chunkHeader in ChunkHeaders)
+            {
+                if (chunkHeader.Tag == type.ToString())
+                    return chunkHeader.ChunkElements;
+            }
+
+            return null;
         }
     }
 
@@ -85,6 +100,7 @@ namespace WWActorEdit
     public interface IChunkType
     {
         void WriteData(BinaryWriter stream);
+        void LoadData(byte[] data, ref int srcOffset);
     }
 
     #region DZS Chunk File Formats
@@ -94,6 +110,7 @@ namespace WWActorEdit
     /// </summary>
     public class DefaultChunk : IChunkType
     {
+        public void LoadData(byte[] data, ref int srcOffset) {}
         public void WriteData(BinaryWriter stream) {}
     }
 
@@ -113,7 +130,13 @@ namespace WWActorEdit
         public byte SnowingColorIndexB;
         public byte UnknownColorIndexB;
 
-        public EnvRChunk(byte[] data, ref int srcOffset)
+        public EnvRChunk()
+        {
+            ClearColorIndexA = RainingColorIndexA = SnowingColorIndexA = UnknownColorIndexA = 0;
+            ClearColorIndexB = RainingColorIndexB = SnowingColorIndexB = UnknownColorIndexB = 0;
+        }
+
+        public void LoadData(byte[] data, ref int srcOffset)
         {
             ClearColorIndexA = Helpers.Read8(data, srcOffset + 0);
             RainingColorIndexA = Helpers.Read8(data, srcOffset + 1);
@@ -155,7 +178,12 @@ namespace WWActorEdit
         public byte DuskIndex;
         public byte NightIndex;
 
-        public ColoChunk(byte[] data, ref int srcOffset)
+        public ColoChunk()
+        {
+            DawnIndex = MorningIndex = NoonIndex = AfternoonIndex = DuskIndex = NightIndex = 0;
+        }
+
+        public void LoadData(byte[] data, ref int srcOffset)
         {
             DawnIndex =     Helpers.Read8(data, srcOffset + 0);
             MorningIndex =  Helpers.Read8(data, srcOffset + 1);
@@ -201,7 +229,27 @@ namespace WWActorEdit
         public ByteColorAlpha OceanFadeInto;
         public ByteColorAlpha ShoreFadeInto;
 
-        public PaleChunk(byte[] data, ref int srcOffset)
+        public PaleChunk()
+        {
+            ActorAmbient = new ByteColor();
+            ShadowColor = new ByteColor();
+            RoomFillColor = new ByteColor();
+            RoomAmbient = new ByteColor();
+            WaveColor = new ByteColor();
+            OceanColor = new ByteColor();
+            UnknownColor1 = new ByteColor();
+            UnknownColor2 = new ByteColor();
+            DoorwayColor = new ByteColor();
+            UnknownColor3 = new ByteColor();
+            FogColor = new ByteColor();
+
+            VirtIndex = 0;
+
+            OceanFadeInto = new ByteColorAlpha();
+            ShoreFadeInto = new ByteColorAlpha();
+        }
+
+        public void LoadData(byte[] data, ref int srcOffset)
         {
             ActorAmbient = new ByteColor(data, ref srcOffset);
             ShadowColor = new ByteColor(data, ref srcOffset);
@@ -256,7 +304,16 @@ namespace WWActorEdit
         public ByteColor HorizonColor;
         public ByteColor SkyFadeTo; //Color to fade to from CenterSky. 
 
-        public VirtChunk(byte[] data, ref int srcOffset)
+        public VirtChunk() 
+        {
+            HorizonCloudColor = new ByteColorAlpha();
+            CenterCloudColor = new ByteColorAlpha();
+            CenterSkyColor = new ByteColor();
+            HorizonColor = new ByteColor();
+            SkyFadeTo = new ByteColor();
+        }
+
+        public void LoadData(byte[] data, ref int srcOffset)
         {
             //First 16 bytes are 80 00 00 00 (repeated 4 times). Unknown why.
             srcOffset += 16;

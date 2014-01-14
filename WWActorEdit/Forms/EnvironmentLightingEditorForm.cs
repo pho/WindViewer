@@ -49,13 +49,13 @@ namespace WWActorEdit.Forms
             {
                 switch (chunk.Tag)
                 {
-                    case "EnvR": 
+                    case "EnvR":
                         //Populate the Dropdown
                         for (int i = 0; i < chunk.ElementCount; i++)
                             EnvRDropdown.Items.Add("EnvR [" + i + "]");
                         EnvRDropdown.SelectedIndex = 0;
                         break;
-                    case "Colo": 
+                    case "Colo":
                         //Populate the Dropdown
                         for (int i = 0; i < chunk.ElementCount; i++)
                             ColorDropdown.Items.Add("Colo [" + i + "]");
@@ -75,59 +75,6 @@ namespace WWActorEdit.Forms
                         break;
                     default:
                         break;
-                }
-            }
-        }
-
-        //I'm not really sure... what this should be called. Ech.
-        private void LoadEnvrElement()
-        {
-            //Need to find the EnvRchunk again, and get the right index.
-            foreach (var header in _data.ChunkHeaders)
-            {
-                if (header.Tag == "EnvR")
-                {
-                    _envrChunk = (EnvRChunk)header.ChunkElements[EnvRDropdown.SelectedIndex];
-                    break;
-                }
-            }
-        }
-
-        private void LoadColorElement()
-        {
-            //Need to find the ColoChunk again, and get the right index.
-            foreach (var header in _data.ChunkHeaders)
-            {
-                if (header.Tag == "Colo")
-                {
-                    _coloChunk = (ColoChunk)header.ChunkElements[ColorDropdown.SelectedIndex];
-                    break;
-                }
-            }
-        }
-
-        private void LoadPaleElement()
-        {
-            //Need to find the ColoChunk again, and get the right index.
-            foreach (var header in _data.ChunkHeaders)
-            {
-                if (header.Tag == "Pale")
-                {
-                    _paleChunk = (PaleChunk)header.ChunkElements[PaleDropdown.SelectedIndex];
-                    break;
-                }
-            }
-        }
-
-        private void LoadVirtElement()
-        {
-            //Need to find the ColoChunk again, and get the right index.
-            foreach (var header in _data.ChunkHeaders)
-            {
-                if (header.Tag == "Virt")
-                {
-                    _virtChunk = (VirtChunk)header.ChunkElements[VirtDropdown.SelectedIndex];
-                    break;
                 }
             }
         }
@@ -248,7 +195,7 @@ namespace WWActorEdit.Forms
         /// </summary>
         private void EnvRDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadEnvrElement();
+            _envrChunk = (EnvRChunk) _data.GetChunksOfType(DZSChunkTypes.EnvR)[EnvRDropdown.SelectedIndex];
             UpdateEnvrGroupBox();
         }
 
@@ -257,19 +204,19 @@ namespace WWActorEdit.Forms
         /// </summary>
         private void ColorDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadColorElement();
+            _coloChunk = (ColoChunk)_data.GetChunksOfType(DZSChunkTypes.Colo)[ColorDropdown.SelectedIndex];
             UpdateColoGroupBox();
         }
 
         private void PaleDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadPaleElement();
+            _paleChunk = (PaleChunk)_data.GetChunksOfType(DZSChunkTypes.Pale)[PaleDropdown.SelectedIndex];
             UpdatePaleGroupBox();
         }
 
         private void VirtDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadVirtElement();
+            _virtChunk = (VirtChunk)_data.GetChunksOfType(DZSChunkTypes.Virt)[VirtDropdown.SelectedIndex];
             UpdateVirtGroupBox();
         }
 
