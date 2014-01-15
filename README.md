@@ -1,6 +1,11 @@
+#About
+
 Wind Viewer is a level viewer and editor for Zelda: Wind Waker and (to an extent) Twilight Princess.
 
+![WindViewer](http://i.imgur.com/ajQe1Xt.jpg)
+
 Original author: [xDaniel](http://magicstone.de/dzd/)
+
 
 #Compiling the Project#
 WindViewer is written using Visual Studios 2012. This means the project solutions are **incompatible with previous versions**. To solve this issue, you can get the Virtual Studios 2012 Service Pack 1 to enable compatibility with Visual Studios 2010. Other versions will require modifying the Solution file to open. 
