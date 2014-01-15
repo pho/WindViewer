@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Blue.Windows;
+using OpenTK;
 using WWActorEdit.Kazari;
 using WWActorEdit.Kazari.DZx;
 using WWActorEdit.Source;

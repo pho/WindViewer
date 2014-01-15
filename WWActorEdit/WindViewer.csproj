@@ -73,6 +73,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\FloatConverter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FloatConverter.Designer.cs">
+      <DependentUpon>FloatConverter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\InvalidRoomNumber.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +165,9 @@
     <Compile Include="Kazari\RARC.cs" />
     <EmbeddedResource Include="Forms\ExceptionForm.resx">
       <DependentUpon>ExceptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FloatConverter.resx">
+      <DependentUpon>FloatConverter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\InvalidRoomNumber.resx">
       <DependentUpon>InvalidRoomNumber.cs</DependentUpon>
