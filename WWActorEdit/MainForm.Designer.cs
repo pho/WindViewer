@@ -54,6 +54,7 @@
             this.environmentLightingEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.roomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.spawnEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sharedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,7 +69,8 @@
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.spawnEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.floatConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -295,6 +297,13 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(220, 6);
             // 
+            // spawnEditorToolStripMenuItem
+            // 
+            this.spawnEditorToolStripMenuItem.Name = "spawnEditorToolStripMenuItem";
+            this.spawnEditorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.spawnEditorToolStripMenuItem.Text = "Spawn Editor";
+            this.spawnEditorToolStripMenuItem.Click += new System.EventHandler(this.spawnEditorToolStripMenuItem_Click);
+            // 
             // sharedToolStripMenuItem
             // 
             this.sharedToolStripMenuItem.Enabled = false;
@@ -318,9 +327,11 @@
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showReadmeToolStripMenuItem,
+            this.wikiToolStripMenuItem,
             this.toolStripMenuItem5,
             this.aboutToolStripMenuItem,
-            this.wikiToolStripMenuItem});
+            this.toolStripSeparator4,
+            this.floatConverterToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
@@ -328,26 +339,26 @@
             // showReadmeToolStripMenuItem
             // 
             this.showReadmeToolStripMenuItem.Name = "showReadmeToolStripMenuItem";
-            this.showReadmeToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.showReadmeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.showReadmeToolStripMenuItem.Text = "&Show Readme";
             this.showReadmeToolStripMenuItem.Click += new System.EventHandler(this.showReadmeToolStripMenuItem_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(146, 6);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(152, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // wikiToolStripMenuItem
             // 
             this.wikiToolStripMenuItem.Name = "wikiToolStripMenuItem";
-            this.wikiToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.wikiToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.wikiToolStripMenuItem.Text = "&Wiki";
             this.wikiToolStripMenuItem.Click += new System.EventHandler(this.wikiToolStripMenuItem_Click);
             // 
@@ -405,12 +416,17 @@
             this.panel2.TabIndex = 6;
             this.panel2.Visible = false;
             // 
-            // spawnEditorToolStripMenuItem
+            // toolStripSeparator4
             // 
-            this.spawnEditorToolStripMenuItem.Name = "spawnEditorToolStripMenuItem";
-            this.spawnEditorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
-            this.spawnEditorToolStripMenuItem.Text = "Spawn Editor";
-            this.spawnEditorToolStripMenuItem.Click += new System.EventHandler(this.spawnEditorToolStripMenuItem_Click);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(152, 6);
+            // 
+            // floatConverterToolStripMenuItem
+            // 
+            this.floatConverterToolStripMenuItem.Name = "floatConverterToolStripMenuItem";
+            this.floatConverterToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.floatConverterToolStripMenuItem.Text = "Float Converter";
+            this.floatConverterToolStripMenuItem.Click += new System.EventHandler(this.floatConverterToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -481,6 +497,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem wikiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem spawnEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem floatConverterToolStripMenuItem;
     }
 }
 

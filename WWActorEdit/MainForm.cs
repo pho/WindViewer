@@ -535,5 +535,11 @@ namespace WWActorEdit
             SpawnpointEditor popup = new SpawnpointEditor(this);
             popup.Show(this);
         }
+
+        private void floatConverterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FloatConverter popup = new FloatConverter();
+            popup.Show(this);
+        }
     }
 }
