@@ -229,7 +229,8 @@ namespace WWActorEdit
         /// <summary>
         /// In a 'Stage', there is data that is indexed by Room number. The actual rooms don't store
         /// this data internally, it is only by file name. So we're going to strip apart the filename
-        /// to get the room number.
+        /// to get the room number. If we can't get the room from the filename (ie: user has renamed
+        /// archive) then we'll just ask them.
         /// </summary>
         /// <param name="NewArc"></param>
         private void GetRoomNumber(ZeldaArc NewArc)
@@ -319,7 +320,7 @@ namespace WWActorEdit
 
         private void LoadRARC(string Filename, bool IsRoom = true, bool IgnoreModels = false)
         {
-            if (Filename != string.Empty)
+            /*if (Filename != string.Empty)
             {
                 ZeldaArc NewArc = new ZeldaArc(Filename, treeView1, IgnoreModels);
 
@@ -337,12 +338,12 @@ namespace WWActorEdit
                     MessageBox.Show(string.Format("RARC archive '{0}' is compressed; changes cannot be saved!", Path.GetFileName(NewArc.Archive.Filename)), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 else
                     saveChangesToolStripMenuItem.Enabled = true;
-            }
+            }*/
         }
 
         private void UnloadAllRARCs()
         {
-            foreach (ZeldaArc A in Rooms) A.Clear();
+            /*foreach (ZeldaArc A in Rooms) A.Clear();
             if (Stage != null) Stage.Clear();
 
             Rooms = new List<ZeldaArc>();
@@ -354,12 +355,12 @@ namespace WWActorEdit
 
             saveChangesToolStripMenuItem.Enabled = false;
 
-            toolStripStatusLabel1.Text = "Ready";
+            toolStripStatusLabel1.Text = "Ready";*/
         }
 
         private void openRoomRARCToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string[] Files = Helpers.ShowOpenFileDialog("GameCube/Wii RARC archives (*.arc; *.rarc)|*.arc; *.rarc|All Files (*.*)|*.*", true);
+            /*string[] Files = Helpers.ShowOpenFileDialog("GameCube/Wii RARC archives (*.arc; *.rarc)|*.arc; *.rarc|All Files (*.*)|*.*", true);
             Array.Sort(Files);
 
             if (Files.Length == 1 && Files[0] == string.Empty) return;
@@ -396,7 +397,7 @@ namespace WWActorEdit
 
             toolStripStatusLabel1.Text = string.Format("Loaded {0} room files. Ready!", Files.Length);
 
-            Helpers.MassEnableDisable(this.Controls, true);
+            Helpers.MassEnableDisable(this.Controls, true);*/
         }
 
         private void openStageRARCToolStripMenuItem_Click(object sender, EventArgs e)
@@ -429,7 +430,7 @@ namespace WWActorEdit
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            object Selected = ((TreeView)sender).SelectedNode.Tag;
+            /*object Selected = ((TreeView)sender).SelectedNode.Tag;
             Console.WriteLine("TreeView clicked, Selected: " + Selected);
 
             if (SelectedDZRChunkElement != null)
@@ -474,7 +475,7 @@ namespace WWActorEdit
             else
                 TargetPanel.Visible = false;
 
-            TargetPanel.ResumeLayout();
+            TargetPanel.ResumeLayout();*/
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -569,7 +570,24 @@ namespace WWActorEdit
         private void _DONOTUSETHIS_LoadArchiveFromFile(string filePath)
         {
             ZArchive newArchive = new ZArchive();
-            newArchive.LoadFromFile(filePath);
+            //newArchive.LoadFromFile(filePath);
+        }
+
+        private void treeView2_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                string clickedNode = e.Node.Name;
+                MenuItem test = new MenuItem("Test");
+                test.MenuItems.Add("Test2");
+                test.MenuItems.Add("Test3");
+
+                ContextMenu contextMenu = new ContextMenu();
+                contextMenu.MenuItems.Add(test);
+
+
+                contextMenu.Show(treeView2, e.Location);
+            }
         }
     }
 }
