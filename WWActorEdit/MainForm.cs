@@ -478,6 +478,7 @@ namespace WWActorEdit
             TargetPanel.ResumeLayout();*/
         }
 
+        #region Toolstrip Callbacks
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.ExitThread();
@@ -497,22 +498,6 @@ namespace WWActorEdit
                 Environment.NewLine +
                 "Greetings to The GCN's WW hacking thread!",
                 "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void showReadmeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(
-                "Well, there's no Readme yet actually... Some points of interest:" + Environment.NewLine +
-                Environment.NewLine +
-                "- While moving the camera around, hold Space to speed it up, or Shift to slow it down (good idea from Kargaroc)" + Environment.NewLine +
-                "- Saving is not yet fully tested; it worked for me and I couldn't spot any obvious errors in the code but still, tread carefully" + Environment.NewLine +
-                "- In case an exception occurs, my exception handler should pop up instead of Windows' mean dialog box; press Ctrl+C" + Environment.NewLine +
-                "  there to copy everything into the clipboard, then message me or post that on The GCN or whatever" + Environment.NewLine +
-                "- The icon was made by Sage of Mirrors, thanks!" + Environment.NewLine +
-                "- I'm thinking of posting the source code for this as well, but I haven't decided yet; I'd rather first write some" + Environment.NewLine +
-                "  documentation about WW's file formats, so that the source makes more sense and such" + Environment.NewLine +
-                "- Here's hoping I didn't forget anyone in the About box credits :P",
-                "Readme?", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void environmentLightingEditorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -586,8 +571,73 @@ namespace WWActorEdit
                 contextMenu.MenuItems.Add(test);
 
 
-                contextMenu.Show(treeView2, e.Location);
+                contextMenu.Show(fileBrowserTV, e.Location);
             }
         }
+
+        /// <summary>
+        /// The "New from Archive..." is effectively the same as the old "Open Archive" feature.
+        /// It will extract the selected Archive to the Working Directory and then invoke the
+        /// same loading function as the "File->Open Worldspace Dir" option which is the actual
+        /// loading routines used by the program.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void newFromArchiveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string[] filePaths = Helpers.ShowOpenFileDialog("Wind Waker Archives (*.arc; *.rarc)|*.arc; *.rarc|All Files (*.*)|*.*", true);
+
+            //If they hit cancel it'll return an empty string.
+            if (filePaths[0] == string.Empty)
+                return;
+
+            foreach (string filePath in filePaths)
+            {
+                //For each file selected we want to extract it to the working directory.
+                string workingDir = Path.Combine(
+                    System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName);
+
+                //Next we're going to stop and retrieve the "Worldspace Dir" from the user (name of parent folder, ie:
+                //"MiniHyo" or "DragonRoostIsland" or something fancy like that. We'll just have to ask the user!
+                NewWorldspaceDialogue dialogue = new NewWorldspaceDialogue();
+                DialogResult result = dialogue.ShowDialog();
+                if (result == DialogResult.Cancel)
+                    return;
+
+
+                //Don't like using the RARC class but it seems like it can do what I want for now...
+                RARC arc = new RARC(filePath);
+                foreach (RARC.FileNode node in arc.Root.ChildNodes)
+                {
+                    //Create the folder on disk to represent the folder in the Archive.
+                    DirectoryInfo outputDir = Directory.CreateDirectory(Path.Combine(workingDir, node.NodeName));
+
+                    //Now extract each of the files in the Archive into this folder.
+                    foreach (RARC.FileEntry fileEntry in node.Files)
+                    {
+                        try
+                        {
+                            //Write the bytes to disk as a binary file and we'll have succesfully unpacked an archive, sweet!
+                            FileStream fs = File.Create(Path.Combine(outputDir.FullName, fileEntry.FileName));
+                            BinaryWriter bw = new BinaryWriter(fs);
+
+                            bw.Write(fileEntry.GetFileData());
+                            bw.Close();
+                            fs.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error opening " + fileEntry.FileName + " for writing, error message: " +
+                                              ex);
+                        }
+                        
+                    }
+
+                }
+
+            }
+        }
+
+        #endregion
     }
 }
