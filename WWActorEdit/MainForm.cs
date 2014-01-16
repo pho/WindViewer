@@ -604,6 +604,8 @@ namespace WWActorEdit
                 if (result == DialogResult.Cancel)
                     return;
 
+                string worldspaceName = dialogue.dirName.Text;
+                workingDir = Path.Combine(workingDir, worldspaceName + ".wrkDir");
 
                 //Don't like using the RARC class but it seems like it can do what I want for now...
                 RARC arc = new RARC(filePath);

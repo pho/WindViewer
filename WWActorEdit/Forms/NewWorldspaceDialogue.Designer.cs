@@ -38,7 +38,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(10, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(143, 13);
             this.label1.TabIndex = 0;
@@ -46,7 +46,7 @@
             // 
             // dirName
             // 
-            this.dirName.Location = new System.Drawing.Point(196, 6);
+            this.dirName.Location = new System.Drawing.Point(194, 12);
             this.dirName.Name = "dirName";
             this.dirName.Size = new System.Drawing.Size(138, 20);
             this.dirName.TabIndex = 1;
@@ -55,7 +55,7 @@
             // okButton
             // 
             this.okButton.Enabled = false;
-            this.okButton.Location = new System.Drawing.Point(171, 64);
+            this.okButton.Location = new System.Drawing.Point(169, 63);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 2;
@@ -65,7 +65,8 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(259, 64);
+            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelButton.Location = new System.Drawing.Point(257, 63);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 3;
@@ -76,7 +77,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(188, 38);
+            this.linkLabel1.Location = new System.Drawing.Point(186, 40);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(146, 13);
             this.linkLabel1.TabIndex = 4;
@@ -86,14 +87,19 @@
             // 
             // NewWorldspaceDialogue
             // 
+            this.AcceptButton = this.okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(352, 98);
+            this.CancelButton = this.cancelButton;
+            this.ClientSize = new System.Drawing.Size(344, 98);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.dirName);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "NewWorldspaceDialogue";
             this.Text = "New Worldspace";
             this.ResumeLayout(false);
