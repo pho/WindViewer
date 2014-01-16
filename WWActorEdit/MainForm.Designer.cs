@@ -69,6 +69,12 @@
             this.glControl = new OpenTK.GLControl();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newFromArchiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.openWorldspaceDirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recentDirsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renderModelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,12 +110,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.newFromArchiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openWorldspaceDirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.recentDirsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -170,6 +170,43 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Enabled = false;
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.newToolStripMenuItem.Text = "&New...";
+            // 
+            // newFromArchiveToolStripMenuItem
+            // 
+            this.newFromArchiveToolStripMenuItem.Name = "newFromArchiveToolStripMenuItem";
+            this.newFromArchiveToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.newFromArchiveToolStripMenuItem.Text = "New &From Archive...";
+            this.newFromArchiveToolStripMenuItem.Click += new System.EventHandler(this.newFromArchiveToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(183, 6);
+            // 
+            // openWorldspaceDirToolStripMenuItem
+            // 
+            this.openWorldspaceDirToolStripMenuItem.Name = "openWorldspaceDirToolStripMenuItem";
+            this.openWorldspaceDirToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.openWorldspaceDirToolStripMenuItem.Text = "&Open Worldspace Dir";
+            // 
+            // recentDirsToolStripMenuItem
+            // 
+            this.recentDirsToolStripMenuItem.Enabled = false;
+            this.recentDirsToolStripMenuItem.Name = "recentDirsToolStripMenuItem";
+            this.recentDirsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.recentDirsToolStripMenuItem.Text = "&Recent Dirs...";
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(183, 6);
             // 
             // exitToolStripMenuItem
             // 
@@ -532,43 +569,6 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(225, 713);
             this.panel5.TabIndex = 1;
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Enabled = false;
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.newToolStripMenuItem.Text = "&New...";
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(183, 6);
-            // 
-            // newFromArchiveToolStripMenuItem
-            // 
-            this.newFromArchiveToolStripMenuItem.Name = "newFromArchiveToolStripMenuItem";
-            this.newFromArchiveToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.newFromArchiveToolStripMenuItem.Text = "New &From Archive...";
-            this.newFromArchiveToolStripMenuItem.Click += new System.EventHandler(this.newFromArchiveToolStripMenuItem_Click);
-            // 
-            // openWorldspaceDirToolStripMenuItem
-            // 
-            this.openWorldspaceDirToolStripMenuItem.Name = "openWorldspaceDirToolStripMenuItem";
-            this.openWorldspaceDirToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.openWorldspaceDirToolStripMenuItem.Text = "&Open Worldspace Dir";
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(183, 6);
-            // 
-            // recentDirsToolStripMenuItem
-            // 
-            this.recentDirsToolStripMenuItem.Enabled = false;
-            this.recentDirsToolStripMenuItem.Name = "recentDirsToolStripMenuItem";
-            this.recentDirsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.recentDirsToolStripMenuItem.Text = "&Recent Dirs...";
             // 
             // MainForm
             // 

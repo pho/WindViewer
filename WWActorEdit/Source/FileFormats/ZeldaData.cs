@@ -18,6 +18,11 @@ namespace WWActorEdit
         PLYR,
 
     }
+
+    /// <summary>
+    /// Nicknamed "ZeldaData" because both "DZR" and "DZS" use the same format. DZR = "Zelda Room Data"
+    /// while DZS = "Zelda Stage Data". 
+    /// </summary>
     public class DZSFormat
     {
         public DZSHeader Header;

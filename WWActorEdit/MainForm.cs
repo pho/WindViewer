@@ -593,53 +593,92 @@ namespace WWActorEdit
 
             foreach (string filePath in filePaths)
             {
-                //For each file selected we want to extract it to the working directory.
-                string workingDir = Path.Combine(
-                    System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName);
+                string workDir = CreateWorkingDirForArchive(filePath);
 
-                //Next we're going to stop and retrieve the "Worldspace Dir" from the user (name of parent folder, ie:
-                //"MiniHyo" or "DragonRoostIsland" or something fancy like that. We'll just have to ask the user!
-                NewWorldspaceDialogue dialogue = new NewWorldspaceDialogue();
-                DialogResult result = dialogue.ShowDialog();
-                if (result == DialogResult.Cancel)
-                    return;
+                if (workDir == string.Empty)
+                    break;
 
-                string worldspaceName = dialogue.dirName.Text;
-                workingDir = Path.Combine(workingDir, worldspaceName + ".wrkDir");
-
-                //Don't like using the RARC class but it seems like it can do what I want for now...
-                RARC arc = new RARC(filePath);
-                foreach (RARC.FileNode node in arc.Root.ChildNodes)
-                {
-                    //Create the folder on disk to represent the folder in the Archive.
-                    DirectoryInfo outputDir = Directory.CreateDirectory(Path.Combine(workingDir, node.NodeName));
-
-                    //Now extract each of the files in the Archive into this folder.
-                    foreach (RARC.FileEntry fileEntry in node.Files)
-                    {
-                        try
-                        {
-                            //Write the bytes to disk as a binary file and we'll have succesfully unpacked an archive, sweet!
-                            FileStream fs = File.Create(Path.Combine(outputDir.FullName, fileEntry.FileName));
-                            BinaryWriter bw = new BinaryWriter(fs);
-
-                            bw.Write(fileEntry.GetFileData());
-                            bw.Close();
-                            fs.Close();
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("Error opening " + fileEntry.FileName + " for writing, error message: " +
-                                              ex);
-                        }
-                        
-                    }
-
-                }
-
+                //Now that we've extracted the files into the Working Dir (subdir), we'll invoke our regular
+                //old "Open Project" type routine. Super clean!
+                OpenFileFromWorkingDir(workDir);
             }
         }
 
+        private void OpenFileFromWorkingDir(string workDir)
+        {
+            //Iterate through the sub folders (dzb, dzr, bdl, etc.) and construct an appropriate data
+            //structure for each one out of it. Then stick them all in a WorldspaceProject and save that
+            //into our list of open projects. Then we can operate out of the WorldspaceProject references
+            //and save and stuff.
+
+            WorldspaceProject worldProj = new WorldspaceProject();
+            worldProj.LoadFromDirectory(workDir);
+
+            //Ps: WorldspaceProject::GetFiletype<DZS>(); should be a thing.
+            //PPS: So should DZS::GetChunk<ChunkType>(); - How to handle mutliple chunks?
+            //PPPS: GetSingleChunk<ChunkType> or GetMultipleChunks<ChunkType>? The latter could return
+            //a list with a single entry in it if invoked on chunks with only one entry, the previous
+            //could return only the first.
+        }
+
         #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="archiveFilePath"></param>
+        /// <returns></returns>
+        private string CreateWorkingDirForArchive(string archiveFilePath)
+        {
+            //For each file selected we want to extract it to the working directory.
+            string workingDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName);
+
+            //Next we're going to stop and retrieve the "Worldspace Dir" from the user (name of parent folder, ie:
+            //"MiniHyo" or "DragonRoostIsland" or something fancy like that. We'll just have to ask the user!
+            NewWorldspaceDialogue dialogue = new NewWorldspaceDialogue();
+            DialogResult result = dialogue.ShowDialog();
+            if (result == DialogResult.Cancel)
+                return string.Empty;
+
+            string worldspaceName = dialogue.dirName.Text;
+            workingDir = Path.Combine(workingDir, worldspaceName + ".wrkDir");
+
+            //Don't like using the RARC class but it seems like it can do what I want for now...
+            RARC arc = new RARC(archiveFilePath);
+
+            //We're going to stick these inside a sub-folder inside the .wrkDir directory based on the Arc name (ie: "Room0.arc");
+            string arcName = arc.Filename.Substring(0, arc.Filename.IndexOf('.'));
+            string folderDir = Path.Combine(workingDir, arcName);
+
+            foreach (RARC.FileNode node in arc.Root.ChildNodes)
+            {
+                //Create the folder on disk to represent the folder in the Archive.
+                DirectoryInfo outputDir = Directory.CreateDirectory(Path.Combine(folderDir, node.NodeName));
+
+                //Now extract each of the files in the Archive into this folder.
+                foreach (RARC.FileEntry fileEntry in node.Files)
+                {
+                    try
+                    {
+                        //Write the bytes to disk as a binary file and we'll have succesfully unpacked an archive, sweet!
+                        FileStream fs = File.Create(Path.Combine(outputDir.FullName, fileEntry.FileName));
+                        BinaryWriter bw = new BinaryWriter(fs);
+
+                        bw.Write(fileEntry.GetFileData());
+                        bw.Close();
+                        fs.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error opening " + fileEntry.FileName + " for writing, error message: " +
+                                          ex);
+                    }
+
+                }
+            }
+
+            return workingDir;
+        }
     }
 }
