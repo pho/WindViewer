@@ -20,6 +20,7 @@ using WWActorEdit.Kazari;
 using WWActorEdit.Kazari.DZx;
 using WWActorEdit.Kazari.DZB;
 using WWActorEdit.Kazari.J3Dx;
+using WWActorEdit.Source;
 
 namespace WWActorEdit
 {
@@ -540,6 +541,35 @@ namespace WWActorEdit
         {
             FloatConverter popup = new FloatConverter();
             popup.Show(this);
+        }
+        
+        /// <summary>
+        /// The new and improved Open Archive menu! This is totally super secret stuff
+        /// (which is why it's disabled on the UI!) but I wanted to start tinkering
+        /// with it without disturbing the existing code, but not being in its own
+        /// branch... Yeah I'm a bad person.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void openArchiveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string[] filePaths = Helpers.ShowOpenFileDialog("Wind Waker Archives (*.arc; *.rarc)|*.arc; *.rarc|All Files (*.*)|*.*", true);
+
+            //If they hit cancel it'll return an empty string.
+            if (filePaths[0] == string.Empty)
+                return;
+
+            foreach (string filePath in filePaths)
+            {
+                _DONOTUSETHIS_LoadArchiveFromFile(filePath);
+            }
+        }
+
+
+        private void _DONOTUSETHIS_LoadArchiveFromFile(string filePath)
+        {
+            ZArchive newArchive = new ZArchive();
+            newArchive.LoadFromFile(filePath);
         }
     }
 }

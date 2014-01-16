@@ -71,6 +71,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.floatConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.openArchiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -124,6 +126,8 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openRoomRARCToolStripMenuItem,
             this.openStageRARCToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.openArchiveToolStripMenuItem,
             this.toolStripMenuItem2,
             this.saveChangesToolStripMenuItem,
             this.toolStripMenuItem1,
@@ -428,6 +432,18 @@
             this.floatConverterToolStripMenuItem.Text = "Float Converter";
             this.floatConverterToolStripMenuItem.Click += new System.EventHandler(this.floatConverterToolStripMenuItem_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(190, 6);
+            // 
+            // openArchiveToolStripMenuItem
+            // 
+            this.openArchiveToolStripMenuItem.Name = "openArchiveToolStripMenuItem";
+            this.openArchiveToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.openArchiveToolStripMenuItem.Text = "Open Archive";
+            this.openArchiveToolStripMenuItem.Click += new System.EventHandler(this.openArchiveToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -499,6 +515,8 @@
         private System.Windows.Forms.ToolStripMenuItem spawnEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem floatConverterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem openArchiveToolStripMenuItem;
     }
 }
 

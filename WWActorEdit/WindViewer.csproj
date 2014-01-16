@@ -103,6 +103,7 @@
     <Compile Include="Forms\SpawnpointEditor.Designer.cs">
       <DependentUpon>SpawnpointEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\ZArchive.cs" />
     <Compile Include="Source\DZS\FileFormat.cs" />
     <Compile Include="Source\FSHelpers.cs" />
     <Compile Include="Source\StickyWindow.cs" />
