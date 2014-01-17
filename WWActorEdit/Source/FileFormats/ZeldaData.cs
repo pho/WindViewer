@@ -139,6 +139,11 @@ namespace WWActorEdit
 
                 headerList.Add(chnkHeader);
 
+
+                //RTBL chunks are tables with global offsets to themselves, so they need to recalculate some things
+                if (chnkHeader.Tag.Equals("RTBL"))
+                    adjustRTBL(pair.Value);
+
                 //Now write the actual chunks to the stream.
                 foreach (IChunkType chunk in pair.Value)
                 {
@@ -189,6 +194,16 @@ namespace WWActorEdit
 
             return returnList;
         }
+
+        /// <summary>
+        /// Sets true the lastChunk parameter of the last RTBL chunk
+        /// </summary>
+        public void adjustRTBL(List<IChunkType> chunks){
+
+            ((RTBLChunk)chunks[chunks.Count - 1]).lastRTBLChunk = true;
+
+        }
+
     }
 
     public class DZSHeader
@@ -1134,14 +1149,6 @@ namespace WWActorEdit
         public byte unknown2; //variable, but changing it has no immediate result
         public byte padding;
 
-        public TwoDMAChunk()
-        {
-            fullMapImageScaleX = fullMapImageScaleY = fullMapSpaceScaleX = fullMapSpaceScaleY
-             = fullMapXCoord = fullMapYCoord = zoomedMapXScrolling1 = zoomedMapYScrolling1 
-             = zoomedMapXScrolling2 = zoomedMapYScrolling2 = zoomedMapXCoord = zoomedMapYCoord
-             = zoomedMapScale = unknown1 = mapIndex = unknown2 = padding = 0;
-        }
-
         public void LoadData(byte[] data, ref int srcOffset)
         {
             fullMapImageScaleX  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset));
@@ -1210,6 +1217,53 @@ namespace WWActorEdit
             FSHelpers.WriteFloat(stream, mapSpaceY);
             FSHelpers.WriteFloat(stream, mapSpaceScale);
             FSHelpers.WriteFloat(stream, unknown1);
+        }
+    }
+
+    public class RTBLChunk : IChunkType
+    {
+        public byte unknown1;
+        public ushort unknown2;
+        public byte[] data;
+        public float index1;
+        public float index2;
+        public bool lastRTBLChunk;
+
+        public RTBLChunk(){
+            lastRTBLChunk = false;
+        }
+
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            index1 = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset));
+
+            dataSize = Helpers.Read8(data, index1);
+            unknown1 = Helpers.Read8(data, index1 + 0x1);
+            unknown2 = Helpers.Read16(data, index1 + 0x2); // 0x2 and 0x3 bytes seems to be always 0
+            index2 = Helpers.ConvertIEEE754Float(Helpers.Read32(data, index1 + 0x4));
+            data = Helpers.ReadN(data, index2, dataSize);
+
+            srcOffset += 0x4;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteFloat(stream, index1);
+            long nextChunkOffset = stream.BaseStream.Position;
+            stream.Seek(index1, SeekOrigin.Begin);
+
+            FSHelpers.Write8(stream, data.Length);
+            FSHelpers.Write8(stream, unknown1);
+            FSHelpers.Write16(stream, unknown2);
+            FSHelpers.WriteFloat(stream, index2);
+            stream.Seek(index2, SeekOrigin.Begin);
+
+            FSHelpers.WriteArray(stream, data);
+            if (!lastRTBLChunk) {
+                // Do we need padding here?
+                stream.Seek(nextChunkOffset, SeekOrigin.Begin);
+            }
         }
     }
 

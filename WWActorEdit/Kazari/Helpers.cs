@@ -51,6 +51,12 @@ namespace WWActorEdit.Kazari
             return (uint)((Buffer.GetByte(Data, Offset + 3) << 24) | (Buffer.GetByte(Data, Offset + 2) << 16) | (Buffer.GetByte(Data, Offset + 1) << 8) | Buffer.GetByte(Data, Offset));
         }
 
+        public static byte[] ReadN(byte[] Data, int Offset, int N){
+            byte[] ret = new byte[N];
+            Array.Copy(Data, Offset, ret, N);
+            return ret;
+        }
+
         public static byte[] LoadBinary(string Path)
         {
             BinaryReader BR = new BinaryReader(File.OpenRead(Path));
