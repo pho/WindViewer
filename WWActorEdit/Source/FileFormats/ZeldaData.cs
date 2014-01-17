@@ -75,6 +75,7 @@ namespace WWActorEdit
                             chunk = new RcamChunk();break;
                         case "FLOR": chunk = new FlorChunk(); break;
                         case "2DMA": chunk = new TwoDMAChunk(); break;
+                        case "DMAP": chunk = new DMAPChunk(); break;
                         default:
                             Console.WriteLine("Unsupported Chunk Tag: " + chunkHeader.Tag +
                                               " making DefaultChunk() instead!");
@@ -1111,8 +1112,7 @@ namespace WWActorEdit
     }
 
     /// <summary>
-    /// Colo (short for Color) contains indexes into the Pale section. Color specifies
-    /// which color to use for the different times of day.
+    /// 2DMA holds the settings for the map display in the bottom left-hand corner of the screen.
     /// </summary>
     public class TwoDMAChunk : IChunkType
     {
@@ -1184,6 +1184,32 @@ namespace WWActorEdit
             FSHelpers.Write8(stream, mapIndex);
             FSHelpers.Write8(stream, unknown2);
             FSHelpers.Write8(stream, padding);
+        }
+    }
+
+    public class DMAPChunk : IChunkType
+    {
+        public float mapSpaceX;
+        public float mapSpaceY;
+        public float mapSpaceScale;
+        public float unknown1;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            mapSpaceX = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset));
+            mapSpaceY = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0x4));
+            mapSpaceScale = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0x8));
+            unknown1 = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0xC));
+
+            srcOffset += 0x10;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteFloat(stream, mapSpaceX);
+            FSHelpers.WriteFloat(stream, mapSpaceY);
+            FSHelpers.WriteFloat(stream, mapSpaceScale);
+            FSHelpers.WriteFloat(stream, unknown1);
         }
     }
 
