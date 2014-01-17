@@ -45,7 +45,7 @@ namespace WWActorEdit.Forms
 
         private void LoadDZSForStage(ZeldaArc stage)
         {
-            int srcOffset = 0;
+            /*int srcOffset = 0;
             _data = new DZSFormat(stage.DZRs[0].FileEntry.GetFileData(), ref srcOffset);
 
             List<IChunkType> plyrChunks = _data.GetChunksOfType(DZSChunkTypes.PLYR);
@@ -60,7 +60,7 @@ namespace WWActorEdit.Forms
 
             spawnDropdown.SelectedIndex = 0;
             _plyrChunk = (PlyrChunk)plyrChunks[spawnDropdown.SelectedIndex];
-            UpdateUIControlsFromFile();
+            UpdateUIControlsFromFile();*/
         }
 
         private void UpdateUIControlsFromFile()
@@ -82,8 +82,7 @@ namespace WWActorEdit.Forms
 
         private void spawnDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<IChunkType> plyrChunks = _data.GetChunksOfType(DZSChunkTypes.PLYR);
-            _plyrChunk = (PlyrChunk)plyrChunks[spawnDropdown.SelectedIndex];
+            _plyrChunk = _data.GetAllChunks<PlyrChunk>()[spawnDropdown.SelectedIndex];
             UpdateUIControlsFromFile();
         }
 
@@ -124,7 +123,7 @@ namespace WWActorEdit.Forms
             //OH BOY D:<
 
 
-            foreach (DZSChunkHeader chunk in _data.ChunkHeaders)
+            /*foreach (DZSChunkHeader chunk in _data.ChunkHeaders)
             {
                 if (chunk.Tag == "PLYR")
                 {
@@ -141,7 +140,7 @@ namespace WWActorEdit.Forms
                     bw.Close();
                     fs.Close();
                 }
-            }
+            }*/
         }
 
 

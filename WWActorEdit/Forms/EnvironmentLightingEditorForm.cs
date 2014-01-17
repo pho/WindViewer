@@ -201,7 +201,7 @@ namespace WWActorEdit.Forms
         /// </summary>
         private void EnvRDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _envrChunk = (EnvRChunk) _data.GetChunksOfType(DZSChunkTypes.EnvR)[EnvRDropdown.SelectedIndex];
+            _envrChunk = _data.GetAllChunks<EnvRChunk>()[EnvRDropdown.SelectedIndex];
             UpdateEnvrGroupBox();
         }
 
@@ -210,19 +210,19 @@ namespace WWActorEdit.Forms
         /// </summary>
         private void ColorDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _coloChunk = (ColoChunk)_data.GetChunksOfType(DZSChunkTypes.Colo)[ColorDropdown.SelectedIndex];
+            _coloChunk = _data.GetAllChunks<ColoChunk>()[ColorDropdown.SelectedIndex];
             UpdateColoGroupBox();
         }
 
         private void PaleDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _paleChunk = (PaleChunk)_data.GetChunksOfType(DZSChunkTypes.Pale)[PaleDropdown.SelectedIndex];
+            _paleChunk = _data.GetAllChunks<PaleChunk>()[PaleDropdown.SelectedIndex];
             UpdatePaleGroupBox();
         }
 
         private void VirtDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _virtChunk = (VirtChunk)_data.GetChunksOfType(DZSChunkTypes.Virt)[VirtDropdown.SelectedIndex];
+            _virtChunk = _data.GetAllChunks<VirtChunk>()[VirtDropdown.SelectedIndex];
             UpdateVirtGroupBox();
         }
 
@@ -412,7 +412,7 @@ namespace WWActorEdit.Forms
             //OH BOY D:<
 
 
-            foreach (DZSChunkHeader chunk in _data.ChunkHeaders)
+            /*foreach (DZSChunkHeader chunk in _data.ChunkHeaders)
             {
                 if (chunk.Tag == "EnvR" || chunk.Tag == "Pale" || chunk.Tag == "Virt" || chunk.Tag == "Colo")
                 {
@@ -430,7 +430,7 @@ namespace WWActorEdit.Forms
                     fs.Close();
                 }
                 
-            }
+            }*/
         }
 
         private void cancelButton_Click(object sender, EventArgs e)

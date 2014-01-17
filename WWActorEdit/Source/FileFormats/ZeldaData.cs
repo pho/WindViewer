@@ -8,17 +8,6 @@ using WWActorEdit.Source;
 
 namespace WWActorEdit
 {
-    public enum DZSChunkTypes
-    {
-        /* Stage Environment Lighting */
-        EnvR, Colo, Pale, Virt,
-        /* Stage and Room Exits */
-        SCLS,
-        /* Player Spawn Points */
-        PLYR,
-
-    }
-
     /// <summary>
     /// Nicknamed "ZeldaData" because both "DZR" and "DZS" use the same format. DZR = "Zelda Room Data"
     /// while DZS = "Zelda Stage Data". 
@@ -63,7 +52,7 @@ namespace WWActorEdit
                     }
 
                     chunk.LoadData(data, ref chunkHeader.ChunkOffset);
-                    chunkHeader.ChunkElements.Add(chunk);
+                    _chunkList.Add(chunk);
                 }
             }
         }
@@ -115,7 +104,6 @@ namespace WWActorEdit
             ElementCount = (int) Helpers.Read32(data, srcOffset + 4);
             ChunkOffset = (int) Helpers.Read32(data, srcOffset + 8);
 
-            ChunkElements = new List<IChunkType>();
             srcOffset += 12; //Header is 0xC/12 bytes in length
         }
     }

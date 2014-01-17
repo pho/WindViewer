@@ -55,7 +55,7 @@ namespace WWActorEdit.Forms
         /// <param name="stage"></param>
         private void LoadDZSForStage(ZeldaArc stage)
         {
-            int srcOffset = 0;
+            /*int srcOffset = 0;
             _data = new DZSFormat(stage.DZRs[0].FileEntry.GetFileData(), ref srcOffset);
 
             List<IChunkType> sclsChunks = _data.GetChunksOfType(DZSChunkTypes.SCLS);
@@ -70,7 +70,7 @@ namespace WWActorEdit.Forms
 
             sclsDropdown.SelectedIndex = 0;
             _sclsChunk = (SclsChunk) sclsChunks[sclsDropdown.SelectedIndex];
-            UpdateSclsControlsFromFile();
+            UpdateSclsControlsFromFile();*/
         }
 
         private void RoomExitEditor_Load(object sender, EventArgs e)
@@ -92,8 +92,7 @@ namespace WWActorEdit.Forms
         /// <param name="e"></param>
         private void sclsDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<IChunkType> sclsChunks = _data.GetChunksOfType(DZSChunkTypes.SCLS);
-            _sclsChunk = (SclsChunk) sclsChunks[sclsDropdown.SelectedIndex];
+            _sclsChunk = _data.GetAllChunks<SclsChunk>()[sclsDropdown.SelectedIndex];
             UpdateSclsControlsFromFile();
         }
 
@@ -128,7 +127,7 @@ namespace WWActorEdit.Forms
             //OH BOY D:<
 
 
-            foreach (DZSChunkHeader chunk in _data.ChunkHeaders)
+            /*foreach (DZSChunkHeader chunk in _data.ChunkHeaders)
             {
                 if (chunk.Tag == "SCLS")
                 {
@@ -145,7 +144,7 @@ namespace WWActorEdit.Forms
                     bw.Close();
                     fs.Close();
                 }
-            }
+            }*/
         }
 
         /// <summary>
