@@ -74,6 +74,7 @@ namespace WWActorEdit
                         case "CAMR":
                             chunk = new RcamChunk();break;
                         case "FLOR": chunk = new FlorChunk(); break;
+                        case "2DMA": chunk = new TwoDMAChunk(); break;
                         default:
                             Console.WriteLine("Unsupported Chunk Tag: " + chunkHeader.Tag +
                                               " making DefaultChunk() instead!");
@@ -1106,6 +1107,83 @@ namespace WWActorEdit
             FSHelpers.Write8(stream, Unknown2);
             FSHelpers.Write8(stream, Unknown3);
             FSHelpers.Write16(stream, DrawDistance);
+        }
+    }
+
+    /// <summary>
+    /// Colo (short for Color) contains indexes into the Pale section. Color specifies
+    /// which color to use for the different times of day.
+    /// </summary>
+    public class TwoDMAChunk : IChunkType
+    {
+        public float fullMapImageScaleX;
+        public float fullMapImageScaleY;
+        public float fullMapSpaceScaleX;
+        public float fullMapSpaceScaleY;
+        public float fullMapXCoord;
+        public float fullMapYCoord;
+        public float zoomedMapXScrolling1; //Something with scrolling, but that's also defined below?
+        public float zoomedMapYScrolling1; //Does something like scrolling on y-axis
+        public float zoomedMapXScrolling2;
+        public float zoomedMapYScrolling2;
+        public float zoomedMapXCoord;
+        public float zoomedMapYCoord;
+        public float zoomedMapScale; //That's what it appeared to affect, anyway
+        public byte unknown1; //Always 0x80?
+        public byte mapIndex; //number of the map image to use. For instance, using the first image would be 80, the second 81, and so on.
+        public byte unknown2; //variable, but changing it has no immediate result
+        public byte padding;
+
+        public TwoDMAChunk()
+        {
+            fullMapImageScaleX = fullMapImageScaleY = fullMapSpaceScaleX = fullMapSpaceScaleY
+             = fullMapXCoord = fullMapYCoord = zoomedMapXScrolling1 = zoomedMapYScrolling1 
+             = zoomedMapXScrolling2 = zoomedMapYScrolling2 = zoomedMapXCoord = zoomedMapYCoord
+             = zoomedMapScale = unknown1 = mapIndex = unknown2 = padding = 0;
+        }
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            fullMapImageScaleX  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset));
+            fullMapImageScaleY  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0x4));
+            fullMapSpaceScaleX  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0x8));
+            fullMapSpaceScaleY  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0xC));
+            fullMapXCoord  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0x10));
+            fullMapYCoord  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0x14));
+            zoomedMapXScrolling1  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0x18));
+            zoomedMapYScrolling1  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0x1C));
+            zoomedMapXScrolling2  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0x20));
+            zoomedMapYScrolling2  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0x24));
+            zoomedMapXCoord  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0x28));
+            zoomedMapYCoord  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0x2C));
+            zoomedMapScale  = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0x30));
+            unknown1 = Helpers.Read8(data, srcOffset + 0x34);
+            mapIndex = Helpers.Read8(data, srcOffset + 0x35);
+            unknown2 = Helpers.Read8(data, srcOffset + 0x36);
+            padding = Helpers.Read8(data, srcOffset + 0x37);
+
+            srcOffset += 0x38;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteFloat(stream, fullMapImageScaleX);
+            FSHelpers.WriteFloat(stream, fullMapImageScaleY);
+            FSHelpers.WriteFloat(stream, fullMapSpaceScaleX);
+            FSHelpers.WriteFloat(stream, fullMapSpaceScaleY);
+            FSHelpers.WriteFloat(stream, fullMapXCoord);
+            FSHelpers.WriteFloat(stream, fullMapYCoord);
+            FSHelpers.WriteFloat(stream, zoomedMapXScrolling1);
+            FSHelpers.WriteFloat(stream, zoomedMapYScrolling1);
+            FSHelpers.WriteFloat(stream, zoomedMapXScrolling2);
+            FSHelpers.WriteFloat(stream, zoomedMapYScrolling2);
+            FSHelpers.WriteFloat(stream, zoomedMapXCoord);
+            FSHelpers.WriteFloat(stream, zoomedMapYCoord);
+            FSHelpers.WriteFloat(stream, zoomedMapScale);
+            FSHelpers.Write8(stream, unknown1);
+            FSHelpers.Write8(stream, mapIndex);
+            FSHelpers.Write8(stream, unknown2);
+            FSHelpers.Write8(stream, padding);
         }
     }
 
