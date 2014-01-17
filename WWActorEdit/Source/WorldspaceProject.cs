@@ -35,6 +35,13 @@ namespace WWActorEdit.Source
             Name = String.Empty;
         }
 
+        public List<ZArchive> GetAllArchives()
+        {
+            List<ZArchive> archive = new List<ZArchive>(Rooms);
+            archive.Add(Stage);
+
+            return archive;
+        }
 
         /// <summary>
         /// This will create a new WorldspaceProject from an existing working directory.
@@ -42,6 +49,12 @@ namespace WWActorEdit.Source
         /// <param name="dirFilePath">A filepath that ends in ".wrkDir" that is the root folder of the project.</param>
         public void LoadFromDirectory(string dirFilePath)
         {
+            //Name (sans .wrkDir)
+            string wrkDirName = new DirectoryInfo(dirFilePath).Name;
+            Name = wrkDirName.Substring(0, wrkDirName.LastIndexOf(".wrkDir"));
+            
+
+
             //We're going to scan for folders in this directory and construct ZArchives out of their contents.
             string[] subFolders = Directory.GetDirectories(dirFilePath);
 
@@ -50,6 +63,27 @@ namespace WWActorEdit.Source
             {
                 ZArchive arc = new ZArchive();
                 arc.LoadFromDirectory(folder);
+               
+                //Check to see if this is a stage (name starts with "Stage") or a Room ("Room")
+                string folderName = new DirectoryInfo(folder).Name;
+                arc.Name = folderName;
+
+                if (folderName.ToLower().StartsWith("stage"))
+                {
+                    Console.WriteLine("Loaded Stage for " + Name);
+                    Stage = arc;
+                }
+                else if (folderName.ToLower().StartsWith("room"))
+                {
+                    Console.WriteLine("Loaded room \"" + folderName + "\" for " + Name);
+                    Rooms.Add(arc);
+                }
+                else
+                {
+                    Console.WriteLine("Loaded folder [" + folderName +
+                                      "]. Not sure if it's a room or a stage, assuming room...");
+                    Rooms.Add(arc);
+                }
             }
 
         }
@@ -98,14 +132,23 @@ namespace WWActorEdit.Source
         //This is a list of all loaded files from the Archive.
         private readonly List<IArchiveFile> _archiveFiles;
 
+        //This is the name of the Archive, ie: "Room0" "Stage", etc.
+        public string Name;
+
         public ZArchive()
         {
             _archiveFiles = new List<IArchiveFile>();
+            Name = "Unnamed";
         }
 
         public void AddFileToArchive(IArchiveFile file)
         {
             _archiveFiles.Add(file);
+        }
+
+        public List<BaseArchiveFile> GetAllFiles()
+        {
+            return _archiveFiles.Cast<BaseArchiveFile>().ToList();
         }
 
         /// <summary>
@@ -126,7 +169,6 @@ namespace WWActorEdit.Source
                 Directory.CreateDirectory(subFolder);
 
                 //Open the file for Read/Write Access
-
                 FileStream fs = new FileStream(Path.Combine(subFolder, file.FileName), FileMode.Create);
                 try
                 {

@@ -12,7 +12,7 @@ namespace WWActorEdit
     /// Nicknamed "ZeldaData" because both "DZR" and "DZS" use the same format. DZR = "Zelda Room Data"
     /// while DZS = "Zelda Stage Data". 
     /// </summary>
-    public class DZSFormat
+    public class DZSFormat : BaseArchiveFile
     {
         public DZSHeader Header;
         public List<DZSChunkHeader> ChunkHeaders;
@@ -20,18 +20,41 @@ namespace WWActorEdit
         //Data from file
         public byte[] Data;
 
-        private List<IChunkType> _chunkList; 
+        private List<IChunkType> _chunkList;
 
-
-        public DZSFormat(byte[] data, ref int srcOffset)
+        public T GetSingleChunk<T>()
         {
-            Header = new DZSHeader(data, ref srcOffset);
+            foreach (IChunkType chunk in _chunkList)
+            {
+                if (chunk is T)
+                    return (T) chunk;
+            }
+
+            return default(T);
+        }
+
+        public List<T> GetAllChunks<T>()
+        {
+            List<T> returnList = new List<T>();
+            foreach (IChunkType chunk in _chunkList)
+            {
+                if (chunk is T)
+                    returnList.Add((T) chunk);
+            }
+
+            return returnList;
+        }
+
+        public override void Load(byte[] data)
+        {
+            int offset = 0;
+            Header = new DZSHeader(data, ref offset);
             ChunkHeaders = new List<DZSChunkHeader>();
             Data = data;
 
             for (int i = 0; i < Header.ChunkCount; i++)
             {
-                DZSChunkHeader chunkHeader = new DZSChunkHeader(data, ref srcOffset);
+                DZSChunkHeader chunkHeader = new DZSChunkHeader(data, ref offset);
                 ChunkHeaders.Add(chunkHeader);
 
                 for (int k = 0; k < chunkHeader.ElementCount; k++)
@@ -57,27 +80,9 @@ namespace WWActorEdit
             }
         }
 
-        public T GetSingleChunk<T>()
+        public override void Save(BinaryWriter stream)
         {
-            foreach (IChunkType chunk in _chunkList)
-            {
-                if (chunk is T)
-                    return (T) chunk;
-            }
-
-            return default(T);
-        }
-
-        public List<T> GetAllChunks<T>()
-        {
-            List<T> returnList = new List<T>();
-            foreach (IChunkType chunk in _chunkList)
-            {
-                if (chunk is T)
-                    returnList.Add((T) chunk);
-            }
-
-            return returnList;
+            
         }
     }
 

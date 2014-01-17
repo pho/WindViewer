@@ -458,7 +458,7 @@
             treeNode12});
             this.fileBrowserTV.Size = new System.Drawing.Size(219, 268);
             this.fileBrowserTV.TabIndex = 7;
-            this.fileBrowserTV.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView2_NodeMouseClick);
+            this.fileBrowserTV.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.fileBrowserTV_AfterSelect);
             // 
             // curDataTV
             // 
@@ -585,6 +585,7 @@
             this.MinimumSize = new System.Drawing.Size(800, 451);
             this.Name = "MainForm";
             this.Text = "Wind Viewer";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);

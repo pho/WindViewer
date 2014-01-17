@@ -21,6 +21,7 @@ using WWActorEdit.Kazari.DZx;
 using WWActorEdit.Kazari.DZB;
 using WWActorEdit.Kazari.J3Dx;
 using WWActorEdit.Source;
+using WWActorEdit.Source.FileFormats;
 
 namespace WWActorEdit
 {
@@ -40,12 +41,26 @@ namespace WWActorEdit
         //Used for "dockable" WinForms
         private StickyWindow _stickyWindow;
 
+        /* EVENTS */
+        //Fired when a WorldspaceProject is loaded or unloaded
+        public static event Action WorldspaceProjectListModified;
+
+
+
+        private List<WorldspaceProject> _loadedWorldspaceProjects; 
+
         public MainForm()
         {
             //Initialize the WinForm
             InitializeComponent();
 
             _stickyWindow = new StickyWindow(this);
+            _loadedWorldspaceProjects = new List<WorldspaceProject>();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            WorldspaceProjectListModified += RebuildFileBrowserTreeview;
         }
 
         #region GLControl
@@ -529,35 +544,6 @@ namespace WWActorEdit
             popup.Show(this);
         }
 
-        /// <summary>
-        /// The new and improved Open Archive menu! This is totally super secret stuff
-        /// (which is why it's disabled on the UI!) but I wanted to start tinkering
-        /// with it without disturbing the existing code, but not being in its own
-        /// branch... Yeah I'm a bad person.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void openArchiveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string[] filePaths = Helpers.ShowOpenFileDialog("Wind Waker Archives (*.arc; *.rarc)|*.arc; *.rarc|All Files (*.*)|*.*", true);
-
-            //If they hit cancel it'll return an empty string.
-            if (filePaths[0] == string.Empty)
-                return;
-
-            foreach (string filePath in filePaths)
-            {
-                _DONOTUSETHIS_LoadArchiveFromFile(filePath);
-            }
-        }
-
-
-        private void _DONOTUSETHIS_LoadArchiveFromFile(string filePath)
-        {
-            ZArchive newArchive = new ZArchive();
-            //newArchive.LoadFromFile(filePath);
-        }
-
         private void treeView2_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -619,12 +605,11 @@ namespace WWActorEdit
 
             WorldspaceProject worldProj = new WorldspaceProject();
             worldProj.LoadFromDirectory(workDir);
+            _loadedWorldspaceProjects.Add(worldProj);
 
-            //Ps: WorldspaceProject::GetFiletype<DZS>(); should be a thing.
-            //PPS: So should DZS::GetChunk<ChunkType>(); - How to handle mutliple chunks?
-            //PPPS: GetSingleChunk<ChunkType> or GetMultipleChunks<ChunkType>? The latter could return
-            //a list with a single entry in it if invoked on chunks with only one entry, the previous
-            //could return only the first.
+            if (WorldspaceProjectListModified != null)
+                WorldspaceProjectListModified();
+
         }
 
         /// <summary>
@@ -716,5 +701,84 @@ namespace WWActorEdit
 
             return workingDir;
         }
+
+
+
+
+
+
+        
+
+        /// <summary>
+        /// This rebuilds the File Browser Treeview (lower left) with a list of the 
+        /// currently loaded WorldspaceProjects. It is invoked by the WorldspaceProjectListModified
+        /// event and rebuilds the UI from scratch when you change loaded selections. Users will lose
+        /// their selected Entity file, but oh well.
+        /// </summary>
+        private void RebuildFileBrowserTreeview()
+        {
+            //Wipe out any existing stuff.
+            fileBrowserTV.Nodes.Clear();
+
+
+            foreach (WorldspaceProject project in _loadedWorldspaceProjects)
+            {
+                //Create a Root node for this project
+                TreeNode root = fileBrowserTV.Nodes.Add(project.Name, project.Name);
+                foreach (ZArchive archive in project.GetAllArchives())
+                {
+                    TreeNode arcRoot = root.Nodes.Add(archive.Name, archive.Name);
+                    foreach (BaseArchiveFile archiveFile in archive.GetAllFiles())
+                    {
+                        //Place the folder into the UI (this can be repeated so we only add if it doesn't exist)
+                        TreeNode folderNode;
+                        if (!arcRoot.Nodes.ContainsKey(archiveFile.FolderName))
+                        {
+                            folderNode = arcRoot.Nodes.Add(archiveFile.FolderName, archiveFile.FolderName);
+                        }
+                        else
+                        {
+                            TreeNode[] searchResults = arcRoot.Nodes.Find(archiveFile.FolderName, false);
+                            folderNode = searchResults[0];
+                        }
+
+                        //Now the node for the folder will exist for sure, so we can add our file to it.
+                        TreeNode fileName = folderNode.Nodes.Add(archiveFile.FileName);
+                        fileName.Tag = archiveFile;
+                    }
+                }
+            }
+
+            
+            //Auto-expand the TreeView because it looks nice.
+            fileBrowserTV.ExpandAll();
+        }
+
+        /// <summary>
+        /// This is called when the user changes their selection in the File Browser. For now,
+        /// we're just going to look to see what they selected, and if its an Entity file (dzs, dzr)
+        /// then we'll update the curData TreeView.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void fileBrowserTV_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            //Lets hope they always pick the default name for Entity files...
+            if (e.Node.Text.ToLower() == "room.dzr" || e.Node.Text.ToLower() == "room.dzs")
+            {
+                //The user has selected an entity file. The reference to which entity file should
+                //be stored in the node's tag, so with a little casting... magic!
+                GenericData baseFile = (GenericData)e.Node.Tag;
+                if (baseFile == null)
+                {
+                    Console.WriteLine("Error loading Entity Data for selected node. You should probably report this on our Issue Tracker!");
+                    return;
+                }
+
+
+            }
+        }
+
+        
     }
 }
