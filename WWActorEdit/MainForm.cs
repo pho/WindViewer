@@ -28,9 +28,9 @@ namespace WWActorEdit
     public partial class MainForm : Form
     {
         //A list of currently loaded .arc Archives
-        public List<ZeldaArc> Rooms = new List<ZeldaArc>();
+        //public List<ZeldaArc> Rooms = new List<ZeldaArc>();
         //Shortcut to the 'Stage' one if it is loaded.
-        public ZeldaArc Stage;
+        //public ZeldaArc Stage;
 
         //idek
         IDZxChunkElement SelectedDZRChunkElement;
@@ -183,62 +183,71 @@ namespace WWActorEdit
             GL.Scale(0.005f, 0.005f, 0.005f);
 
             /* Models */
-            if (renderModelsToolStripMenuItem.Checked == true)
+            foreach (WorldspaceProject worldspaceProject in _loadedWorldspaceProjects)
             {
-                foreach (ZeldaArc A in Rooms)
+                if (renderModelsToolStripMenuItem.Checked == true)
                 {
-                    GL.PushMatrix();
-                    GetGlobalTranslation(A);
-                    GetGlobalRotation(A);
-
-                    foreach (J3Dx M in A.J3Dxs)
+                
+                    foreach (ZArchive room in worldspaceProject.Rooms)
                     {
-                        /* Got model translation from Stage? (ex. rooms in sea) */
-                        if (A.GlobalTranslation != Vector3.Zero || A.GlobalRotation != 0)
+                        GL.PushMatrix();
+                        //GetGlobalTranslation(A);
+                        //GetGlobalRotation(A);
+
+                        foreach (J3Dx M in room.GetAllFilesByType<J3Dx>())
                         {
-                            /* Perform translation */
-                            GL.Translate(A.GlobalTranslation);
-                            GL.Rotate(A.GlobalRotation, 0, 1, 0);
+                            /* Got model translation from Stage? (ex. rooms in sea) */
+                            /*if (A.GlobalTranslation != Vector3.Zero || A.GlobalRotation != 0)
+                            {
+                                //Perform translation
+                                GL.Translate(A.GlobalTranslation);
+                                GL.Rotate(A.GlobalRotation, 0, 1, 0);
+                            }*/
+                            M.Render();
                         }
-                        M.Render();
+
+                        GL.PopMatrix();
                     }
-                    GL.PopMatrix();
+      
                 }
-            }
-
-            /* Actors, 1st pass */
-            if (renderRoomActorsToolStripMenuItem.Checked == true)
-            {
-                foreach (ZeldaArc A in Rooms)
+                // Actors, 1st pass 
+                /*if (renderRoomActorsToolStripMenuItem.Checked == true)
                 {
-                    if (A.DZRs != null) foreach (DZx D in A.DZRs) D.Render();
-                    if (A.DZSs != null) foreach (DZx D in A.DZSs) D.Render();
+                   foreach (ZArchive room in worldspaceProject.Rooms)
+                    {
+
+                        if (A.DZRs != null) foreach (DZx D in A.DZRs) D.Render();
+                        if (A.DZSs != null) foreach (DZx D in A.DZSs) D.Render();
+                    }
                 }
-            }
-            if (renderStageActorsToolStripMenuItem.Checked == true && Stage != null)
-            {
-                if (Stage.DZRs != null) foreach (DZx D in Stage.DZRs) D.Render();
-                if (Stage.DZSs != null) foreach (DZx D in Stage.DZSs) D.Render();
-            }
-
-            /* Collision */
-            if (renderCollisionToolStripMenuItem.Checked == true)
-                foreach (ZeldaArc A in Rooms) foreach (DZB D in A.DZBs) D.Render();
-
-            /* Actors, 2nd pass */
-            if (renderRoomActorsToolStripMenuItem.Checked == true)
-            {
-                foreach (ZeldaArc A in Rooms)
+                if (renderStageActorsToolStripMenuItem.Checked == true && Stage != null)
                 {
-                    if (A.DZRs != null) foreach (DZx D in A.DZRs) D.Render();
-                    if (A.DZSs != null) foreach (DZx D in A.DZSs) D.Render();
+                    if (Stage.DZRs != null) foreach (DZx D in Stage.DZRs) D.Render();
+                    if (Stage.DZSs != null) foreach (DZx D in Stage.DZSs) D.Render();
                 }
+
+                // Collision 
+                if (renderCollisionToolStripMenuItem.Checked == true)
+                    foreach (ZeldaArc A in Rooms) foreach (DZB D in A.DZBs) D.Render();
+
+                // Actors, 2nd pass 
+                if (renderRoomActorsToolStripMenuItem.Checked == true)
+                {
+                    foreach (ZeldaArc A in Rooms)
+                    {
+                        if (A.DZRs != null) foreach (DZx D in A.DZRs) D.Render();
+                        if (A.DZSs != null) foreach (DZx D in A.DZSs) D.Render();
+                    }
+                }
+                if (renderStageActorsToolStripMenuItem.Checked == true && Stage != null)
+                {
+                    if (Stage.DZRs != null) foreach (DZx D in Stage.DZRs) D.Render();
+                    if (Stage.DZSs != null) foreach (DZx D in Stage.DZSs) D.Render();
+                }*/
+
             }
-            if (renderStageActorsToolStripMenuItem.Checked == true && Stage != null)
-            {
-                if (Stage.DZRs != null) foreach (DZx D in Stage.DZRs) D.Render();
-                if (Stage.DZSs != null) foreach (DZx D in Stage.DZSs) D.Render();
-            }
+
+            
 
             Helpers.Camera.KeyUpdate();
             glControl.SwapBuffers();
@@ -304,7 +313,7 @@ namespace WWActorEdit
         /// <param name="A"></param> 
         private void GetGlobalTranslation(ZeldaArc A)
         {
-            if (Stage != null)
+            /*if (Stage != null)
             {
                 foreach (DZx D in Stage.DZSs)
                 {
@@ -316,12 +325,12 @@ namespace WWActorEdit
                         }
                     }
                 }
-            }
+            }*/
         }
 
         private void GetGlobalRotation(ZeldaArc A)
         {
-            if (Stage != null)
+            /*if (Stage != null)
             {
                 foreach (DZx D in Stage.DZSs)
                 {
@@ -333,7 +342,7 @@ namespace WWActorEdit
                         }
                     }
                 }
-            }
+            }*/
         }
 
         private void LoadRARC(string Filename, bool IsRoom = true, bool IgnoreModels = false)
@@ -427,17 +436,17 @@ namespace WWActorEdit
 
             toolStripStatusLabel1.Text = "Loaded stage file. Ready!";
 
-            foreach (ZeldaArc A in Rooms)
+            /*foreach (ZeldaArc A in Rooms)
             {
                 GetGlobalTranslation(A);
                 GetGlobalRotation(A);
-            }
+            }*/
         }
 
         private void saveChangesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (ZeldaArc A in Rooms) A.Save();
-            if (Stage != null) Stage.Save();
+            /*foreach (ZeldaArc A in Rooms) A.Save();
+            if (Stage != null) Stage.Save();*/
         }
 
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)

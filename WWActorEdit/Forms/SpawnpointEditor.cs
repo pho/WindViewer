@@ -33,7 +33,7 @@ namespace WWActorEdit.Forms
 
         private void SpawnpointEditor_Load(object sender, EventArgs e)
         {
-            ZeldaArc stage = _mainForm.Rooms[0];
+            ZeldaArc stage = null; //ToDo: Fix this
             if (stage == null)
             {
                 Console.WriteLine("Load a Stage first!");

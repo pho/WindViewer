@@ -168,7 +168,7 @@ namespace WWActorEdit.Forms
         /// </summary>
         private void EnvironmentLightingEditorForm_Load(object sender, EventArgs e)
         {
-            ZeldaArc stage = _mainForm.Stage;
+            ZeldaArc stage = null; //ToDo: Unbreak this lol.
             if (stage == null)
             {
                 Console.WriteLine("Load a Stage first!");
