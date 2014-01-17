@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 using OpenTK;
 using WWActorEdit.Kazari;
 using WWActorEdit.Source;
@@ -43,6 +46,9 @@ namespace WWActorEdit
                         case "Virt": chunk = new VirtChunk(); break;
                         case "SCLS": chunk = new SclsChunk(); break;
                         case "PLYR": chunk = new PlyrChunk(); break;
+                        case "RPAT":
+                        case "PATH":
+                            chunk = new RPATChunk(); break;
                         default:
                             chunk = new DefaultChunk();
                             break;
@@ -539,8 +545,336 @@ namespace WWActorEdit
 
             FSHelpers.WriteArray(stream, FSHelpers.ToBytes(0xFFFF, 2));
         }
+    }
+
+
+    ///<summary>
+    ///RPAT and Path are two chunks that put RPPN and PPNT chunk entries into groups.
+    ///RPAT and RPPN are found in DZR files, while Path and PPNT are found in DZS files.
+    ///</summary>
+    public class RPATChunk : IChunkType
+    {
+        public ushort NumPoints;
+        public ushort Unknown1; //Probably padding
+        public byte Unknown2; //More padding?
+        public byte Unknown3; //Possibly not padding
+        public ushort Padding; //ACTUAL PADDING!?
+        public int FirstPointOffset; //Offset in the DZx file of the first waypoint in the group
+
+        public RPATChunk()
+        {
+            NumPoints = 0;
+            Unknown1 = BitConverter.ToUInt16(FSHelpers.ToBytes(0xFFFF, 2), 0);
+            Unknown2 = 0xFF;
+            Unknown3 = 0;
+            Padding = 0;
+            FirstPointOffset = 0;
+        }
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            NumPoints = Helpers.Read16(data, srcOffset);
+            Unknown1 = Helpers.Read16(data, srcOffset + 2);
+            Unknown2 = Helpers.Read8(data, srcOffset + 4);
+            Unknown3 = Helpers.Read8(data, srcOffset + 5);
+            Padding = Helpers.Read16(data, srcOffset + 6);
+            FirstPointOffset = (int)Helpers.Read32(data, srcOffset + 8);
+
+            srcOffset += 12;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.Write16(stream, NumPoints);
+            FSHelpers.Write16(stream, Unknown1);
+            FSHelpers.Write8(stream, Unknown2);
+            FSHelpers.Write8(stream, Unknown3);
+            FSHelpers.Write16(stream, Padding);
+            FSHelpers.Write32(stream, FirstPointOffset);
+        }
+    }
+
+    public class SondChunk : IChunkType
+    {
+        public string Name; //Seems to always be "sndpath"
+        public Vector3 SourcePos; //Position the sound plays from
+        public byte Unknown1; //Typically 00, one example had 08.
+        public byte Padding;
+        public byte Unknown2; //Typically FF, but Outset's entries have the room number (0x2C) here
+        public byte SoundId;
+        public byte SoundRadius;
+        public byte Padding2;
+        public byte Padding3;
+        public byte Padding4;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            Name = Helpers.ReadString(data, srcOffset, 8);
+            SourcePos.X = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 8));
+            SourcePos.Y = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 12));
+            SourcePos.Z = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 16));
+            Unknown1 = Helpers.Read8(data, srcOffset + 20);
+            Padding = Helpers.Read8(data, srcOffset + 21);
+            Unknown2 = Helpers.Read8(data, srcOffset + 22);
+            SoundId = Helpers.Read8(data, srcOffset + 23);
+            SoundRadius = Helpers.Read8(data, srcOffset + 24);
+            Padding2 = Helpers.Read8(data, srcOffset + 25);
+            Padding3 = Helpers.Read8(data, srcOffset + 26);
+            Padding4 = Helpers.Read8(data, srcOffset + 27);
+
+            srcOffset += 28;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteString(stream, Name, 8);
+            FSHelpers.WriteFloat(stream, SourcePos.X);
+            FSHelpers.WriteFloat(stream, SourcePos.Y);
+            FSHelpers.WriteFloat(stream, SourcePos.Z);
+            FSHelpers.Write8(stream, Unknown1);
+            FSHelpers.Write8(stream, Padding);
+            FSHelpers.Write8(stream, Unknown2);
+            FSHelpers.Write8(stream, SoundId);
+            FSHelpers.Write8(stream, SoundRadius);
+            FSHelpers.Write8(stream, Padding2);
+            FSHelpers.Write8(stream, Padding3);
+            FSHelpers.Write8(stream, Padding4);
+        }   
+    }
+
+    public class FlorChunk : IChunkType
+    {
+        public float LowerBoundaryYCoord; //Y value of the lower boundary of a floor. When link crosses the coord, the map switches him to being on that floor.
+        public byte FloorId; //????
+        public byte[] IncludedRooms;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            LowerBoundaryYCoord = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset));
+            FloorId = Helpers.Read8(data, srcOffset + 4);
+            IncludedRooms = new byte[15];
+            for (int i = 0; i < 15; i++)
+                IncludedRooms[i] = Helpers.Read8(data, srcOffset + 5 + i);
+
+            srcOffset += 20;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteFloat(stream, LowerBoundaryYCoord);
+            FSHelpers.Write8(stream, FloorId);
+
+            for (int i = 0; i < 15; i++)
+                FSHelpers.Write8(stream, IncludedRooms[i]);
+        }
+    }
+
+    public class FiliChunk : IChunkType
+    {
+        public byte TimePassage;
+        public byte WindSettings;
+        public byte Unknown1;
+        public byte LightingType; //04 is normal, 05 is shadowed.
+        public float Unknown2; 
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            TimePassage = Helpers.Read8(data, srcOffset + 0);
+            WindSettings = Helpers.Read8(data, srcOffset + 1);
+            Unknown1 = Helpers.Read8(data, srcOffset + 2);
+            LightingType = Helpers.Read8(data, srcOffset + 3);
+
+            Unknown2 = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 4));
+            srcOffset += 8;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.Write8(stream, TimePassage);
+            FSHelpers.Write8(stream, WindSettings);
+            FSHelpers.Write8(stream, Unknown1);
+            FSHelpers.Write8(stream, LightingType);
+            FSHelpers.WriteFloat(stream, Unknown2);
+        }
+    }
+
+    public class RcamChunk : IChunkType
+    {
+        public string CameraType;
+        public int Padding;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            CameraType = Helpers.ReadString(data, srcOffset, 16);
+            Padding = (int) Helpers.Read32(data, srcOffset + 16);
+
+            srcOffset += 20;
+        }
+
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteString(stream, CameraType, 16);
+            FSHelpers.Write32(stream, Padding);
+        } 
+    }
+
+    public class MecoChunk : IChunkType
+    {
+        public byte RoomNumber; //Which room number this applies to
+        public byte MemaIndex;  //Which index in the Mema array to use.
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            RoomNumber = Helpers.Read8(data, srcOffset);
+            MemaIndex = Helpers.Read8(data, srcOffset + 1);
+
+            srcOffset += 2;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.Write8(stream, RoomNumber);
+            FSHelpers.Write8(stream, MemaIndex);
+        }
 
     }
+
+    public class MemaChunk : IChunkType
+    {
+        public uint MemSize; //Amount of memory to allocate for a room.
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            MemSize = Helpers.Read32(data, srcOffset);
+            srcOffset += 4;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.Write32(stream, (int)MemSize);
+        }
+    }
+
+    public class TresChunk : IChunkType
+    {
+        public string Name; //Usually Takara, 8 bytes + null terminator.
+        public ushort ChestType; //Big Key, Common Wooden, etc.
+        public Vector3 Position;
+        public ushort Unknown;
+        public ushort YRotation; //Rotation on the Y axis
+        public byte ChestContents; //Rupees, Hookshot, etc.
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            Name = Helpers.ReadString(data, srcOffset, 8);
+            ChestType = Helpers.Read16(data, srcOffset + 9);
+            Position.X = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 11));
+            Position.Y = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 15));
+            Position.Z = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 19));
+            Unknown = Helpers.Read16(data, srcOffset + 23);
+            YRotation = Helpers.Read16(data, srcOffset + 25);
+            ChestContents = Helpers.Read8(data, srcOffset + 27);
+
+            srcOffset += 28;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteString(stream, Name, 8);
+            FSHelpers.Write8(stream, 0xFF);
+            FSHelpers.Write16(stream, ChestType);
+            FSHelpers.WriteFloat(stream, Position.X);
+            FSHelpers.WriteFloat(stream, Position.Y);
+            FSHelpers.WriteFloat(stream, Position.Z);
+            FSHelpers.Write16(stream, Unknown);
+            FSHelpers.Write16(stream, YRotation);
+            FSHelpers.Write8(stream, ChestContents);
+        }
+    }
+
+    public class ShipChunk : IChunkType
+    {
+        public Vector3 Position;
+        public uint Unknown;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            Position.X = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0));
+            Position.Y = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 4));
+            Position.Z = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 8));
+
+            Unknown = Helpers.Read32(data, srcOffset + 12);
+
+            srcOffset += 12;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteFloat(stream, Position.X);
+            FSHelpers.WriteFloat(stream, Position.Y);
+            FSHelpers.WriteFloat(stream, Position.Z);
+
+            FSHelpers.Write32(stream, (int)Unknown);
+        }
+    }
+
+
+    public class RppnChunk : IChunkType
+    {
+        public uint Unknown;
+        public Vector3 Position;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            Unknown = Helpers.Read32(data, srcOffset);
+            Position.X = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 4));
+            Position.Y = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 8));
+            Position.Z = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 12));
+
+            srcOffset += 16;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.Write32(stream, (int)Unknown);
+
+            FSHelpers.WriteFloat(stream, Position.X);
+            FSHelpers.WriteFloat(stream, Position.Y);
+            FSHelpers.WriteFloat(stream, Position.Z);
+        }
+    }
+
+    public class MultChunk : IChunkType
+    {
+        public float TranslationX;
+        public float TranslationY;
+        public ushort YRotation;
+        public byte RoomNumber;
+        public byte Unknown;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            TranslationX = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0));
+            TranslationY = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 4));
+            YRotation = Helpers.Read16(data, srcOffset + 8);
+            RoomNumber = Helpers.Read8(data, srcOffset + 10);
+            Unknown = Helpers.Read8(data, srcOffset + 11);
+
+
+            srcOffset += 12;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteFloat(stream, TranslationX);
+            FSHelpers.WriteFloat(stream, TranslationY);
+            FSHelpers.Write16(stream, YRotation);
+            FSHelpers.Write8(stream, RoomNumber);
+            FSHelpers.Write8(stream, Unknown);
+        }
+    }
+
     #endregion
 
     public class HalfRotation

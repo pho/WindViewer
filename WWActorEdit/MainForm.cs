@@ -27,29 +27,17 @@ namespace WWActorEdit
 {
     public partial class MainForm : Form
     {
-        //A list of currently loaded .arc Archives
-        //public List<ZeldaArc> Rooms = new List<ZeldaArc>();
-        //Shortcut to the 'Stage' one if it is loaded.
-        //public ZeldaArc Stage;
-
-        //idek
-        IDZxChunkElement SelectedDZRChunkElement;
-
-        //Has the GL Control been loaded? Used to prevent rendering before GL is Initialized.
-        private bool _glContextLoaded;
-
-        //Used for "dockable" WinForms
-        private StickyWindow _stickyWindow;
+        //List of current loaded WorldspaceProjects (see WorldspaceProjects.cs for more information)
+        private readonly List<WorldspaceProject> _loadedWorldspaceProjects;
 
         /* EVENTS */
-        //Fired when a WorldspaceProject is loaded or unloaded
-        public static event Action WorldspaceProjectListModified;
-        
-        //Fired when the currently selected Room/Stage Entity Data changes in the FileBrowser Treeview.
-        public static event Action<ZeldaData> SelectedEntityDataFileChanged;
+        public static event Action WorldspaceProjectListModified;  //Fired when a WorldspaceProject is loaded or unloaded
+        public static event Action<ZeldaData> SelectedEntityDataFileChanged; //Fired when the currently selected Room/Stage Entity Data changes in the FileBrowser Treeview.
+         
 
-
-        private List<WorldspaceProject> _loadedWorldspaceProjects; 
+        /* MISC */
+        private bool _glContextLoaded; //Has the GL Control been loaded? Used to prevent rendering before GL is Initialized.
+        private StickyWindow _stickyWindow; //Used for "dockable" WinForms
 
         public MainForm()
         {
