@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -49,10 +50,38 @@ namespace WWActorEdit
                         case "RPAT":
                         case "PATH":
                             chunk = new RPATChunk(); break;
+                        case "RPPN":
+                        case "PPNT":
+                            chunk = new RPATChunk(); break;
+
+                        case "SOND": chunk = new SondChunk(); break;
+                        case "FILI": chunk = new FiliChunk(); break;
+                        case "MECO": chunk = new MecoChunk(); break;
+                        case "MEMA": chunk = new MemaChunk(); break;
+                        case "TRES": chunk = new TresChunk(); break;
+                        case "SHIP" : chunk = new ShipChunk(); break;
+                        case "MULT" : chunk = new MultChunk(); break;
+                        case "LGHT":
+                        case "LGTV":
+                            chunk = new LghtChunk(); break;
+                        case "RARO":
+                        case "AROB":
+                            chunk = new RaroChunk(); break;
+                        case "Evnt": chunk = new EvntChunk(); break;
+                        case "ACTR": chunk = new ActrChunk(); break;
+                        case "STAG": chunk = new StagChunk(); break;
+                        case "RCAM":
+                        case "CAMR":
+                            chunk = new RcamChunk();break;
+                        case "FLOR": chunk = new FlorChunk(); break;
                         default:
+                            Console.WriteLine("Unsupported Chunk Tag: " + chunkHeader.Tag +
+                                              " making DefaultChunk() instead!");
                             chunk = new DefaultChunk();
                             break;
                     }
+
+                    Console.WriteLine("Processing chunk: " + chunkHeader.Tag);
 
                     chunk.LoadData(data, ref chunkHeader.ChunkOffset);
                     _chunkList.Add(chunk);
@@ -539,7 +568,7 @@ namespace WWActorEdit
             FSHelpers.WriteFloat(stream, Position.X);
             FSHelpers.WriteFloat(stream, Position.Y);
             FSHelpers.WriteFloat(stream, Position.Z);
-            FSHelpers.Write16(stream, (ushort)Rotation.X);
+            FSHelpers.Write16(stream, (ushort) Rotation.X);
             FSHelpers.Write16(stream, (ushort) Rotation.Y);
             FSHelpers.Write16(stream, (ushort) Rotation.Z);
 
@@ -872,6 +901,211 @@ namespace WWActorEdit
             FSHelpers.Write16(stream, YRotation);
             FSHelpers.Write8(stream, RoomNumber);
             FSHelpers.Write8(stream, Unknown);
+        }
+    }
+
+    public class LghtChunk : IChunkType
+    {
+        public Vector3 Position;
+        public Vector3 Scale; //Or Intensity
+        public ByteColorAlpha Color;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            Position.X = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0));
+            Position.Y = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 4));
+            Position.Z = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 8));
+
+            Scale.X = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 12));
+            Scale.Y = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 16));
+            Scale.Z = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 20));
+
+            srcOffset += 24;
+            Color = new ByteColorAlpha(data, ref srcOffset);
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteFloat(stream, Position.X);
+            FSHelpers.WriteFloat(stream, Position.Y);
+            FSHelpers.WriteFloat(stream, Position.Z);
+
+            FSHelpers.WriteFloat(stream, Scale.X);
+            FSHelpers.WriteFloat(stream, Scale.Y);
+            FSHelpers.WriteFloat(stream, Scale.Z);
+
+            FSHelpers.WriteArray(stream, Color.GetBytes());
+        }
+    }
+
+    public class RaroChunk : IChunkType
+    {
+        public Vector3 Position;
+        public byte[] Unknown; //Always seems to be 00 00 80 00 00 00 FF FF
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            Position.X = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 0));
+            Position.Y = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 4));
+            Position.Z = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 8));
+
+            Unknown = new byte[8];
+            for (int i = 0; i < 8; i++)
+                Unknown[i] = Helpers.Read8(data, srcOffset + 12 + i);
+
+            srcOffset += 20;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteFloat(stream, Position.X);
+            FSHelpers.WriteFloat(stream, Position.Y);
+            FSHelpers.WriteFloat(stream, Position.Z);
+
+            for (int i = 0; i < 8; i++)
+                FSHelpers.Write8(stream, Unknown[i]);
+        }
+    }
+
+    public class EvntChunk : IChunkType
+    {
+        public byte Unknown;
+        public String EventName;
+        public byte Unknown2;
+        public byte Unknown3;
+        public byte Unknown4;
+        public byte Unknown5;
+        public byte RoomNumber;
+        public byte Unknown6;
+        public byte Unknown7;
+        public byte Unknown8;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            Unknown = Helpers.Read8(data, srcOffset);
+            EventName = Helpers.ReadString(data, srcOffset + 1, 15);
+            Unknown2 = Helpers.Read8(data, srcOffset + 16);
+            Unknown3 = Helpers.Read8(data, srcOffset + 17);
+            Unknown4 = Helpers.Read8(data, srcOffset + 18);
+            Unknown5 = Helpers.Read8(data, srcOffset + 19);
+            RoomNumber = Helpers.Read8(data, srcOffset + 20);
+            Unknown6 = Helpers.Read8(data, srcOffset + 21);
+            Unknown7 = Helpers.Read8(data, srcOffset + 22);
+            Unknown8 = Helpers.Read8(data, srcOffset + 23);
+
+            srcOffset += 24;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.Write8(stream, Unknown);
+            FSHelpers.WriteString(stream, EventName, 15);
+            FSHelpers.Write8(stream, Unknown2);
+            FSHelpers.Write8(stream, Unknown3);
+            FSHelpers.Write8(stream, Unknown4);
+            FSHelpers.Write8(stream, Unknown5);
+
+            FSHelpers.Write8(stream, RoomNumber);
+
+            FSHelpers.Write8(stream, Unknown6);
+            FSHelpers.Write8(stream, Unknown7);
+            FSHelpers.Write8(stream, Unknown8);
+        }
+    }
+
+    public class ActrChunk : IChunkType
+    {
+        public string Name;
+        public byte Unknown1;
+        public byte RpatIndex;
+        public byte Unknown2;
+        public byte BehaviorType;
+        public Vector3 Position;
+        public HalfRotation Rotation;
+
+        public ushort EnemyNumber;
+            //Unknown purpose. Enemies are given a number here based on their position in the actor list.
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            Name = Helpers.ReadString(data, srcOffset, 8);
+            Unknown1 = Helpers.Read8(data, srcOffset + 8);
+            RpatIndex = Helpers.Read8(data, srcOffset + 9);
+            Unknown2 = Helpers.Read8(data, srcOffset + 10);
+            BehaviorType = Helpers.Read8(data, srcOffset + 11);
+
+            Position.X = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 12));
+            Position.Y = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 16));
+            Position.Z = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 20));
+
+            srcOffset += 24;
+            Rotation = new HalfRotation(data, ref srcOffset);
+
+            EnemyNumber = Helpers.Read16(data, srcOffset + 30);
+
+            srcOffset += 2; //Already got +24 from earlier, then +6 from HalfRotation.
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteString(stream, Name, 8);
+            FSHelpers.Write8(stream, Unknown1);
+            FSHelpers.Write8(stream, RpatIndex);
+            FSHelpers.Write8(stream, Unknown2);
+            FSHelpers.Write8(stream, BehaviorType);
+            FSHelpers.WriteFloat(stream, Position.X);
+            FSHelpers.WriteFloat(stream, Position.Y);
+            FSHelpers.WriteFloat(stream, Position.Z);
+
+            FSHelpers.Write16(stream, (ushort)Rotation.X);
+            FSHelpers.Write16(stream, (ushort)Rotation.Y);
+            FSHelpers.Write16(stream, (ushort)Rotation.Z);
+
+            FSHelpers.Write16(stream, EnemyNumber);
+        }
+    }
+
+    public class StagChunk : IChunkType
+    {
+        public float MinDepth;
+        public float MaxDepth;
+        public ushort KeyCounterDisplay; //Seems to be a multi-use field?
+        public ushort LoadedParticleBank; //Particle Bank to load for the worldspace. Unclear how this works exactly.
+        public ushort ItemUsageAndMinimap; //Items link can use and what color the minimap backgorund is
+        public byte Padding;
+        public byte Unknown1;
+        public byte Unknown2;
+        public byte Unknown3;
+        public ushort DrawDistance;
+
+        public void LoadData(byte[] data, ref int srcOffset)
+        {
+            MinDepth = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset));
+            MaxDepth = Helpers.ConvertIEEE754Float(Helpers.Read32(data, srcOffset + 4));
+            KeyCounterDisplay = Helpers.Read16(data, srcOffset + 8);
+            LoadedParticleBank = Helpers.Read16(data, srcOffset + 10);
+            ItemUsageAndMinimap = Helpers.Read16(data, srcOffset + 12);
+            Padding = Helpers.Read8(data, srcOffset + 14);
+            Unknown1 = Helpers.Read8(data, srcOffset + 15);
+            Unknown2 = Helpers.Read8(data, srcOffset + 16);
+            Unknown3 = Helpers.Read8(data, srcOffset + 17);
+            DrawDistance = Helpers.Read16(data, srcOffset + 18);
+
+            srcOffset += 20;
+        }
+
+        public void WriteData(BinaryWriter stream)
+        {
+            FSHelpers.WriteFloat(stream, MinDepth);
+            FSHelpers.WriteFloat(stream, MaxDepth);
+            FSHelpers.Write16(stream, KeyCounterDisplay);
+            FSHelpers.Write16(stream, LoadedParticleBank);
+            FSHelpers.Write16(stream, ItemUsageAndMinimap);
+            FSHelpers.Write8(stream, Padding);
+            FSHelpers.Write8(stream, Unknown1);
+            FSHelpers.Write8(stream, Unknown2);
+            FSHelpers.Write8(stream, Unknown3);
+            FSHelpers.Write16(stream, DrawDistance);
         }
     }
 
