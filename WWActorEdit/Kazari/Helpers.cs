@@ -53,7 +53,7 @@ namespace WWActorEdit.Kazari
 
         public static byte[] ReadN(byte[] Data, int Offset, int N){
             byte[] ret = new byte[N];
-            Array.Copy(Data, Offset, ret, N);
+            Array.Copy( Data, Offset, ret, 0, N);
             return ret;
         }
 
