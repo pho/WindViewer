@@ -31,6 +31,8 @@ namespace WWActorEdit
         //Data from file
         public byte[] Data;
 
+        private List<IChunkType> _chunkList; 
+
 
         public DZSFormat(byte[] data, ref int srcOffset)
         {
@@ -66,15 +68,27 @@ namespace WWActorEdit
             }
         }
 
-        public List<IChunkType> GetChunksOfType(DZSChunkTypes type)
+        public T GetSingleChunk<T>()
         {
-            foreach (DZSChunkHeader chunkHeader in ChunkHeaders)
+            foreach (IChunkType chunk in _chunkList)
             {
-                if (chunkHeader.Tag == type.ToString())
-                    return chunkHeader.ChunkElements;
+                if (chunk is T)
+                    return (T) chunk;
             }
 
-            return null;
+            return default(T);
+        }
+
+        public List<T> GetAllChunks<T>()
+        {
+            List<T> returnList = new List<T>();
+            foreach (IChunkType chunk in _chunkList)
+            {
+                if (chunk is T)
+                    returnList.Add((T) chunk);
+            }
+
+            return returnList;
         }
     }
 
@@ -94,8 +108,6 @@ namespace WWActorEdit
         public string Tag;              //ASCI Name for Chunk
         public int ElementCount;     //How many elements of this Chunk type
         public int ChunkOffset;      //Offset from beginning of file to first element
-
-        [NonSerialized] public List<IChunkType> ChunkElements; 
 
         public DZSChunkHeader(byte[] data, ref int srcOffset)
         {

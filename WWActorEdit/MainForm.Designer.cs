@@ -195,6 +195,7 @@
             this.openWorldspaceDirToolStripMenuItem.Name = "openWorldspaceDirToolStripMenuItem";
             this.openWorldspaceDirToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.openWorldspaceDirToolStripMenuItem.Text = "&Open Worldspace Dir";
+            this.openWorldspaceDirToolStripMenuItem.Click += new System.EventHandler(this.openWorldspaceDirToolStripMenuItem_Click);
             // 
             // recentDirsToolStripMenuItem
             // 

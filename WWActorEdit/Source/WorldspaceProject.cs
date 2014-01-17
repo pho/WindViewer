@@ -55,16 +55,30 @@ namespace WWActorEdit.Source
         }
     }
 
+    /// <summary>
+    /// All file formats inside an archive should derive ultimately from BaseArchiveFile,
+    /// because BaseArchiveFile has really important meta data (ie: FileName/FolderName)
+    /// that I kept out of the interface so that each class wouldn't have to implement it.
+    /// However, the Generic ZArchive::GetFileByType<T> requires us to use an interface
+    /// for casting.
+    /// </summary>
     public interface IArchiveFile
     {
+        /* DON'T DERIVE ARCHIVE FILE FORMATS FROM THIS INTERFACE, DERIVE FROM BaseArchiveFile INSTEAD */
+
         void Load(byte[] data);
         void Save(BinaryWriter stream);
     }
+
     /// <summary>
     /// Well, this was originally going an IArchiveFile interface that all of the
     /// archive file types (dzs, dzb, etc.) derived from. However, the desire to
     /// include a filename field (so we can save back out to the disk) has pushed
     /// us to use an abstract class with a field!
+    /// 
+    /// All ArchiveFile types (dzb, dzr, bdl, etc.) should derive from this base
+    /// class as it provides information for loading/saving to the 
+    /// WorldspaceProject / wrkDir. 
     /// </summary>
     public abstract class BaseArchiveFile : IArchiveFile
     {
@@ -82,7 +96,7 @@ namespace WWActorEdit.Source
     public class ZArchive
     {
         //This is a list of all loaded files from the Archive.
-        private List<IArchiveFile> _archiveFiles;
+        private readonly List<IArchiveFile> _archiveFiles;
 
         public ZArchive()
         {
@@ -98,7 +112,7 @@ namespace WWActorEdit.Source
         /// Invokes the Save() interface on each ArchiveFile. Generates the required
         /// folders and saves out each individual file.
         /// </summary>
-        /// <param name="archiveRootFolder">Folder inside the WrkDir to save to, ie: ""C:\...\MiniHyo\Room0\"</param>
+        /// <param name="archiveRootFolder">Folder inside the WrkDir to save to, ie: "C:\...\MiniHyo\Room0\"</param>
         public void Save(string archiveRootFolder)
         {
             foreach (IArchiveFile archiveFile in _archiveFiles)

@@ -236,7 +236,7 @@ namespace WWActorEdit
         private void GetRoomNumber(ZeldaArc NewArc)
         {
             int roomNumber = 0;
-            
+
             //We're going to trim the Filepath down to just name - ie: "Room0.arc / R00_00.arc"
             string fileName = Path.GetFileName(NewArc.Filename);
 
@@ -254,7 +254,7 @@ namespace WWActorEdit
             else if (fileName.Substring(0, 1).ToLower() == "r")
             {
                 //I *think* these follow the Rxx_00 pattern, where xx is the room number. _00 can change, xx might be 1 or 3, who knows!
-                
+
                 //We're going to use RegEx here to make sure we only grab what is between R and _00 which could be multipl.e
                 string[] numbers = Regex.Split(fileName.Substring(0, fileName.Length - 6), @"\D+");
                 string trimmedNumbers = String.Join("", numbers);
@@ -270,7 +270,7 @@ namespace WWActorEdit
                     fileName;
                 popup.ShowDialog(this);
 
-                roomNumber = (int) popup.roomNumberSelector.Value;
+                roomNumber = (int)popup.roomNumberSelector.Value;
                 Console.WriteLine("User chose: " + roomNumber);
             }
 
@@ -491,7 +491,7 @@ namespace WWActorEdit
 
             MessageBox.Show(
                 Application.ProductName + " - Written 2012 by xdaniel - Build " + BuildDate.ToString(CultureInfo.InvariantCulture) + Environment.NewLine +
-                "Improvements by LordNed, Abahbob, Pho, and Sage of Mirrors" + Environment.NewLine + 
+                "Improvements by LordNed, Abahbob, Pho, and Sage of Mirrors" + Environment.NewLine +
                 Environment.NewLine +
                 "RARC, Yaz0 and J3Dx/BMD documentation by thakis" + Environment.NewLine +
                 "DZB and DZx documentation by Sage of Mirrors, Twili, fkualol, xdaniel, et al." + Environment.NewLine +
@@ -528,7 +528,7 @@ namespace WWActorEdit
             FloatConverter popup = new FloatConverter();
             popup.Show(this);
         }
-        
+
         /// <summary>
         /// The new and improved Open Archive menu! This is totally super secret stuff
         /// (which is why it's disabled on the UI!) but I wanted to start tinkering
@@ -593,7 +593,7 @@ namespace WWActorEdit
 
             foreach (string filePath in filePaths)
             {
-                string workDir = CreateWorkingDirForArchive(filePath);
+                string workDir = CreateWorkingDirFormArchive(filePath);
 
                 if (workDir == string.Empty)
                     break;
@@ -604,6 +604,12 @@ namespace WWActorEdit
             }
         }
 
+        /// <summary>
+        /// This is the main "Open" file loading routine. It takes a workdir (directory ending in
+        /// .wrkDir) that contains a Room<x> or Stage folders and loads them into a WorldspaceProject
+        /// which is then stored in our list of loaded WorldspaceProjects.
+        /// </summary>
+        /// <param name="workDir"></param>
         private void OpenFileFromWorkingDir(string workDir)
         {
             //Iterate through the sub folders (dzb, dzr, bdl, etc.) and construct an appropriate data
@@ -621,14 +627,44 @@ namespace WWActorEdit
             //could return only the first.
         }
 
+        /// <summary>
+        /// Callback handler for opening an existing project.
+        /// </summary>
+        private void openWorldspaceDirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //This is a crappy version of the thing but I can't find the WinForm someone made that replicates
+            //the OpenFileDialog but for folders instead... Sorry!
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            string workingDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName);
+
+            fbd.ShowNewFolderButton = false;
+            fbd.SelectedPath = workingDir;
+            fbd.Description = "Choose a Working Dir that ends in .wrkDir to load! This Working Dir should contain one or more 'Room<x>' or a 'Stage' folder.";
+
+            DialogResult result = fbd.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                //Ensure that the selected directory ends in ".wrkDir". If it doesn't, I don't want to figure out what happens.
+                if (fbd.SelectedPath.EndsWith(".wrkDir"))
+                {
+                    OpenFileFromWorkingDir(fbd.SelectedPath);
+                }
+                else
+                {
+                    Console.WriteLine("Error: Select a folder that ends in .wrkDir!");
+                }
+            }
+        }
+
         #endregion
 
         /// <summary>
-        /// 
+        /// This creates a new "Working Dir" for a project (ie: "My Documents\WindViewer\MiniHyo"). It is the equivelent
+        /// of setting up a project directory for new files. 
         /// </summary>
-        /// <param name="archiveFilePath"></param>
+        /// <param name="archiveFilePath">Archive to use as the base content to place in the WrkDir.</param>
         /// <returns></returns>
-        private string CreateWorkingDirForArchive(string archiveFilePath)
+        private string CreateWorkingDirFormArchive(string archiveFilePath)
         {
             //For each file selected we want to extract it to the working directory.
             string workingDir = Path.Combine(
