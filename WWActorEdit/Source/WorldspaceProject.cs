@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms.VisualStyles;
 using WWActorEdit.Kazari;
 using WWActorEdit.Kazari.DZx;
+using WWActorEdit.Kazari.J3Dx;
 using WWActorEdit.Source.FileFormats;
 
 namespace WWActorEdit.Source
@@ -202,8 +203,8 @@ namespace WWActorEdit.Source
                 foreach (string filePath in subFiles)
                 {
                     BinaryReader br = new BinaryReader(File.OpenRead(filePath));
-                    try
-                    {
+                    //try
+                    //{
                         BaseArchiveFile file;
 
                         byte[] fileData = br.ReadBytes((int) br.BaseStream.Length);
@@ -215,7 +216,7 @@ namespace WWActorEdit.Source
                             case "bck":
                             case "brk":
                             case "btk":
-                                file = new GenericData();
+                                file = new J3Dx();
                                 file.Load(fileData);
                                 break;
 
@@ -247,11 +248,11 @@ namespace WWActorEdit.Source
                         //it in our list of loaded files. They can later be gotten with the templated getter!
                         _archiveFiles.Add(file);
                         br.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error opening file " + filePath + " for reading. Error Message: " + ex);
-                    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+                        //Console.WriteLine("Error opening file " + filePath + " for reading. Error Message: " + ex);
+                    //}
                 }
             }
         }

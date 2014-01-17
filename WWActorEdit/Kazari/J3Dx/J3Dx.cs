@@ -11,12 +11,13 @@ using System.Windows.Forms;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using WWActorEdit.Source;
 
 #endregion
 
 namespace WWActorEdit.Kazari.J3Dx
 {
-    public class J3Dx
+    public class J3Dx : BaseArchiveFile
     {
         #region Variables
 
@@ -53,6 +54,11 @@ namespace WWActorEdit.Kazari.J3Dx
 
         #region Constructors, J3Dx Loader
 
+        public J3Dx()
+        {
+            
+        }
+
         public J3Dx(TreeNode TN)
         {
             Root = TN;
@@ -81,9 +87,9 @@ namespace WWActorEdit.Kazari.J3Dx
             Load(DataArray);
         }
 
-        public void Load(byte[] DataArray)
+        public override void Load(byte[] data)
         {
-            Data = DataArray;
+            Data = data;
 
             Header = new FileHeader(Data);
             if (Header.Tag.Substring(0, 3) != "J3D")
@@ -113,8 +119,14 @@ namespace WWActorEdit.Kazari.J3Dx
 
                 GenerateDisplayLists();
 
-                Root.Nodes.Add(Helpers.CreateTreeNode(Name, this, string.Format("Size: {0:X6}", Data.Length)));
+                if(Root != null)
+                    Root.Nodes.Add(Helpers.CreateTreeNode(Name, this, string.Format("Size: {0:X6}", Data.Length)));
             }
+        }
+
+        public override void Save(BinaryWriter stream)
+        {
+            stream.Write(Data);
         }
 
         #endregion
