@@ -10,52 +10,23 @@ namespace WWActorEdit
 {
     /// <summary>
     /// Nicknamed "ZeldaData" because both "DZR" and "DZS" use the same format. DZR = "Zelda Room Data"
-    /// while DZS = "Zelda Stage Data". 
+    /// while DZS = "Zelda Stage Data". To solve this, I'm just calling it ZeldaData;
     /// </summary>
-    public class DZSFormat : BaseArchiveFile
+    public class ZeldaData : BaseArchiveFile
     {
-        public DZSHeader Header;
-        public List<DZSChunkHeader> ChunkHeaders;
-
-        //Data from file
-        public byte[] Data;
-
+        //The only thing we keep is a list of the Chunks as this is all we need to re-create the file.
         private List<IChunkType> _chunkList;
-
-        public T GetSingleChunk<T>()
-        {
-            foreach (IChunkType chunk in _chunkList)
-            {
-                if (chunk is T)
-                    return (T) chunk;
-            }
-
-            return default(T);
-        }
-
-        public List<T> GetAllChunks<T>()
-        {
-            List<T> returnList = new List<T>();
-            foreach (IChunkType chunk in _chunkList)
-            {
-                if (chunk is T)
-                    returnList.Add((T) chunk);
-            }
-
-            return returnList;
-        }
 
         public override void Load(byte[] data)
         {
             int offset = 0;
-            Header = new DZSHeader(data, ref offset);
-            ChunkHeaders = new List<DZSChunkHeader>();
-            Data = data;
+            DZSHeader header = new DZSHeader();
+            header.Load(data, ref offset);
 
-            for (int i = 0; i < Header.ChunkCount; i++)
+            for (int i = 0; i < header.ChunkCount; i++)
             {
-                DZSChunkHeader chunkHeader = new DZSChunkHeader(data, ref offset);
-                ChunkHeaders.Add(chunkHeader);
+                DZSChunkHeader chunkHeader = new DZSChunkHeader();
+                chunkHeader.Load(data, ref offset);
 
                 for (int k = 0; k < chunkHeader.ElementCount; k++)
                 {
@@ -82,18 +53,122 @@ namespace WWActorEdit
 
         public override void Save(BinaryWriter stream)
         {
-            
+            //This is a really weird/complicated implementation. We can fill out the DZSHeader pretty easily
+            //but then we don't know the offsets until we write them... To fix this we're going to jump around
+            //in the stream a little bit. It's kind of weird. There's probably a simpler implementation that I'm
+            //missing, but oh well.
+
+            //We need to sort out the unique chunks out of our list, as some chunks only have one entry,
+            //and some will have multiple. This is kind of a weird implementation, oops.
+            var dict = new Dictionary<Type, List<IChunkType>>();
+
+            foreach (IChunkType chunkType in _chunkList)
+            {
+                //If the dictionary already contains the key, then the list exists and we can just add to it.
+                if (dict.ContainsKey(chunkType.GetType()))
+                {
+                    dict[chunkType.GetType()].Add(chunkType);
+                }
+                else
+                {
+                    //The dictionary doesn't contain the key, so make the list and add it.
+                    dict[chunkType.GetType()] = new List<IChunkType>();
+                    dict[chunkType.GetType()].Add(chunkType);
+                }
+            }
+
+            //Write the Header
+            DZSHeader header = new DZSHeader();
+            header.ChunkCount = dict.Count;
+            header.Save(stream);
+
+            int curOffset = (int)stream.BaseStream.Position;
+
+            //Then allocate numChunkHeaders * chunkHeaderSize and then write the chunks, and then we'll go back...?
+            stream.BaseStream.Position += dict.Count*12; //A chunk Header is 12 bytes in size.
+
+            List<DZSChunkHeader> headerList = new List<DZSChunkHeader>();
+
+            //Now write all the chunk headers
+            foreach (KeyValuePair<Type, List<IChunkType>> pair in dict)
+            {
+                DZSChunkHeader chnkHeader = new DZSChunkHeader();
+                chnkHeader.ChunkOffset = (int) stream.BaseStream.Position;
+                chnkHeader.Tag = pair.Key.Name.Substring(0, 4);
+                chnkHeader.ElementCount = pair.Value.Count;
+
+                headerList.Add(chnkHeader);
+
+                //Now write the actual chunks to the stream.
+                foreach (IChunkType chunk in pair.Value)
+                {
+                    chunk.WriteData(stream);
+                }
+            }
+
+            //Now that we've created the chunk headers, they have their offsets set, and the data is made, lets go back and actually write them to file.
+            stream.BaseStream.Position = curOffset;
+            for (int i = 0; i < headerList.Count; i++)
+            {
+                headerList[i].Save(stream);
+            }
+
+        }
+
+        /// <summary>
+        /// Gets the first Chunk of type T and returns it, null if the
+        /// specified chunk doesn't exist.
+        /// </summary>
+        /// <typeparam name="T">A IChunkType derived chunk.</typeparam>
+        /// <returns></returns>
+        public T GetSingleChunk<T>()
+        {
+            foreach (IChunkType chunk in _chunkList)
+            {
+                if (chunk is T)
+                    return (T)chunk;
+            }
+
+            return default(T);
+        }
+        
+        /// <summary>
+        /// Returns all Chunks of type T, or a list with a length of zero
+        /// if the specified chunk doesn't exist.
+        /// </summary>
+        /// <typeparam name="T">A IChunkType derived chunk.</typeparam>
+        /// <returns></returns>
+        public List<T> GetAllChunks<T>()
+        {
+            List<T> returnList = new List<T>();
+            foreach (IChunkType chunk in _chunkList)
+            {
+                if (chunk is T)
+                    returnList.Add((T)chunk);
+            }
+
+            return returnList;
         }
     }
 
     public class DZSHeader
     {
-        public UInt32 ChunkCount;
+        public int ChunkCount;
 
-        public DZSHeader(byte[] data, ref int srcOffset)
+        public DZSHeader()
         {
-            ChunkCount = Helpers.Read32(data, srcOffset);
+            ChunkCount = 0;
+        }
+
+        public void Load(byte[] data, ref int srcOffset)
+        {
+            ChunkCount = (int)Helpers.Read32(data, srcOffset);
             srcOffset += 4;
+        }
+
+        public void Save(BinaryWriter stream)
+        {
+            FSHelpers.Write32(stream, ChunkCount);
         }
     }
 
@@ -103,13 +178,27 @@ namespace WWActorEdit
         public int ElementCount;     //How many elements of this Chunk type
         public int ChunkOffset;      //Offset from beginning of file to first element
 
-        public DZSChunkHeader(byte[] data, ref int srcOffset)
+        public DZSChunkHeader()
+        {
+            Tag = "OOPS"; //For chunks someone forgot to name
+            ElementCount = 0;
+            ChunkOffset = 0;
+        }
+
+        public void Load(byte[] data, ref int srcOffset)
         {
             Tag = Helpers.ReadString(data, srcOffset, 4); //Tag is 4 bytes in length.
-            ElementCount = (int) Helpers.Read32(data, srcOffset + 4);
-            ChunkOffset = (int) Helpers.Read32(data, srcOffset + 8);
+            ElementCount = (int)Helpers.Read32(data, srcOffset + 4);
+            ChunkOffset = (int)Helpers.Read32(data, srcOffset + 8);
 
             srcOffset += 12; //Header is 0xC/12 bytes in length
+        }
+
+        public void Save(BinaryWriter stream)
+        {
+            FSHelpers.WriteString(stream, Tag, 4);
+            FSHelpers.Write32(stream, ElementCount);
+            FSHelpers.Write32(stream, ChunkOffset);
         }
     }
 

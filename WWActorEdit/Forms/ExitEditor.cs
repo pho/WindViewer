@@ -15,7 +15,7 @@ namespace WWActorEdit.Forms
     public partial class ExitEditor : Form
     {
         private MainForm _mainForm;
-        private DZSFormat _data;
+        private ZeldaData _data;
 
         //Change this and then call UpdateSCLSControlsFromFile to update the UI.
         private SclsChunk _sclsChunk;

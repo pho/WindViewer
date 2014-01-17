@@ -20,7 +20,7 @@ namespace WWActorEdit.Forms
         //Set by the MainForm when it opens this Popup
         private MainForm _mainForm;
 
-        private DZSFormat _data;
+        private ZeldaData _data;
 
         //These are references to the currently selected EnvR/Color/Etc. chunks. They are
         //used to populate the UI with the values of the selected index. When the index
@@ -46,7 +46,7 @@ namespace WWActorEdit.Forms
         private void LoadDZSForStage(ZeldaArc stage)
         {
             int srcOffset = 0;
-            _data = new DZSFormat(stage.DZSs[0].FileEntry.GetFileData(), ref srcOffset);
+            _data = new ZeldaData(stage.DZSs[0].FileEntry.GetFileData(), ref srcOffset);
 
             //Now that the DZSFormat is populated with information, we're going to load the UI up!
 

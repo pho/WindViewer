@@ -16,7 +16,7 @@ namespace WWActorEdit.Forms
     public partial class SpawnpointEditor : Form
     {
         private MainForm _mainForm;
-        private DZSFormat _data;
+        private ZeldaData _data;
         private PlyrChunk _plyrChunk;
 
         //Used for "dockable" WinForms
