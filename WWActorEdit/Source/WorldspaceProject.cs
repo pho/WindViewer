@@ -228,7 +228,7 @@ namespace WWActorEdit.Source
                             /* Room and Stage Entity Data */
                             case "dzr":
                             case "dzs":
-                                file = new GenericData();
+                                file = new ZeldaData();
                                 file.Load(fileData);
                                 break;
 

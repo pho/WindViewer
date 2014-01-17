@@ -44,7 +44,9 @@ namespace WWActorEdit
         /* EVENTS */
         //Fired when a WorldspaceProject is loaded or unloaded
         public static event Action WorldspaceProjectListModified;
-
+        
+        //Fired when the currently selected Room/Stage Entity Data changes in the FileBrowser Treeview.
+        public static event Action<ZeldaData> SelectedEntityDataFileChanged;
 
 
         private List<WorldspaceProject> _loadedWorldspaceProjects; 
@@ -61,6 +63,7 @@ namespace WWActorEdit
         private void MainForm_Load(object sender, EventArgs e)
         {
             WorldspaceProjectListModified += RebuildFileBrowserTreeview;
+            SelectedEntityDataFileChanged += RebuildEntityListTreeview;
         }
 
         #region GLControl
@@ -768,15 +771,37 @@ namespace WWActorEdit
             {
                 //The user has selected an entity file. The reference to which entity file should
                 //be stored in the node's tag, so with a little casting... magic!
-                GenericData baseFile = (GenericData)e.Node.Tag;
+                ZeldaData baseFile = (ZeldaData)e.Node.Tag;
                 if (baseFile == null)
                 {
                     Console.WriteLine("Error loading Entity Data for selected node. You should probably report this on our Issue Tracker!");
                     return;
                 }
 
-
+                //Now we're going to generate an event so that the floating WinForm editors can catch it too...
+                if (SelectedEntityDataFileChanged != null)
+                    SelectedEntityDataFileChanged(baseFile);
             }
+        }
+
+
+        /// <summary>
+        /// This rebuilds the Entity List treeview (upper left) with a list of the data from 
+        /// the currently selected ZeldaData entity file. It is invoked by the 
+        /// SelectedEntityDataFileChanged event and rebuilds the Tree from scratch.
+        /// </summary>
+        private void RebuildEntityListTreeview(ZeldaData data)
+        {
+            //Wipe out any existing stuff
+            curDataTV.Nodes.Clear();
+
+            foreach (IChunkType chunk in data.GetAllChunks<IChunkType>())
+            {
+                curDataTV.Nodes.Add(chunk.GetType().Name);
+            }
+
+            //Expand everything
+            curDataTV.ExpandAll();
         }
 
         

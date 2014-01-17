@@ -45,7 +45,7 @@ namespace WWActorEdit.Forms
 
         private void LoadDZSForStage(ZeldaArc stage)
         {
-            int srcOffset = 0;
+            /*int srcOffset = 0;
             _data = new ZeldaData(stage.DZSs[0].FileEntry.GetFileData(), ref srcOffset);
 
             //Now that the DZSFormat is populated with information, we're going to load the UI up!
@@ -82,7 +82,7 @@ namespace WWActorEdit.Forms
                     default:
                         break;
                 }
-            }
+            }*/
         }
 
         /// <summary>

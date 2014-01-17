@@ -23,6 +23,9 @@ namespace WWActorEdit
             DZSHeader header = new DZSHeader();
             header.Load(data, ref offset);
 
+
+            _chunkList = new List<IChunkType>();
+
             for (int i = 0; i < header.ChunkCount; i++)
             {
                 DZSChunkHeader chunkHeader = new DZSChunkHeader();
